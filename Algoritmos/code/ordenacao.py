@@ -1,4 +1,5 @@
 import random
+from sys import settrace
 
 def criaVetor(n, rng) -> list:
     v = list()
