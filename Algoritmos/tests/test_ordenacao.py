@@ -1,4 +1,4 @@
-from code.ordenacao import *
+from codigos.ordenacao import *
 import pytest
 
 values = [
