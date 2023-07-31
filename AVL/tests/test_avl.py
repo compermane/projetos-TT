@@ -1,5 +1,7 @@
 import pytest
+from sys import settrace
 from AVL.AVL import *
+from analise import showTrace
 
 """
     Teste para criacao de arvore: testa se a funcao
@@ -14,11 +16,13 @@ param1 = (
 )
 @pytest.mark.parametrize("chave, expected", param1)
 def test_criaArvore(chave, expected):
+    settrace(showTrace)
     raiz = Node.criaArvore(chave)
     if raiz == None:
         assert None == expected
     else:
         assert raiz.chave == expected
+    settrace(None)
 
 """
     Teste para insercao: testa se a funcao insere() insere corretamente
@@ -32,12 +36,13 @@ param2 = (
 )
 @pytest.mark.parametrize("chave, expected", param2)
 def test_insere(chave, expected):
+    settrace(showTrace)
     arvore = AVL()
     raiz = Node.criaArvore()
 
     raiz = arvore.insere(raiz, chave)
     assert raiz.chave == expected
-
+    settrace(None)
 """
     Teste de multiplas insercoes: testa se a funcao insere() insere
     as chaves corretamente na arvore. Para tanto, realiza uma leitura preOrder
@@ -51,6 +56,7 @@ param3 = (
 )
 @pytest.mark.parametrize("chaves, expected", param3)
 def test_multiplasInsercoes(chaves, expected):
+    settrace(showTrace)
     arvore = AVL()
     raiz = Node.criaArvore()
 
@@ -58,6 +64,7 @@ def test_multiplasInsercoes(chaves, expected):
         raiz = arvore.insere(raiz, chave)
 
     assert arvore.preOrderVetor(raiz, []) == expected
+    settrace(None)
 
 """
     Teste de delecao de nohs: testa se um noh eh corretamente removido.
@@ -72,6 +79,7 @@ param4 = (
 )
 @pytest.mark.parametrize("chaves, deletado, expected", param4)
 def test_delecao(chaves, deletado, expected):
+    settrace(showTrace)
     arvore = AVL()
     raiz = Node.criaArvore()
 
@@ -79,6 +87,7 @@ def test_delecao(chaves, deletado, expected):
         raiz = arvore.insere(raiz, chave)
     raiz = arvore.deleta(raiz, deletado)
     assert arvore.preOrderVetor(raiz, []) == expected
+    showTrace(None)
 
 """
     Teste de busca: testa se a funcao busca() retorna o valor correto.
@@ -93,6 +102,7 @@ param5 = (
 )
 @pytest.mark.parametrize("chaves, buscado, expected", param5)
 def test_busca(chaves, buscado, expected):
+    settrace(showTrace)
     arvore = AVL()
     raiz = Node.criaArvore()
     
@@ -100,8 +110,10 @@ def test_busca(chaves, buscado, expected):
         raiz = arvore.insere(raiz, chave)
 
     assert arvore.busca(raiz, buscado) == expected
+    settrace(showTrace)
 
 def test_preOrder():
+    settrace(showTrace)
     chaves = [0, 1, 2, 3, 4, 5]
     arvore = AVL()
     raiz = Node.criaArvore()
@@ -110,8 +122,10 @@ def test_preOrder():
         raiz = arvore.insere(raiz, chave)
 
     assert arvore.preOrderVetor(raiz) == [3, 1, 0, 2, 4, 5]
+    settrace(None)
 
 def test_inOrder():
+    settrace(showTrace)
     chaves = [0, 1, 2, 3, 4, 5]
     arvore = AVL()
     raiz = Node.criaArvore()
@@ -120,8 +134,10 @@ def test_inOrder():
         raiz = arvore.insere(raiz, chave)
 
     assert arvore.inOrderVetor(raiz) == [0, 1, 2, 3, 4, 5]
+    settrace(None)
 
 def test_posOrder():
+    settrace(showTrace)
     chaves = [0, 1, 2, 3, 4, 5]
     arvore = AVL()
     raiz = Node.criaArvore()
@@ -130,3 +146,4 @@ def test_posOrder():
         raiz = arvore.insere(raiz, chave)
 
     assert arvore.posOrderVetor(raiz) == [0, 2, 1, 5, 4, 3]
+    settrace(None)
