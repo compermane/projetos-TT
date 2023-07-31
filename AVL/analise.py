@@ -1,4 +1,5 @@
 from AVL import *
+from os import sep
 
 """
     Funcao showTrace(frame, event, arg)
@@ -25,26 +26,60 @@ from AVL import *
     diagnóstico local.
 """
 
-def showTrace(frame, event, arg):
+def showTrace(frame, event = None, arg = None):
     code =  frame.f_code
     func_name = code.co_name
     line = frame.f_lineno
     origin  = code.co_filename
+    caminho = origin.split(sep)
+
+    f = open('out.txt', 'a')
 
     match event:
         case "call":
-            with open('out.txt', 'a') as f:
-                print(f"Chamada da funçao {func_name} na linha {line} do arquivo {origin}", file = f)
+            print(f"Chamada da funcao {func_name} na linha {line} do arquivo {caminho[-2:]}", file = f)
         case "line":
-            with open('out.txt', 'a'):
-                print(f"O interpretador vai executar a linha {line} do arquivo {origin}", file = f)
+            print(f"O interpretador vai executar a linha {line} do arquivo {caminho[-2:]}", file = f)
         case "return":
-            with open('out.txt', 'a'):
-                print(f"A funcao {func_name} vai retornar o valor {arg}, origem: {origin}", file = f)
+            print(f"A funcao {func_name} vai retornar o valor {arg}, origem: {caminho[-2:]}", file = f)
+            print(f"----------fim da execucao da funcao {func_name}------------", file = f)
         case "exception":
-            with open('out.txt', 'a'):
-                print(f"Uma excecao ocorreu na função {func_name}, origem: {origin}, detalhamento: {arg}", file = f)
+            print(f"Uma excecao ocorreu na funcao {func_name}, origem: {caminho[-2:]}, detalhamento: {arg}", file = f)
     
-    # return showTrace
+    f.close()
+    return showTrace
 
+"""
+    Funcao postAnalysis(f)
+    Gera um arquivo texto contendo estatísticas sobre a análise
+"""
+def postAnalysis(name: str) -> None:
+    keywords = {
+        'Chamada de funcao': 0,
+        'Execucao de linha': 0,
+        'Retorno de valor': 0,
+        'Excecao': 0
+    }
+
+    with open(name, 'r') as reader:
+        for line in reader:
+            for word in line.split(" "):
+                match word:
+                    case 'Chamada':
+                        keywords['Chamada de funcao'] += 1
+                        break
+                    case 'interpretador':
+                        keywords['Execucao de linha'] += 1
+                        break
+                    case 'retornar':
+                        keywords['Retorno de valor'] += 1
+                        break
+                    case 'excecao':
+                        keywords['Excecao'] += 1
+                        break
+    reader.close()
     
+    with open('post.txt', 'w') as writer:
+        for i in keywords:
+            print(f"{i}: {keywords[i]} vezes", file = writer)
+    writer.close()

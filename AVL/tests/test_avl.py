@@ -87,7 +87,6 @@ def test_delecao(chaves, deletado, expected):
         raiz = arvore.insere(raiz, chave)
     raiz = arvore.deleta(raiz, deletado)
     assert arvore.preOrderVetor(raiz, []) == expected
-    showTrace(None)
 
 """
     Teste de busca: testa se a funcao busca() retorna o valor correto.
@@ -110,7 +109,7 @@ def test_busca(chaves, buscado, expected):
         raiz = arvore.insere(raiz, chave)
 
     assert arvore.busca(raiz, buscado) == expected
-    settrace(showTrace)
+    settrace(None)
 
 def test_preOrder():
     settrace(showTrace)
