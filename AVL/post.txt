@@ -1,4 +1,0 @@
-Chamada de funcao: 10087 vezes
-Execucao de linha: 33227 vezes
-Retorno de valor: 10068 vezes
-Excecao: 299 vezes

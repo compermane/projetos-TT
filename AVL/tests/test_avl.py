@@ -1,7 +1,7 @@
 import pytest
 from sys import settrace
-from AVL.AVL import *
-from analise import showTrace
+from AVL.Arvore.AVL import AVL, Node
+from Analise.analise import *
 
 """
     Teste para criacao de arvore: testa se a funcao
@@ -22,6 +22,7 @@ def test_criaArvore(chave, expected):
         assert None == expected
     else:
         assert raiz.chave == expected
+
     settrace(None)
 
 """
@@ -87,6 +88,7 @@ def test_delecao(chaves, deletado, expected):
         raiz = arvore.insere(raiz, chave)
     raiz = arvore.deleta(raiz, deletado)
     assert arvore.preOrderVetor(raiz, []) == expected
+    settrace(None)
 
 """
     Teste de busca: testa se a funcao busca() retorna o valor correto.
