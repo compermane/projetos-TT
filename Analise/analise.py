@@ -36,10 +36,11 @@ def showTrace(frame = currentframe(), event = None, arg = None):
     line = frame.f_lineno
     origin  = code.co_filename
     caminho = origin.split(sep)
-    dir = "../" + caminho[-3] + "/" + caminho[-2] + "/" + caminho[-1]
+    dir = caminho[-1:]
+    if(len(caminho) >= 4):
+        dir = "../" + caminho[-3] + "/" + caminho[-2] + "/" + caminho[-1]
 
     funcoes = open('Analise/Resultados/funcoes.txt', 'a')
-    modulos = open('Analise/Resultados/modulos.txt', 'a')
     f = open('Analise/Resultados/out.txt', 'a')
     match event:
         case "call":
@@ -55,7 +56,6 @@ def showTrace(frame = currentframe(), event = None, arg = None):
         
     f.close()
     funcoes.close()
-    modulos.close()
 
     return showTrace
 

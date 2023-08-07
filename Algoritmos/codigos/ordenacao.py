@@ -1,10 +1,14 @@
 import random
-from sys import settrace
+from math import floor
 
 def criaVetor(n, rng) -> list:
     v = list()
-    for i in range(n):
-        v.append(random.randint(0, rng))
+    i = 0
+    while i < n:
+        rand = random.randint(0, rng)
+        if rand not in v:
+            v.append(rand)
+            i += 1
 
     return v
 
@@ -50,5 +54,36 @@ def insertionSort(L):
         while k > 1 and L[k] < L[k - 1]:
             L[k], L[k - 1] = L[k - 1], L[k]
             k -= 1
+
+    return L
+
+def mergeSort(L: list) -> list:
+    if len(L) == 1:
+        return L
+
+    half = floor(len(L) / 2)
+    esq = L[:half]
+    dir = L[half:]
+
+    mergeSort(esq)
+    mergeSort(dir)
+
+    i, j, k = 0, 0, 0
+    while j < len(esq) and k < len(dir):
+        if esq[j] <= dir[k]:
+            L[i] = esq[j]
+            j += 1
+        else:
+            L[i] = dir[k]
+            k += 1
+        i += 1
+    while j < len(esq):
+        L[i] = esq[j]
+        j += 1
+        i += 1
+    while k < len(dir):
+        L[i] = dir[k]
+        k += 1
+        i += 1
 
     return L
