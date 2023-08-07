@@ -36,22 +36,27 @@ def showTrace(frame = currentframe(), event = None, arg = None):
     line = frame.f_lineno
     origin  = code.co_filename
     caminho = origin.split(sep)
+    dir = "../" + caminho[-3] + "/" + caminho[-2] + "/" + caminho[-1]
 
     funcoes = open('Analise/Resultados/funcoes.txt', 'a')
+    modulos = open('Analise/Resultados/modulos.txt', 'a')
     f = open('Analise/Resultados/out.txt', 'a')
     match event:
         case "call":
-            print(f"Chamada da funcao {func_name} na linha {line} do arquivo {caminho[-2:]}", file = f)
+            print(f"Chamada da funcao {func_name} na linha {line} do arquivo {dir}", file = f)
+            print(f"{func_name} - Origem: {dir} - ", file = funcoes)
         case "line":
-            print(f"O interpretador vai executar a linha {line} do arquivo {caminho[-2:]}", file = f)
-            print(f"{func_name}", file = funcoes)
+            print(f"O interpretador vai executar a linha {line} do arquivo {dir}", file = f)
         case "return":
-            print(f"A funcao {func_name} vai retornar o valor {arg}, origem: {caminho[-2:]}", file = f)
+            print(f"A funcao {func_name} vai retornar o valor {arg}, origem: {dir}", file = f)
             print(f"----------fim da execucao da funcao {func_name}------------", file = f)
         case "exception":
-            print(f"Uma excecao ocorreu na funcao {func_name}, origem: {caminho[-2:]}, detalhamento: {arg}", file = f)
+            print(f"Uma excecao ocorreu na funcao {func_name}, origem: {dir}, detalhamento: {arg}", file = f)
         
     f.close()
+    funcoes.close()
+    modulos.close()
+
     return showTrace
 
 """
@@ -74,6 +79,7 @@ def postAnalysis(name: str) -> None:
                 funcoes[func] += 1
             else:
                 funcoes[func] = 1
+    reader.close()
 
     with open(name, 'r') as reader:
         for line in reader:
@@ -97,6 +103,9 @@ def postAnalysis(name: str) -> None:
         for i in keywords:
             print(f"{i}: {keywords[i]} vezes", file = writer)
         print(file = writer)
+
+        print("Funcoes chamadas: ", file = writer)
         for j in funcoes:
-            print(f"{j}: {funcoes[j]} vezes", file = writer)
+            print(f"{j} :{funcoes[j]} vezes", file = writer)
+
     writer.close()
