@@ -3,8 +3,7 @@ import os
 from time import sleep
 
 def cloning(repos: dict()) -> None:
-    os.system('cd Repos')
-    
+    os.chdir(os.getcwd() + '/Repos')
     for hash in repos: 
         nome = repos[hash][0]
         url = repos[hash][1]
@@ -14,9 +13,19 @@ def cloning(repos: dict()) -> None:
         os.chdir(cwd + "/" + nome)
         comando = 'git checkout ' + hash
         os.system(comando)
+        pipping()
+        os.chdir(cwd)
+
+def pipping() -> None:
+    comando = 'pip install -r requirements.txt'
+    try:
+        os.system(comando)
+    except OSError as e:
+        print(f"Nao foi possivel instalar as dependencias: {e}")
 
 if __name__ == "__main__":
-    with open('repos.csv', 'r') as csv_flapy:
+    os.system('mkdir Repos')
+    with open('teste.csv', 'r') as csv_flapy:
         repos = dict()
         csv_reader = csv.DictReader(csv_flapy, delimiter = ',')
         line_count = 0
@@ -24,7 +33,9 @@ if __name__ == "__main__":
             if line_count == 0:
                 print(f'Column names are: {", ".join(row)}')
             line_count += 1
-            repos[row["Project_Hash"]] = (row["Project_Name"], row["Project_Hash"])
+            # Representa um repositorio com seu respectivo commit hash em uma tupla.
+            # Cada chave do dicionario eh uma 
+            repos[row["Project_Hash"]] = (row["Project_Name"], row["Project_URL"])
         csv_flapy.close()    
 
     cloning(repos)
