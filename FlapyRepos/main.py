@@ -28,11 +28,7 @@ if __name__ == "__main__":
     with open('teste.csv', 'r') as csv_flapy:
         repos = dict()
         csv_reader = csv.DictReader(csv_flapy, delimiter = ',')
-        line_count = 0
         for row in csv_reader:
-            if line_count == 0:
-                print(f'Column names are: {", ".join(row)}')
-            line_count += 1
             # Representa um repositorio com seu respectivo commit hash em uma tupla.
             # Cada chave do dicionario eh uma 
             repos[row["Project_Hash"]] = (row["Project_Name"], row["Project_URL"])
