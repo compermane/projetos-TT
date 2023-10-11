@@ -1,6 +1,6 @@
 import csv
 import os
-from time import sleep
+import random
 
 def cloning(repos: dict()) -> None:
     os.chdir(os.getcwd() + '/Repos')
@@ -23,15 +23,44 @@ def pipping() -> None:
     except OSError as e:
         print(f"Nao foi possivel instalar as dependencias: {e}")
 
-if __name__ == "__main__":
+def depipping() -> None:
+    comand = 'pip uninstal -r requirements.txt -Y'
+
+def reader(csv_name: str) -> dict():
     os.system('mkdir Repos')
-    with open('teste.csv', 'r') as csv_flapy:
+    with open(csv_name, 'r') as csv_flapy:
         repos = dict()
         csv_reader = csv.DictReader(csv_flapy, delimiter = ',')
         for row in csv_reader:
             # Representa um repositorio com seu respectivo commit hash em uma tupla.
             # Cada chave do dicionario eh uma 
-            repos[row["Project_Hash"]] = (row["Project_Name"], row["Project_URL"])
+            repos[row["Project_Hash"]] = (row["Project_Name"], row["Project_URL"], row["Num_Runs"])
         csv_flapy.close()    
 
-    cloning(repos)
+    return repos
+
+def writer() -> None:
+    with open('repos_csv.csv', 'a', newline = '') as repos_csv:
+        writer =  csv.writer(repos_csv)
+        header = ["Project_Hash", "Project_Name", "Project_URL", "Num_Runs"]
+        writer.writerow(header)
+
+        with open('TestsOverview.csv', 'r', encoding = "utf8") as flapy_repos:
+            reader = csv.reader(flapy_repos)
+
+            randRepo = random.choice(list(reader))
+            name = randRepo[0]
+            url = randRepo[1]
+            hash = randRepo[2]
+            runs = randRepo[11]
+            writer.writerow([hash, name, url, runs])
+
+            flapy_repos.close()
+
+        repos_csv.close()
+
+def getNumRuns(repos: dict()) -> int:
+    for hash in repos:
+        num = repos[hash][2]
+
+    return num
