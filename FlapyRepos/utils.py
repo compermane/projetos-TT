@@ -1,6 +1,5 @@
 import csv
 import os
-import random
 import subprocess
 
 def cloning(repos: dict(), hash: str) -> None:
@@ -33,7 +32,8 @@ def depipping(repos: dict(), hash: str) -> None:
     os.chdir(cwd)
 
 def flapper(directory: str, csv: str, numRuns: int) -> None:
-    subprocess.Popen("./flapy.sh run --plus-random-runs --out-dir %s %s %s" % (str(directory), str(csv), str(numRuns)), shell = True)
+    p1 = subprocess.Popen("./flapy.sh run --plus-random-runs --out-dir %s %s %s" % (str(directory), str(csv), str(numRuns)), shell = True)
+    p1.wait()
 
 """
     Retorna um dicionario contendo informacoes sobre o nome do projeto, URL do projeto
@@ -57,13 +57,13 @@ def reader(csv_name: str) -> dict():
     1: escolher os repositorios de TestsOveview
     2: montar um csv com os repositorios ja escolhidos
 """
-def writer(repos = tuple) -> None:
-    with open('repos_to_flapy.csv', 'w', encoding = "utf8") as toFlapy:
+def writer(repos, hash) -> None:
+    with open('repos_to_flapy.csv', 'w', newline = '') as toFlapy:
         writer = csv.writer(toFlapy)
-        header = ["Project_Name", "Project_URL", "Project_Hash", "Num_Runs"]
+        header = ["PROJECT_NAME", "PROJECT_URL", "PROJECT_HASH", "PYPI_TAG", "FUNCS_TO_TRACE", "TESTS_TO_BE_RUN", "NUM_RUNS"]
         writer.writerow(header)
 
-        row = [repos[0], "./Repos/" + repos[0], repos[1], repos[2]]
+        row = [repos[0], repos[1], hash, None, None, None, repos[2]]
         writer.writerow(row)
 
         toFlapy.close()
@@ -93,48 +93,8 @@ def getFlakyRepos() -> None:
 
         flapy_csv.close()
 
-def getFlakyReposSmall() -> None:
-    with open("TestsOverview.csv", "r", encoding = "utf8") as flapy_csv:
-        reader = csv.DictReader(flapy_csv, delimiter = ",")
-        flaky_repos_small = dict()
+def writeLog(repo_name: str, time_taken: float, observacoes = "Nenhuma") -> None:
+    with open("log.txt", "a", encoding = "utf8") as logFile:
+        print(f"{repo_name}: {time_taken} Observacoes: {observacoes}", file = logFile)
+        logFile.close()
 
-        for row in reader:
-            if (row["Verdict_sameOrder"] == "Flaky" or row["Verdict_randomOrder"] == "Flaky") and row["Project_Hash"] not in flaky_repos_small:
-                flaky_repos_small[row["Project_Hash"]] = [row["Project_Name"], row["Project_URL"], row["Project_Hash"], row["#Runs_sameOrder"], 0]
-        
-        flapy_csv.seek(0)
-        
-        for row in reader:
-            if row["Project_Hash"] in flaky_repos_small:
-                flaky_repos_small[row["Project_Hash"]][4] += 1
-
-        flapy_csv.close()
-
-    with open("flaky_repos_small.csv", "w", newline = '') as flaky_csv_small:
-        writer = csv.writer(flaky_csv_small)
-        header = ["Project_Name", "Project_URL", "Project_Hash", "Num_Runs"]
-        writer.writerow(header)
-
-        for hash in flaky_repos_small:
-            if flaky_repos_small[hash][4] <= 30:
-                print(f"{flaky_repos_small[hash][0]}: {flaky_repos_small[hash][4]}")
-                row = [flaky_repos_small[hash][0], flaky_repos_small[hash][1], flaky_repos_small[hash][2], flaky_repos_small[hash][3]]
-                writer.writerow(row)
-
-        flaky_csv_small.close()
-
-def reorganize() -> None:
-    with open("TestsOverview.csv", "r", encoding = "utf8") as flapy_csv:
-        reader = csv.DictReader(flapy_csv, delimiter = ',')
-
-        with open("TestsOverviewReorganized.csv", "w", encoding = "utf8", newline = '') as result:
-            writer = csv.writer(result)
-            header = ["Project_Name", "Test_funcname", "Verdict_sameOrder", "Verdict_randomOrder"]
-            writer.writerow(header)
-            for row in reader:
-                writer.writerow([row["Project_Name"], row["Test_funcname"], row["Verdict_sameOrder"], row["Verdict_randomOrder"]])
-
-            result.close()
-        flapy_csv.close()
-
-reorganize()
