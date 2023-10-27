@@ -92,3 +92,49 @@ def getFlakyRepos() -> None:
             writer.writerow(row)
 
         flapy_csv.close()
+
+def getFlakyReposSmall() -> None:
+    with open("TestsOverview.csv", "r", encoding = "utf8") as flapy_csv:
+        reader = csv.DictReader(flapy_csv, delimiter = ",")
+        flaky_repos_small = dict()
+
+        for row in reader:
+            if (row["Verdict_sameOrder"] == "Flaky" or row["Verdict_randomOrder"] == "Flaky") and row["Project_Hash"] not in flaky_repos_small:
+                flaky_repos_small[row["Project_Hash"]] = [row["Project_Name"], row["Project_URL"], row["Project_Hash"], row["#Runs_sameOrder"], 0]
+        
+        flapy_csv.seek(0)
+        
+        for row in reader:
+            if row["Project_Hash"] in flaky_repos_small:
+                flaky_repos_small[row["Project_Hash"]][4] += 1
+
+        flapy_csv.close()
+
+    with open("flaky_repos_small.csv", "w", newline = '') as flaky_csv_small:
+        writer = csv.writer(flaky_csv_small)
+        header = ["Project_Name", "Project_URL", "Project_Hash", "Num_Runs"]
+        writer.writerow(header)
+
+        for hash in flaky_repos_small:
+            if flaky_repos_small[hash][4] <= 30:
+                print(f"{flaky_repos_small[hash][0]}: {flaky_repos_small[hash][4]}")
+                row = [flaky_repos_small[hash][0], flaky_repos_small[hash][1], flaky_repos_small[hash][2], flaky_repos_small[hash][3]]
+                writer.writerow(row)
+
+        flaky_csv_small.close()
+
+def reorganize() -> None:
+    with open("TestsOverview.csv", "r", encoding = "utf8") as flapy_csv:
+        reader = csv.DictReader(flapy_csv, delimiter = ',')
+
+        with open("TestsOverviewReorganized.csv", "w", encoding = "utf8", newline = '') as result:
+            writer = csv.writer(result)
+            header = ["Project_Name", "Test_funcname", "Verdict_sameOrder", "Verdict_randomOrder"]
+            writer.writerow(header)
+            for row in reader:
+                writer.writerow([row["Project_Name"], row["Test_funcname"], row["Verdict_sameOrder"], row["Verdict_randomOrder"]])
+
+            result.close()
+        flapy_csv.close()
+
+reorganize()
