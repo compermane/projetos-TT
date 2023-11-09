@@ -98,3 +98,47 @@ def writeLog(repo_name: str, time_taken: float, observacoes = "Nenhuma") -> None
         print(f"{repo_name}: {time_taken} Observacoes: {observacoes}", file = logFile)
         logFile.close()
 
+def getNonOrderDependentRepos(csv_repos: str) -> None:
+    with open(csv_repos, "r", encoding = "utf8") as csvFile:
+        reader = csv.DictReader(csvFile, delimiter = ",")
+        repos = dict()
+
+        for row in reader:
+            if row["Verdict_sameOrder"] == "Flaky" and row["Project_Hash"] not in repos:
+                repos[row["Project_Hash"]] = (row["Project_Name"], row["Project_URL"], row["Project_Hash"], row["#Runs_sameOrder"])
+
+        csvFile.close()
+
+    with open("nonOrderDependent.csv", "w", encoding = "utf8", newline = "") as csvFile:
+        writer = csv.writer(csvFile)
+        header = ["Project_Name", "Project_URL", "Project_Hash", "Num_Runs"]
+        writer.writerow(header)
+
+        for hash in repos:
+            row = [repos[hash][0], repos[hash][1], repos[hash][2], repos[hash][3]]
+            writer.writerow(row)
+
+        csvFile.close()
+
+def diff(csv1: str, csv2: str) -> None:
+    repos1 = dict()
+    repos1 = reader(csv1)
+
+    repos2 = dict()
+    repos2 = reader(csv2)
+
+    keys_to_remove = set(repos1.keys()) & set(repos2.keys())
+
+    for key in keys_to_remove:
+        del repos1[key]
+
+    with open("diff.csv", "w", encoding = "utf8", newline = "") as diff:
+        writer = csv.writer(diff)
+        header = ["Project_Name", "Project_URL", "Project_Hash", "Num_Runs"]
+        writer.writerow(header)
+
+        for hash in repos1:
+            row = [repos1[hash][0], repos1[hash][1], hash, repos1[hash][2]]
+            writer.writerow(row)
+
+        diff.close()
