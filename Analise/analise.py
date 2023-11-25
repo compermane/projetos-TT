@@ -1,6 +1,8 @@
 # from AVL.Arvore.AVL import AVL, Node
-from os import sep, chdir, listdir, getcwd
+from os import sep, chdir, listdir, getcwd, path
 from inspect import currentframe
+from pathlib import Path
+from ast import parse, walk, FunctionDef
 import trace
 import subprocess
 import pytest
@@ -113,15 +115,47 @@ def postAnalysis(name: str) -> None:
 
     writer.close()
 
-"""
-    Roda um teste do pytest dado o seu diretorio e o nome do teste a ser executado
-"""
+# TODO: implementar uma função que busque por diretórios contendo testes
+
+def getTestCases(files: list) -> dict:
+    """Procura por casos de teste
+    :param files: lista contendo o caminho para os arquivos de teste
+    :returns: dicionario contendo nome dos casos de teste de acordo com seu arquivo
+    """
+    tests = dict()
+    names = list()
+    for file in files:
+        with open(file, "r", encoding = "utf8") as f:
+            tree = parse(f.read())
+            f.close()
+        names = [
+            node.name for node in walk(tree) if isinstance(node, FunctionDef) and "test" in node.name
+        ]
+
+        tests[file] = names
+    return tests
+
+def getTestFiles(dir: str) -> list:
+    """Procura por arquivos de teste
+    :param dir: Diretório onde se quer procurar
+    :returns: lista contendo aquivos dos testes
+    """
+    dirPath = Path(dir)
+    testCases = dirPath.glob("test_*.py")
+
+    return [str(case) for case in testCases]
 
 def traceFuncs(dir: str, funcName: str, modName: str) -> None:
+    """Roda um teste específico do pytest
+    :param dir: Diretório onde se encontra o teste
+    :param funcName: Nome do teste
+    :param modName: Nome do módulo
+    :returns: Nada
+    """
     subprocess.run(["mkdir", f"Test-{modName}"])
-
     def runTest(dir: str, funcName: str) -> None:
-        pytest.main([f"{dir}::{funcName}"]) 
+        pytest.main(["-v", f"{dir}::{funcName}"]) 
+        
     tracer = trace.Trace(
         count = 1,
         trace = 0,
@@ -132,17 +166,22 @@ def traceFuncs(dir: str, funcName: str, modName: str) -> None:
     res = tracer.results()
     res.write_results(summary = True, coverdir = f"Test-{modName}")
 
-def refineCovers(modName: str) -> None:
+def refineCovers(modName: str, testFiles: str) -> None:
+    """Função para filtrar todos os arquivos gerados pelo trace da biblioteca trace. Mantém apenas os arquivos que tenha relação com o módulo modName
+    :param modName: Nome do módulo
+    :param testFiles: Arquivos de teste
+    :returns: None
+    """
     cwd = getcwd()
     chdir(f"Test-{modName}")
 
     # Seleciona os arquivos para manter
     files = list()
     for file in listdir("."):
-        if modName in file or ("test" in file and
-                                "pytest" not in file and "unittest" not in file and "__init__" not in file):
-            files.append(file)
-
+        for testFile in testFiles:
+            tail = path.basename(testFile)
+            if tail[:-3] in file:
+                files.append(file)
     # Deleta os não selecionados
     for file in listdir("."):
         if file not in files:
@@ -151,11 +190,13 @@ def refineCovers(modName: str) -> None:
     # Retorna para o diretorio de comeco
     chdir(cwd)
 
-def getTestCoverage(file: str, modName: str, testName: str) -> None:
+
+def getTestCoverage(modName: str, testName: str) -> None:
     cwd = getcwd()
     chdir(f"Test-{modName}")
-
-    for file in listdir("."):
+    files = [file for file in listdir(".") if path.isfile(path.join(getcwd(), file))]
+    print(files)
+    for file in files:
         with open(file, "r") as f:
             content = f.read()
 

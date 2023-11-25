@@ -1,0 +1,32 @@
+>>>>>> def test_ols():
+
+           """Runs the high-dimensional case.
+
+           """
+
+    1:     p = 2
+
+    1:     n = 14
+
+    1:     sigma = np.eye(p, p)
+
+    1:     data = np.random.multivariate_normal(np.zeros(p), sigma, n) + np.arange(n)[:, np.newaxis] + 1
+
+    1:     x = np.vstack((np.ones(n).T, np.arange(n).T)).T
+
+    1:     betahat = np.linalg.solve(np.dot(x.T, x), np.dot(x.T, data))
+
+    1:     datahat = np.dot(x, betahat)
+
+    1:     res = data - datahat
+
+    1:     sigma_tilde = nls.shrink_cov(res, k=2)  # corresponding to 2 degrees of freedom
+
+    1:     S = np.sum(sigma_tilde[np.eye(p) == 0]) / n_choose_k(p, 2) / np.sum(np.diag(sigma_tilde)) * p
+
+    1:     assert S < 1  # assert that the diagonal is the major contributor
+
+       
+
+       
+

@@ -1,0 +1,24 @@
+>>>>>> def test_singular():
+
+           """Runs the high-dimensional case.
+
+           """
+
+    1:     p = 2
+
+    1:     n = 13
+
+    1:     sigma = np.eye(p, p)
+
+    1:     data = np.random.multivariate_normal(np.zeros(p), sigma, n)
+
+    1:     data = np.hstack((data, data))
+
+    2:     with pytest.raises(ValueError):
+
+    1:         sigma_tilde = nls.shrink_cov(data, 0)
+
+       
+
+       
+
