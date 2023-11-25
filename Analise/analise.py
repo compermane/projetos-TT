@@ -1,6 +1,9 @@
 # from AVL.Arvore.AVL import AVL, Node
-from os import sep
+from os import sep, chdir, listdir, getcwd
 from inspect import currentframe
+import trace
+import subprocess
+import pytest
 
 """
     Funcao showTrace(frame, event, arg)
@@ -109,3 +112,65 @@ def postAnalysis(name: str) -> None:
             print(f"{j} :{funcoes[j]} vezes", file = writer)
 
     writer.close()
+
+"""
+    Roda um teste do pytest dado o seu diretorio e o nome do teste a ser executado
+"""
+
+def traceFuncs(dir: str, funcName: str, modName: str) -> None:
+    subprocess.run(["mkdir", f"Test-{modName}"])
+
+    def runTest(dir: str, funcName: str) -> None:
+        pytest.main([f"{dir}::{funcName}"]) 
+    tracer = trace.Trace(
+        count = 1,
+        trace = 0,
+        ignoredirs = [pytest.__file__, trace.__file__]
+    )
+
+    tracer.runfunc(runTest, dir, funcName)
+    res = tracer.results()
+    res.write_results(summary = True, coverdir = f"Test-{modName}")
+
+def refineCovers(modName: str) -> None:
+    cwd = getcwd()
+    chdir(f"Test-{modName}")
+
+    # Seleciona os arquivos para manter
+    files = list()
+    for file in listdir("."):
+        if modName in file or ("test" in file and
+                                "pytest" not in file and "unittest" not in file and "__init__" not in file):
+            files.append(file)
+
+    # Deleta os não selecionados
+    for file in listdir("."):
+        if file not in files:
+            subprocess.run(["rm", file])
+
+    # Retorna para o diretorio de comeco
+    chdir(cwd)
+
+def getTestCoverage(file: str, modName: str, testName: str) -> None:
+    cwd = getcwd()
+    chdir(f"Test-{modName}")
+
+    for file in listdir("."):
+        with open(file, "r") as f:
+            content = f.read()
+
+            if testName in content:
+                subprocess.run(["mkdir", testName])
+                chdir(testName)
+                with open(f"{testName}-cover.txt", "w") as w:
+                    f.seek(0)
+                    flag = False
+                    for line in f.readlines():
+                        if "def" in line and flag == True:
+                            break
+                        if testName in line or flag == True:
+                            print(line, file = w)
+                            flag = True
+                    w.close()
+            f.close()
+    chdir(cwd)
