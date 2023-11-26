@@ -13,7 +13,8 @@ values = [
 # Teste flaky
 @pytest.mark.parametrize("execution_number", range(5))
 def test_criaVetor(execution_number):
-    settrace(showTrace)
+    traceCalls = createTraceCalls()
+    settrace(traceCalls)
     rand = randint(0, 10)
     v = criaVetor(5, 5)
     assert rand in v
@@ -22,9 +23,12 @@ def test_criaVetor(execution_number):
 # Testes não-flaky
 @pytest.mark.parametrize("origin, expected", values)
 def test_bubbleSort(origin, expected):
-    settrace(showTrace)
+    traceCalls = createTraceCalls()
+    settrace(traceCalls)
+
     v = bubbleSort(origin)
     assert expected == v
+    
     settrace(None)
 
 @pytest.mark.parametrize("origin, expected", values)

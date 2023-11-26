@@ -3,6 +3,9 @@ from os import sep, chdir, listdir, getcwd, path
 from inspect import currentframe
 from pathlib import Path
 from ast import parse, walk, FunctionDef
+from sys import settrace
+from shutil import copyfile
+from atexit import register
 import trace
 import subprocess
 import pytest
@@ -64,6 +67,106 @@ def showTrace(frame = currentframe(), event = None, arg = None):
 
     return showTrace
 
+# TODO: função para implementar o settrace em cada teste de repositório
+def implementTracer(modDir: str):
+    fileList = getTestFiles(modDir)
+
+    traceCallsContent = list()
+    with open("analise.py", "r") as file:
+        functionStart = False
+        functionEnd = False
+        for line in file:
+            if line == "def createTraceCalls() -> callable:" or functionStart == True:
+                traceCallsContent.append(line)
+            if line == "return traceCalls" and functionEnd == False:
+                traceCallsContent.append(line)
+                functionEnd = True
+            if line == "return traceCalls" and functionEnd == True:
+                traceCallsContent.append(line)
+                break
+
+    for file in fileList:
+        if "_copy.py" in file:
+            try:
+                with open(file, "r") as copy:
+                    copyContent = list()
+                    counter = 1
+
+                    copyContent[0] = ["from sys import settrace\n"]
+
+                    # Flags
+                    copyTraceCalls = False
+                    for line in copy:
+                        if line == "" and copyTraceCalls == False:
+                            traceDefCounter = counter
+                            copyContent[traceDefCounter] = traceCallsContent
+                            counter += 1
+                            copyTraceCalls = True
+                        else:
+                            copyContent[counter] = [line]
+                            counter += 1
+
+                    copy.close()
+                
+                with open(file, "w") as copy:
+                    for _ in range(counter):
+                        copy.writelines(counter)
+
+                    copy.close()
+            except Exception as e:
+                print(f"Erro durante a execução: {e}")
+
+
+
+def createTraceCalls() -> callable:
+    """Faz o trace de chamadas para funções de uma função
+    """
+    traceBuffer = []
+    callCounter = [1]
+    
+    def traceCalls(frame, event, arg):
+        if event not in ['call', 'return'] or frame == None:
+            return
+        
+        code = frame.f_code
+        funcName = code.co_name
+        fileName = code.co_filename
+
+        if event == 'call':
+            traceBuffer.append(callCounter[0] * ">" + f"{funcName}: {fileName}\n")
+            callCounter[0] += 1
+        if event == 'return':
+            callCounter[0] -= 1
+            if arg is not None:
+                try:
+                    traceBuffer.append(callCounter[0] * "<" + f"{funcName}: {arg}\n")
+                except AttributeError as e:
+                    traceBuffer.append(callCounter[0] * "<" + f"{funcName}: Objeto de retorno: {type(arg)} (Erro: {e})")
+            else:
+                traceBuffer.append(callCounter[0] * "<" + f"{funcName}: None\n")
+
+        if len(traceBuffer) >= 300:
+            with open("calls.txt", "a") as f:
+                f.writelines(traceBuffer)
+            traceBuffer.clear()
+
+        return traceCalls
+    
+    def writeTrace() -> None:
+        if len(traceBuffer) > 0:
+            with open("calls.txt", "a") as f:
+                f.writelines(traceBuffer)
+                f.close()
+    
+    register(writeTrace)
+    return traceCalls
+
+def runTest(dir: str, modName: str, testName: str) -> None:
+    traceCalls = createTraceCalls()
+    settrace(traceCalls)
+    pytest.main([f"{dir}::{testName}"])
+    settrace(None)
+
 """
     Funcao postAnalysis(f)
     Gera um arquivo texto contendo estatísticas sobre a análise
@@ -115,7 +218,39 @@ def postAnalysis(name: str) -> None:
 
     writer.close()
 
+def createTestFileCopy(modDir: str) -> None:
+    """Cria cópias dos arquvios de teste dado o diretório de teste.
+    :param modDir: Diretório para o módulo
+    :returns: None
+    """
+    dirList = getTestDir(modDir)
+    
+    for dir in dirList:
+        fileList = getTestFiles(dir)
+        for file in fileList:
+            copyfile(file, file[:-3] + "_copy.py")
+    
+
 # TODO: implementar uma função que busque por diretórios contendo testes
+def getTestDir(modDir: str, dirList = []) -> list:
+    """Busca por diretórios em um diretório contendo testes
+    :param modDir: Caminho para o diretório do módulo
+    :returns: Lista contendo os diretórios contendo testes
+    """
+    cwd = getcwd()
+    chdir(modDir)
+
+    files = list()
+    files = listdir(".")
+
+    for file in files:
+        if path.isdir(path.join(getcwd(), file)):
+            if file in ["test", "tests"]:
+                dirList.append(path.join(getcwd(), file))
+            else:
+                getTestDir(path.join(getcwd(), file))
+    chdir(cwd)
+    return dirList
 
 def getTestCases(files: list) -> dict:
     """Procura por casos de teste
@@ -141,9 +276,9 @@ def getTestFiles(dir: str) -> list:
     :returns: lista contendo aquivos dos testes
     """
     dirPath = Path(dir)
-    testCases = dirPath.glob("test_*.py")
+    testFiles = dirPath.glob("test_*.py")
 
-    return [str(case) for case in testCases]
+    return [str(file) for file in testFiles]
 
 def traceFuncs(dir: str, funcName: str, modName: str) -> None:
     """Roda um teste específico do pytest
@@ -192,6 +327,11 @@ def refineCovers(modName: str, testFiles: str) -> None:
 
 
 def getTestCoverage(modName: str, testName: str) -> None:
+    """Gera arquivos de texto contendo o cover para um dado caso de teste.
+    :param modName: Módulo do teste
+    :param testName: Nome do teste
+    :returns: None
+    """
     cwd = getcwd()
     chdir(f"Test-{modName}")
     files = [file for file in listdir(".") if path.isfile(path.join(getcwd(), file))]
