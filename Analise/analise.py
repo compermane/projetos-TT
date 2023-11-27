@@ -67,57 +67,6 @@ def showTrace(frame = currentframe(), event = None, arg = None):
 
     return showTrace
 
-# TODO: função para implementar o settrace em cada teste de repositório
-def implementTracer(modDir: str):
-    fileList = getTestFiles(modDir)
-
-    traceCallsContent = list()
-    with open("analise.py", "r") as file:
-        functionStart = False
-        functionEnd = False
-        for line in file:
-            if line == "def createTraceCalls() -> callable:" or functionStart == True:
-                traceCallsContent.append(line)
-            if line == "return traceCalls" and functionEnd == False:
-                traceCallsContent.append(line)
-                functionEnd = True
-            if line == "return traceCalls" and functionEnd == True:
-                traceCallsContent.append(line)
-                break
-
-    for file in fileList:
-        if "_copy.py" in file:
-            try:
-                with open(file, "r") as copy:
-                    copyContent = list()
-                    counter = 1
-
-                    copyContent[0] = ["from sys import settrace\n"]
-
-                    # Flags
-                    copyTraceCalls = False
-                    for line in copy:
-                        if line == "" and copyTraceCalls == False:
-                            traceDefCounter = counter
-                            copyContent[traceDefCounter] = traceCallsContent
-                            counter += 1
-                            copyTraceCalls = True
-                        else:
-                            copyContent[counter] = [line]
-                            counter += 1
-
-                    copy.close()
-                
-                with open(file, "w") as copy:
-                    for _ in range(counter):
-                        copy.writelines(counter)
-
-                    copy.close()
-            except Exception as e:
-                print(f"Erro durante a execução: {e}")
-
-
-
 def createTraceCalls() -> callable:
     """Faz o trace de chamadas para funções de uma função
     """
@@ -160,6 +109,54 @@ def createTraceCalls() -> callable:
     
     register(writeTrace)
     return traceCalls
+
+# TODO: função para implementar o settrace em cada teste de repositório
+def implementTracer(modDir: str):
+    fileList = getTestFiles(modDir)
+    traceCallsContent = list()
+    with open("Analise/analise.py", "r") as file:
+        functionStart = False
+        functionEnd = False
+        for line in file:
+            if "def createTraceCalls() -> callable:" in line or functionStart == True:
+                traceCallsContent.append(line)
+                functionStart = True
+                if "register(writeTrace)" in line:
+                    functionEnd = True
+                elif functionEnd == True:
+                    break
+        file.close()
+
+    for file in fileList:
+        if "_copy.py" in file:
+            try:
+                with open(file, "r") as copy:
+                    copyContent = list()
+                    copyContent.append(["from sys import settrace\n"])
+                    copyContent.append(["from atexit import register\n"])
+                    copyContent.append(traceCallsContent)
+
+                    flag = False
+                    for line in copy:
+                        if "def test_" in line and flag == True:
+                            copyContent.append(["\tsettrace(None)\n"])
+                            copyContent.append([line])
+                            flag = False
+                        else:
+                            copyContent.append([line])
+                            if "def test_" in line and flag == False:
+                                copyContent.append(["\ttraceCalls = createTraceCalls()\n", "\tsettrace(traceCalls)\n"])
+                                flag = True
+
+
+                    copy.close()
+                
+                with open(file, "w") as copy:
+                    for i in range(len(copyContent)):
+                        copy.writelines(copyContent[i])
+                    copy.close()
+            except Exception as e:
+                print(f"Erro durante a execução: {e}")
 
 def runTest(dir: str, modName: str, testName: str) -> None:
     traceCalls = createTraceCalls()
