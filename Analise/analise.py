@@ -9,6 +9,7 @@ from atexit import register
 import trace
 import subprocess
 import pytest
+import cProfile, pstats
 
 """
     Funcao showTrace(frame, event, arg)
@@ -139,13 +140,14 @@ def implementTracer(modDir: str):
                     flag = False
                     for line in copy:
                         if "def test_" in line and flag == True:
-                            copyContent.append(["\tsettrace(None)\n"])
+                            copyContent.append(["    settrace(None)\n"])
                             copyContent.append([line])
                             flag = False
                         else:
                             copyContent.append([line])
                             if "def test_" in line and flag == False:
-                                copyContent.append(["\ttraceCalls = createTraceCalls()\n", "\tsettrace(traceCalls)\n"])
+                                copyContent.append(["    traceCalls = createTraceCalls()\n",
+                                                    "    settrace(traceCalls)\n"])
                                 flag = True
 
 
@@ -352,3 +354,20 @@ def getTestCoverage(modName: str, testName: str) -> None:
                     w.close()
             f.close()
     chdir(cwd)
+
+def profiling(modName: str):
+    dirList = getTestDir(getcwd() + "/" + modName)
+    for dir in dirList:
+        fileList = getTestFiles(dir)
+        testList = getTestCases(fileList)
+        for file in fileList:
+            for test in testList[file]:
+                profiler = cProfile.Profile()
+                profiler.enable()
+                runTest(dir, modName, test)
+                profiler.disable()
+                stats = pstats.Stats(profiler)
+                with open(f"Stats-{test}.txt", "w") as f:
+                    stats.stream = f
+                    stats.print_stats()
+                    

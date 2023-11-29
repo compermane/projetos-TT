@@ -12,12 +12,17 @@ def test_trace() -> None:
             analise.getTestCoverage("analytic_shrinkage", test)
             chdir(cwd)
 
-if __name__ == "__main__":
-    # analise.runTest("Algoritmos/tests/test_ordenacao.py", "Algoritmos","test_bubbleSort")
+def test_settrace() -> None:
     dirs = analise.getTestDir(getcwd() + "/" + "analytic_shrinkage")
     
     for dir in dirs:
         analise.createTestFileCopy(dir)
         analise.implementTracer(dir)
+
+def test_profiler() -> None:
+    analise.profiling("analytic_shrinkage")
+
+if __name__ == "__main__":
+    test_settrace()
 
 
