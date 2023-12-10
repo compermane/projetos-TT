@@ -82,6 +82,10 @@ def createTraceCalls() -> callable:
         funcName = code.co_name
         fileName = code.co_filename
 
+        # Ignora chamadas do pytest
+        if "pytest" in fileName:
+            return
+        
         if event == 'call':
             traceBuffer.append(callCounter[0] * ">" + f"{funcName}: {fileName}\n")
             callCounter[0] += 1
@@ -94,11 +98,6 @@ def createTraceCalls() -> callable:
                     traceBuffer.append(callCounter[0] * "<" + f"{funcName}: Objeto de retorno: {type(arg)} (Erro: {e})")
             else:
                 traceBuffer.append(callCounter[0] * "<" + f"{funcName}: None\n")
-
-        if len(traceBuffer) >= 300:
-            with open("calls.txt", "a") as f:
-                f.writelines(traceBuffer)
-            traceBuffer.clear()
 
         return traceCalls
     
