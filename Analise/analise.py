@@ -6,11 +6,37 @@ from ast import parse, walk, FunctionDef
 from sys import settrace
 from shutil import copyfile
 from atexit import register
+from time import time
 import trace
 import subprocess
 import pytest
 import cProfile, pstats
 
+class TestResult:
+    def __init__(self):
+        self.reports = []
+        self.passed = 0
+        self.failed = 0
+        self.xfailed = 0
+        self.skipped = 0
+        self.total_duration = 0
+
+    @pytest.hookimpl(hookwrapper = True)
+    def pytest_runtest_makereport(self, item, call):
+        outcome = yield
+        report = outcome.get_result()
+        if report.when == 'call':
+            self.reports.append(report)
+
+    def pytest_collection_modifyitems(self, items):
+        self.collected = len(items)
+
+    def pytest_terminal_summary(self, terminalreporter, exitstatus):
+        self.passed = len(terminalreporter.stats.get('passed', []))
+        self.failed = len(terminalreporter.stats.get('failed', []))
+        self.xfailed = len(terminalreporter.stats.get('xfailed', []))
+        self.skipped = len(terminalreporter.stats.get('skipped', []))
+        self.total_duration = time() - terminalreporter._sessionstarttime
 """
     Funcao showTrace(frame, event, arg)
     - frame: é o stack frame atual, isto é, é uma pilha em que são dispostas
@@ -68,7 +94,7 @@ def showTrace(frame = currentframe(), event = None, arg = None):
 
     return showTrace
 
-def createTraceCalls() -> callable:
+def createTraceCalls(dir: str) -> callable:
     """Faz o trace de chamadas para funções de uma função
     """
     traceBuffer = []
@@ -103,73 +129,62 @@ def createTraceCalls() -> callable:
     
     def writeTrace() -> None:
         if len(traceBuffer) > 0:
-            with open("calls.txt", "a") as f:
+            with open(dir + "/" + "calls.txt", "a") as f:
                 f.writelines(traceBuffer)
                 f.close()
     
     register(writeTrace)
     return traceCalls
 
-# TODO: função para implementar o settrace em cada teste de repositório
-def implementTracer(modDir: str):
-    fileList = getTestFiles(modDir)
-    traceCallsContent = list()
-    with open("Analise/analise.py", "r") as file:
-        functionStart = False
-        functionEnd = False
-        for line in file:
-            if "def createTraceCalls() -> callable:" in line or functionStart == True:
-                traceCallsContent.append(line)
-                functionStart = True
-                if "register(writeTrace)" in line:
-                    functionEnd = True
-                elif functionEnd == True:
-                    break
-        file.close()
+def runMultipleTimes(modDir: str, modName: str, count: int):
+    dirList = getTestDir(modDir)
+    createTestFileCopy(modDir)
 
-    for file in fileList:
-        if "_copy.py" in file:
-            try:
-                with open(file, "r") as copy:
-                    copyContent = list()
-                    copyContent.append(["from sys import settrace\n"])
-                    copyContent.append(["from atexit import register\n"])
-                    copyContent.append(traceCallsContent)
+    cwd = getcwd()
+    subprocess.run(["mkdir", f"Test-{modName}"])
 
-                    flag = False
-                    for line in copy:
-                        if "def test_" in line and flag == True:
-                            copyContent.append(["    settrace(None)\n"])
-                            copyContent.append([line])
-                            flag = False
-                        else:
-                            copyContent.append([line])
-                            if "def test_" in line and flag == False:
-                                copyContent.append(["    traceCalls = createTraceCalls()\n",
-                                                    "    settrace(traceCalls)\n"])
-                                flag = True
+    for dir in dirList:
+        testFiles = getTestFiles(dir)
+        for testFile in testFiles:
+            if "_copy" in testFile:
+                tests = getTestCases([testFile])
+                chdir(cwd + "/" + f"Test-{modName}")
+                for testCase in tests[testFile]:
+                    subprocess.run(['mkdir', testCase])
+                    for run in range(count):
+                        chdir(getcwd() + "/" + testCase)
+                        subprocess.run(["mkdir", f"Run-{run}"])
+                        runDir = getcwd() + "/" + f"Run-{run}"
+                        chdir(cwd)
+                        chdir(runDir)
+                        runResult = runTest(testFile, testCase, runDir)
+                        chdir(cwd + "/" + f"Test-{modName}" + "/" + testCase)
+                        with open("runsSummary.txt", 'a') as f:
+                            print(f"Run {run}: {runResult[0]} Tempo: {runResult[1]}", file = f)
+                        f.close()
+                        chdir(cwd + "/" + f"Test-{modName}")
+                chdir(cwd)
 
+def runTest(dir: str, testName: str, outputDir: str) -> tuple:
+    """Roda um teste, dado o diretório do arquivo de testes e o nome do teste
+    :param dir: diretório do arquivo de testes
+    :param testName: nome do teste
+    :returns: resultado do teste 
+    """
+    testResult = TestResult()
+    pytest.main([f"{dir}::{testName}", "--dir=", outputDir], plugins=[testResult])
 
-                    copy.close()
-                
-                with open(file, "w") as copy:
-                    for i in range(len(copyContent)):
-                        copy.writelines(copyContent[i])
-                    copy.close()
-            except Exception as e:
-                print(f"Erro durante a execução: {e}")
+    if testResult.passed != 0:
+        result = "PASSED"
+    else:
+        result = "FAILED"
+    return (result, testResult.total_duration)
 
-def runTest(dir: str, modName: str, testName: str) -> None:
-    traceCalls = createTraceCalls()
-    settrace(traceCalls)
-    pytest.main([f"{dir}::{testName}"])
-    settrace(None)
-
-"""
-    Funcao postAnalysis(f)
-    Gera um arquivo texto contendo estatísticas sobre a análise
-"""
 def postAnalysis(name: str) -> None:
+    """Gera um arquivo texto contendo estatísticas sobre a analise
+    :param name: nome do arquivo
+    :returns: None
+    """
     keywords = {
         'Chamada de funcao': 0,
         'Execucao de linha': 0,
@@ -228,12 +243,27 @@ def createTestFileCopy(modDir: str) -> None:
         for file in fileList:
             copyfile(file, file[:-3] + "_copy.py")
     
+    copied = file[:-3] + "_copy.py"
+    with open(copied, "r") as f:
+        copyContent = list()
+        for line in f: 
+            if "def test_" in line:
+                copyContent.append([line[:-4] + "(createTraceCalls):\n"])
+            else:
+                copyContent.append([line])
+        f.seek(0)
+        f.close()
+
+    with open(copied, "w") as f:
+        for line in copyContent:
+            f.write(line[0])
+        f.close()
 
 # TODO: implementar uma função que busque por diretórios contendo testes
 def getTestDir(modDir: str, dirList = []) -> list:
     """Busca por diretórios em um diretório contendo testes
     :param modDir: Caminho para o diretório do módulo
-    :returns: Lista contendo os diretórios contendo testes
+    :returns: Lista contendo os diretórios contendo testes (ex: ../foo/bar/test)
     """
     cwd = getcwd()
     chdir(modDir)
@@ -243,7 +273,7 @@ def getTestDir(modDir: str, dirList = []) -> list:
 
     for file in files:
         if path.isdir(path.join(getcwd(), file)):
-            if file in ["test", "tests"]:
+            if file in ["test", "tests"] and path.join(getcwd(), file) not in dirList:
                 dirList.append(path.join(getcwd(), file))
             else:
                 getTestDir(path.join(getcwd(), file))
@@ -253,7 +283,7 @@ def getTestDir(modDir: str, dirList = []) -> list:
 def getTestCases(files: list) -> dict:
     """Procura por casos de teste
     :param files: lista contendo o caminho para os arquivos de teste
-    :returns: dicionario contendo nome dos casos de teste de acordo com seu arquivo
+    :returns: dicionario contendo nome dos casos de teste de acordo com seu arquivo (ex: {'..test/test_foo.py: [test_bar, test_fulano]'})
     """
     tests = dict()
     names = list()
@@ -271,7 +301,7 @@ def getTestCases(files: list) -> dict:
 def getTestFiles(dir: str) -> list:
     """Procura por arquivos de teste
     :param dir: Diretório onde se quer procurar
-    :returns: lista contendo aquivos dos testes
+    :returns: lista contendo aquivos dos testes (ex: ['../test/test_foo.py', '../test/test_bar.py'])
     """
     dirPath = Path(dir)
     testFiles = dirPath.glob("test_*.py")
