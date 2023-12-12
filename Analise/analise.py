@@ -37,62 +37,6 @@ class TestResult:
         self.xfailed = len(terminalreporter.stats.get('xfailed', []))
         self.skipped = len(terminalreporter.stats.get('skipped', []))
         self.total_duration = time() - terminalreporter._sessionstarttime
-"""
-    Funcao showTrace(frame, event, arg)
-    - frame: é o stack frame atual, isto é, é uma pilha em que são dispostas
-    chamadas para funções. Funções que são chamadas por outras funções são empilhadas
-    e removidas apenas quando retornam algum valor para a função que a chamou.
-    - event: é uma string que representa o tipo de evento.
-    - arg: argumento que depende do valot de 'event'.
-    O argumento 'event' pode ser:
-    - 'call': Ocorre quando uma função é chamada. Nesse caso, a função de diagnóstico
-    global é chamada 'arg' é None e o valor de retorno especifica a função de trace local, 
-    isto é, especifica o diagnóstico da função que foi chamada.
-    - 'line': Ocorre quando o interpretador está para executar uma nova linha de código 
-    ou re-executar uma condicional de um laço. Nesse caso, a função de diagnóstico da função
-    é chamada, 'arg' é None e o valor de retorno especifica a nova função de diagnóstico local. 
-    - 'return': Ocorre quando uma função está para retornar um valor. A funçaõ de diagnóstico
-    local é chamada, 'arg' é o valor a ser retornado ou é None caso o evento seja causado por 
-    uma exceção. O valor de retorno da função de diagnóstico é ignorado.
-    - 'exception': Ocorre quando uma exceção acontece. A função de diagnóstico é chamada e 'arg'
-    é uma tupla (exception, value, traceback); o valor de retorno especifica a nova função de
-    diagnóstico local.
-    - 'opcode': Ocorre quando o interpretador está para executar um novo opcode. A função de 
-    diagnóstico local é chamada e 'arg' é None. O valor de retorno especifica a nova função de
-    diagnóstico local.
-"""
-
-def showTrace(frame = currentframe(), event = None, arg = None):
-    if frame == None:
-        return 
-    
-    code =  frame.f_code
-    func_name = code.co_name
-    line = frame.f_lineno
-    origin  = code.co_filename
-    caminho = origin.split(sep)
-    dir = caminho[-1:]
-    if(len(caminho) >= 4):
-        dir = "../" + caminho[-3] + "/" + caminho[-2] + "/" + caminho[-1]
-
-    funcoes = open('Analise/Resultados/funcoes.txt', 'a')
-    f = open('Analise/Resultados/out.txt', 'a')
-    match event:
-        case "call":
-            print(f"Chamada da funcao {func_name} na linha {line} do arquivo {dir}", file = f)
-            print(f"{func_name} - Origem: {dir} - ", file = funcoes)
-        case "line":
-            print(f"O interpretador vai executar a linha {line} do arquivo {dir}", file = f)
-        case "return":
-            print(f"A funcao {func_name} vai retornar o valor {arg}, origem: {dir}", file = f)
-            print(f"----------fim da execucao da funcao {func_name}------------", file = f)
-        case "exception":
-            print(f"Uma excecao ocorreu na funcao {func_name}, origem: {dir}, detalhamento: {arg}", file = f)
-        
-    f.close()
-    funcoes.close()
-
-    return showTrace
 
 def createTraceCalls(dir: str) -> callable:
     """Faz o trace de chamadas para funções de uma função
@@ -231,6 +175,8 @@ def postAnalysis(name: str) -> None:
 
     writer.close()
 
+# TODO: Escrever a cópia dos testes considerando argumentos já escritos (a solução atual considera que os testes são escritos como
+# def test_foo(): mas os testes podem ser escritos como def test_bar(a1: str, a2: int, exp) -> None:)
 def createTestFileCopy(modDir: str) -> None:
     """Cria cópias dos arquvios de teste dado o diretório de teste.
     :param modDir: Diretório para o módulo
