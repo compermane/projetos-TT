@@ -99,8 +99,6 @@ def runMultipleTimes(modDir: str, modName: str, count: int):
                         chdir(getcwd() + "/" + testCase)
                         subprocess.run(["mkdir", f"Run-{run}"])
                         runDir = getcwd() + "/" + f"Run-{run}"
-                        chdir(cwd)
-                        chdir(runDir)
                         runResult = runTest(testFile, testCase, runDir)
                         chdir(cwd + "/" + f"Test-{modName}" + "/" + testCase)
                         with open("runsSummary.txt", 'a') as f:
