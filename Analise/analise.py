@@ -99,6 +99,7 @@ def runMultipleTimes(modDir: str, modName: str, count: int):
                         chdir(getcwd() + "/" + testCase)
                         subprocess.run(["mkdir", f"Run-{run}"])
                         runDir = getcwd() + "/" + f"Run-{run}"
+                        chdir(runDir)
                         runResult = runTest(testFile, testCase, runDir)
                         chdir(cwd + "/" + f"Test-{modName}" + "/" + testCase)
                         with open("runsSummary.txt", 'a') as f:
@@ -118,8 +119,13 @@ def runTest(dir: str, testName: str, outputDir: str) -> tuple:
 
     if testResult.passed != 0:
         result = "PASSED"
-    else:
+    elif testResult.failed != 0:
         result = "FAILED"
+    elif testResult.skipped != 0:
+        result = "SKIPPED"
+    else:
+        result = "XFAILED"
+
     return (result, testResult.total_duration)
 
 def postAnalysis(name: str) -> None:
