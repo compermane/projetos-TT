@@ -1,5 +1,5 @@
 # from AVL.Arvore.AVL import AVL, Node
-from os import sep, chdir, listdir, getcwd, path
+from os import chdir, listdir, getcwd, path, remove
 from inspect import currentframe
 from pathlib import Path
 from ast import parse, walk, FunctionDef
@@ -229,6 +229,25 @@ def getTestDir(modDir: str, dirList = []) -> list:
                 getTestDir(path.join(getcwd(), file))
     chdir(cwd)
     return dirList
+
+def cleanUp(modDir: str) -> None:
+    """Exlui arquivos de copia de teste adicionados ao repositorio.
+    :param modDir: diretorio do repositorio
+    :returns: None
+    """
+    cwd = getcwd()
+    chdir(modDir)
+
+    files = list()
+    files = listdir(".")
+
+    for file in files:
+        if path.isdir(path.join(getcwd(), file)):
+            cleanUp(path.join(getcwd(), file))
+        else:
+            if "_copy.py" in file:
+                remove(path.join(getcwd(), file))
+    chdir(cwd)
 
 def getTestCases(files: list) -> dict:
     """Procura por casos de teste

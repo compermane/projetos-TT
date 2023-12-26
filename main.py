@@ -41,6 +41,7 @@ def argsDefiner():
     if tracing:
         analise.runMultipleTimes(repo, name, noruns)
 
+    analise.cleanUp(repo)
 
 def test_trace() -> None:
     files = analise.getTestFiles("analytic_shrinkage/nonlinshrink/test")
