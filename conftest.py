@@ -9,6 +9,16 @@ def pytest_addoption(parser):
         default = None, 
         help = "Local onde o trace será salvo"
         )
+    parser.addoption(
+        "--coverage",
+        action = "store",
+        default = False,
+        help = "Coverage dos testes"
+    )
+
+@pytest.fixture
+def cover_dir(request):
+    return request.config.getoption("--coverage")
 
 @pytest.fixture
 def trace_dir(request):

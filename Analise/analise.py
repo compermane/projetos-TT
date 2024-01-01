@@ -1,9 +1,7 @@
 # from AVL.Arvore.AVL import AVL, Node
 from os import chdir, listdir, getcwd, path, remove
-from inspect import currentframe
 from pathlib import Path
 from ast import parse, walk, FunctionDef
-from sys import settrace
 from shutil import copyfile
 from atexit import register
 from time import time
