@@ -72,4 +72,5 @@ if __name__ == "__main__":
     # analise.runTest(analise.getTestFiles(analise.getTestDir("analytic_shrinkage")[0]), "test_demean", "/home/eugenio/Área de trabalho/Grad")
     # res = analise.runTest("analytic_shrinkage/nonlinshrink/test/test_analytic_shrinkage.py", "test_bruh", ".")
     # print(res)
-    argsDefiner()
+    # argsDefiner()
+    analise.traceDiff("Test-analytic_shrinkage")

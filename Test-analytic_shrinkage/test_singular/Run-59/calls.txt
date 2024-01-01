@@ -1,0 +1,580 @@
+>__exit__: /usr/lib/python3.11/contextlib.py
+>>reset: <frozen codecs>
+>>>reset: <frozen codecs>
+<<<reset: None
+<<reset: None
+>>reset: <frozen codecs>
+<<reset: None
+>>decode: <frozen codecs>
+<<decode: 
+>>reset: <frozen codecs>
+>>>reset: <frozen codecs>
+<<<reset: None
+<<reset: None
+>>reset: <frozen codecs>
+<<reset: None
+>>reset: <frozen codecs>
+>>>reset: <frozen codecs>
+<<<reset: None
+<<reset: None
+>>reset: <frozen codecs>
+<<reset: None
+>>decode: <frozen codecs>
+<<decode: 
+>>reset: <frozen codecs>
+>>>reset: <frozen codecs>
+<<<reset: None
+<<reset: None
+>>reset: <frozen codecs>
+<<reset: None
+<__exit__: False
+>getLogger: /usr/lib/python3.11/logging/__init__.py
+<getLogger: <RootLogger root (WARNING)>
+>removeHandler: /usr/lib/python3.11/logging/__init__.py
+>>_acquireLock: /usr/lib/python3.11/logging/__init__.py
+<<_acquireLock: None
+>>_releaseLock: /usr/lib/python3.11/logging/__init__.py
+<<_releaseLock: None
+<removeHandler: None
+>getLogger: /usr/lib/python3.11/logging/__init__.py
+<getLogger: <RootLogger root (WARNING)>
+>removeHandler: /usr/lib/python3.11/logging/__init__.py
+>>_acquireLock: /usr/lib/python3.11/logging/__init__.py
+<<_acquireLock: None
+>>_releaseLock: /usr/lib/python3.11/logging/__init__.py
+<<_releaseLock: None
+<removeHandler: None
+>__hash__: /usr/lib/python3.11/pathlib.py
+<__hash__: -8452545354329954521
+>__eq__: /usr/lib/python3.11/pathlib.py
+>>_cparts: /usr/lib/python3.11/pathlib.py
+<<_cparts: ['/', 'home', 'eugenio', 'Área de trabalho', 'Grad', 'TT', 'projetos-TT', 'analytic_shrinkage', 'nonlinshrink', 'test', 'test_analytic_shrinkage_copy.py']
+>>_cparts: /usr/lib/python3.11/pathlib.py
+<<_cparts: ['/', 'home', 'eugenio', 'Área de trabalho', 'Grad', 'TT', 'projetos-TT', 'analytic_shrinkage', 'nonlinshrink', 'test', 'test_analytic_shrinkage_copy.py']
+<__eq__: True
+>__hash__: /usr/lib/python3.11/pathlib.py
+<__hash__: 5645248148157726380
+>pytest_runtest_makereport: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/Analise/analise.py
+<pytest_runtest_makereport: None
+>cast: /usr/lib/python3.11/typing.py
+<cast: None
+>pytest_runtest_makereport: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/Analise/analise.py
+<pytest_runtest_makereport: None
+>__hash__: /usr/lib/python3.11/pathlib.py
+<__hash__: -8452545354329954521
+>__eq__: /usr/lib/python3.11/pathlib.py
+>>_cparts: /usr/lib/python3.11/pathlib.py
+<<_cparts: ['/', 'home', 'eugenio', 'Área de trabalho', 'Grad', 'TT', 'projetos-TT', 'analytic_shrinkage', 'nonlinshrink', 'test', 'test_analytic_shrinkage_copy.py']
+>>_cparts: /usr/lib/python3.11/pathlib.py
+<<_cparts: ['/', 'home', 'eugenio', 'Área de trabalho', 'Grad', 'TT', 'projetos-TT', 'analytic_shrinkage', 'nonlinshrink', 'test', 'test_analytic_shrinkage_copy.py']
+<__eq__: True
+>__hash__: /usr/lib/python3.11/pathlib.py
+<__hash__: 5645248148157726380
+>getLogger: /usr/lib/python3.11/logging/__init__.py
+<getLogger: <RootLogger root (WARNING)>
+>addHandler: /usr/lib/python3.11/logging/__init__.py
+>>_acquireLock: /usr/lib/python3.11/logging/__init__.py
+<<_acquireLock: None
+>>_releaseLock: /usr/lib/python3.11/logging/__init__.py
+<<_releaseLock: None
+<addHandler: None
+>getLogger: /usr/lib/python3.11/logging/__init__.py
+<getLogger: <RootLogger root (WARNING)>
+>addHandler: /usr/lib/python3.11/logging/__init__.py
+>>_acquireLock: /usr/lib/python3.11/logging/__init__.py
+<<_acquireLock: None
+>>_releaseLock: /usr/lib/python3.11/logging/__init__.py
+<<_releaseLock: None
+<addHandler: None
+>cast: /usr/lib/python3.11/typing.py
+<cast: {'setup': []}
+>helper: /usr/lib/python3.11/contextlib.py
+>>__init__: /usr/lib/python3.11/contextlib.py
+<<__init__: None
+<helper: <contextlib._GeneratorContextManager object at 0x7fa4778e9c50>
+>__enter__: /usr/lib/python3.11/contextlib.py
+<__enter__: None
+>cast: /usr/lib/python3.11/typing.py
+<cast: None
+>__setitem__: <frozen os>
+>>encode: <frozen os>
+<<encode: b'PYTEST_CURRENT_TEST'
+>>encode: <frozen os>
+<<encode: b'analytic_shrinkage/nonlinshrink/test/test_analytic_shrinkage_copy.py::test_singular (call)'
+<__setitem__: None
+>__hash__: /usr/lib/python3.11/pathlib.py
+<__hash__: -8452545354329954521
+>__eq__: /usr/lib/python3.11/pathlib.py
+>>_cparts: /usr/lib/python3.11/pathlib.py
+<<_cparts: ['/', 'home', 'eugenio', 'Área de trabalho', 'Grad', 'TT', 'projetos-TT', 'analytic_shrinkage', 'nonlinshrink', 'test', 'test_analytic_shrinkage_copy.py']
+>>_cparts: /usr/lib/python3.11/pathlib.py
+<<_cparts: ['/', 'home', 'eugenio', 'Área de trabalho', 'Grad', 'TT', 'projetos-TT', 'analytic_shrinkage', 'nonlinshrink', 'test', 'test_analytic_shrinkage_copy.py']
+<__eq__: True
+>__hash__: /usr/lib/python3.11/pathlib.py
+<__hash__: 5645248148157726380
+>iscoroutinefunction: /usr/lib/python3.11/inspect.py
+>>_has_code_flag: /usr/lib/python3.11/inspect.py
+>>>ismethod: /usr/lib/python3.11/inspect.py
+<<<ismethod: False
+>>>_unwrap_partial: /usr/lib/python3.11/functools.py
+<<<_unwrap_partial: <function test_singular at 0x7fa479e332e0>
+>>>isfunction: /usr/lib/python3.11/inspect.py
+<<<isfunction: True
+<<_has_code_flag: False
+<iscoroutinefunction: False
+>isasyncgenfunction: /usr/lib/python3.11/inspect.py
+>>_has_code_flag: /usr/lib/python3.11/inspect.py
+>>>ismethod: /usr/lib/python3.11/inspect.py
+<<<ismethod: False
+>>>_unwrap_partial: /usr/lib/python3.11/functools.py
+<<<_unwrap_partial: <function test_singular at 0x7fa479e332e0>
+>>>isfunction: /usr/lib/python3.11/inspect.py
+<<<isfunction: True
+<<_has_code_flag: False
+<isasyncgenfunction: False
+>test_singular: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/analytic_shrinkage/nonlinshrink/test/test_analytic_shrinkage_copy.py
+>>eye: /home/eugenio/.local/lib/python3.11/site-packages/numpy/lib/twodim_base.py
+<<eye: [[1. 0.]
+ [0. 1.]]
+>>_handle_fromlist: <frozen importlib._bootstrap>
+<<_handle_fromlist: <module 'numpy.linalg' from '/home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/__init__.py'>
+>>_svd_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<_svd_dispatcher: (array([[1., 0.],
+       [0., 1.]]),)
+>>svd: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+>>>_makearray: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<_makearray: (array([[1., 0.],
+       [0., 1.]]), <built-in method __array_prepare__ of numpy.ndarray object at 0x7fa477b4f1b0>)
+>>>_assert_stacked_2d: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<_assert_stacked_2d: None
+>>>_commonType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+>>>>isComplexType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<<isComplexType: False
+>>>>_realType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<<_realType: <class 'numpy.float64'>
+<<<_commonType: (<class 'numpy.float64'>, <class 'numpy.float64'>)
+>>>get_linalg_error_extobj: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<get_linalg_error_extobj: [8192, 1536, <function _raise_linalgerror_svd_nonconvergence at 0x7fa48e3ccea0>]
+>>>isComplexType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<isComplexType: False
+>>>_realType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<_realType: <class 'numpy.float64'>
+>>><lambda>: <string>
+<<<<lambda>: SVDResult(U=array([[1., 0.],
+       [0., 1.]]), S=array([1., 1.]), Vh=array([[1., 0.],
+       [0., 1.]]))
+<<svd: SVDResult(U=array([[1., 0.],
+       [0., 1.]]), S=array([1., 1.]), Vh=array([[1., 0.],
+       [0., 1.]]))
+>>dot: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/multiarray.py
+<<dot: (array([[1., 0.],
+       [0., 1.]]), array([[1., 0.],
+       [0., 1.]]), None)
+>>_allclose_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/numeric.py
+<<_allclose_dispatcher: (array([[1., 0.],
+       [0., 1.]]), array([[1., 0.],
+       [0., 1.]]))
+>>allclose: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/numeric.py
+>>>_isclose_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/numeric.py
+<<<_isclose_dispatcher: (array([[1., 0.],
+       [0., 1.]]), array([[1., 0.],
+       [0., 1.]]))
+>>>isclose: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/numeric.py
+>>>>result_type: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/multiarray.py
+<<<<result_type: (array([[1., 0.],
+       [0., 1.]]), 1.0)
+>>>>_all_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<<_all_dispatcher: (array([[ True,  True],
+       [ True,  True]]), None, None)
+>>>>all: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>>>_wrapreduction: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>>>><dictcomp>: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<<<<<dictcomp>: {}
+<<<<<_wrapreduction: True
+<<<<all: True
+>>>>_all_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<<_all_dispatcher: (array([[ True,  True],
+       [ True,  True]]), None, None)
+>>>>all: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>>>_wrapreduction: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>>>><dictcomp>: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<<<<<dictcomp>: {}
+<<<<<_wrapreduction: True
+<<<<all: True
+>>>>within_tol: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/numeric.py
+>>>>>__init__: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+<<<<<__init__: None
+>>>>>__enter__: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+>>>>>>seterr: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+>>>>>>>geterr: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+<<<<<<<geterr: {'divide': 'warn', 'over': 'warn', 'under': 'ignore', 'invalid': 'warn'}
+<<<<<<seterr: {'divide': 'warn', 'over': 'warn', 'under': 'ignore', 'invalid': 'warn'}
+<<<<<__enter__: None
+>>>>>helper: /usr/lib/python3.11/contextlib.py
+>>>>>>__init__: /usr/lib/python3.11/contextlib.py
+<<<<<<__init__: None
+<<<<<helper: <contextlib._GeneratorContextManager object at 0x7fa477a6e410>
+>>>>>__enter__: /usr/lib/python3.11/contextlib.py
+>>>>>>_no_nep50_warning: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+<<<<<<_no_nep50_warning: None
+<<<<<__enter__: None
+>>>>>__exit__: /usr/lib/python3.11/contextlib.py
+>>>>>>_no_nep50_warning: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+<<<<<<_no_nep50_warning: None
+<<<<<__exit__: False
+>>>>>__exit__: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+>>>>>>seterr: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+>>>>>>>geterr: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+<<<<<<<geterr: {'divide': 'warn', 'over': 'warn', 'under': 'ignore', 'invalid': 'ignore'}
+<<<<<<seterr: {'divide': 'warn', 'over': 'warn', 'under': 'ignore', 'invalid': 'ignore'}
+<<<<<__exit__: None
+<<<<within_tol: [[ True  True]
+ [ True  True]]
+<<<isclose: [[ True  True]
+ [ True  True]]
+>>>_all_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<_all_dispatcher: (array([[ True,  True],
+       [ True,  True]]), None, None)
+>>>all: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>>_wrapreduction: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>>><dictcomp>: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<<<<dictcomp>: {}
+<<<<_wrapreduction: True
+<<<all: True
+<<allclose: True
+>>dot: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/multiarray.py
+<<dot: (array([[-0.75331886,  1.04842266],
+       [-0.63206261, -1.3581507 ],
+       [-0.47080018, -0.32268522],
+       [-2.84032843,  2.43670586],
+       [ 0.02206119, -0.14970321],
+       [-0.09940418, -1.85230234],
+       [-1.33206137, -0.46608604],
+       [ 0.52382704,  1.0242803 ],
+       [-1.29068894,  0.5738335 ],
+       [-0.12552181, -1.05820218],
+       [-0.12403107, -2.17595032],
+       [-0.61653086,  0.34050865],
+       [-1.60043576,  0.80197494]]), array([[1., 0.],
+       [0., 1.]]), None)
+>>_vhstack_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/shape_base.py
+>>>_arrays_for_stack_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/shape_base.py
+<<<_arrays_for_stack_dispatcher: (array([[-0.75331886,  1.04842266],
+       [-0.63206261, -1.3581507 ],
+       [-0.47080018, -0.32268522],
+       [-2.84032843,  2.43670586],
+       [ 0.02206119, -0.14970321],
+       [-0.09940418, -1.85230234],
+       [-1.33206137, -0.46608604],
+       [ 0.52382704,  1.0242803 ],
+       [-1.29068894,  0.5738335 ],
+       [-0.12552181, -1.05820218],
+       [-0.12403107, -2.17595032],
+       [-0.61653086,  0.34050865],
+       [-1.60043576,  0.80197494]]), array([[-0.75331886,  1.04842266],
+       [-0.63206261, -1.3581507 ],
+       [-0.47080018, -0.32268522],
+       [-2.84032843,  2.43670586],
+       [ 0.02206119, -0.14970321],
+       [-0.09940418, -1.85230234],
+       [-1.33206137, -0.46608604],
+       [ 0.52382704,  1.0242803 ],
+       [-1.29068894,  0.5738335 ],
+       [-0.12552181, -1.05820218],
+       [-0.12403107, -2.17595032],
+       [-0.61653086,  0.34050865],
+       [-1.60043576,  0.80197494]]))
+<<_vhstack_dispatcher: (array([[-0.75331886,  1.04842266],
+       [-0.63206261, -1.3581507 ],
+       [-0.47080018, -0.32268522],
+       [-2.84032843,  2.43670586],
+       [ 0.02206119, -0.14970321],
+       [-0.09940418, -1.85230234],
+       [-1.33206137, -0.46608604],
+       [ 0.52382704,  1.0242803 ],
+       [-1.29068894,  0.5738335 ],
+       [-0.12552181, -1.05820218],
+       [-0.12403107, -2.17595032],
+       [-0.61653086,  0.34050865],
+       [-1.60043576,  0.80197494]]), array([[-0.75331886,  1.04842266],
+       [-0.63206261, -1.3581507 ],
+       [-0.47080018, -0.32268522],
+       [-2.84032843,  2.43670586],
+       [ 0.02206119, -0.14970321],
+       [-0.09940418, -1.85230234],
+       [-1.33206137, -0.46608604],
+       [ 0.52382704,  1.0242803 ],
+       [-1.29068894,  0.5738335 ],
+       [-0.12552181, -1.05820218],
+       [-0.12403107, -2.17595032],
+       [-0.61653086,  0.34050865],
+       [-1.60043576,  0.80197494]]))
+>>hstack: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/shape_base.py
+>>>_atleast_1d_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/shape_base.py
+<<<_atleast_1d_dispatcher: (array([[-0.75331886,  1.04842266],
+       [-0.63206261, -1.3581507 ],
+       [-0.47080018, -0.32268522],
+       [-2.84032843,  2.43670586],
+       [ 0.02206119, -0.14970321],
+       [-0.09940418, -1.85230234],
+       [-1.33206137, -0.46608604],
+       [ 0.52382704,  1.0242803 ],
+       [-1.29068894,  0.5738335 ],
+       [-0.12552181, -1.05820218],
+       [-0.12403107, -2.17595032],
+       [-0.61653086,  0.34050865],
+       [-1.60043576,  0.80197494]]), array([[-0.75331886,  1.04842266],
+       [-0.63206261, -1.3581507 ],
+       [-0.47080018, -0.32268522],
+       [-2.84032843,  2.43670586],
+       [ 0.02206119, -0.14970321],
+       [-0.09940418, -1.85230234],
+       [-1.33206137, -0.46608604],
+       [ 0.52382704,  1.0242803 ],
+       [-1.29068894,  0.5738335 ],
+       [-0.12552181, -1.05820218],
+       [-0.12403107, -2.17595032],
+       [-0.61653086,  0.34050865],
+       [-1.60043576,  0.80197494]]))
+>>>atleast_1d: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/shape_base.py
+<<<atleast_1d: [array([[-0.75331886,  1.04842266],
+       [-0.63206261, -1.3581507 ],
+       [-0.47080018, -0.32268522],
+       [-2.84032843,  2.43670586],
+       [ 0.02206119, -0.14970321],
+       [-0.09940418, -1.85230234],
+       [-1.33206137, -0.46608604],
+       [ 0.52382704,  1.0242803 ],
+       [-1.29068894,  0.5738335 ],
+       [-0.12552181, -1.05820218],
+       [-0.12403107, -2.17595032],
+       [-0.61653086,  0.34050865],
+       [-1.60043576,  0.80197494]]), array([[-0.75331886,  1.04842266],
+       [-0.63206261, -1.3581507 ],
+       [-0.47080018, -0.32268522],
+       [-2.84032843,  2.43670586],
+       [ 0.02206119, -0.14970321],
+       [-0.09940418, -1.85230234],
+       [-1.33206137, -0.46608604],
+       [ 0.52382704,  1.0242803 ],
+       [-1.29068894,  0.5738335 ],
+       [-0.12552181, -1.05820218],
+       [-0.12403107, -2.17595032],
+       [-0.61653086,  0.34050865],
+       [-1.60043576,  0.80197494]])]
+>>>concatenate: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/multiarray.py
+<<<concatenate: [array([[-0.75331886,  1.04842266],
+       [-0.63206261, -1.3581507 ],
+       [-0.47080018, -0.32268522],
+       [-2.84032843,  2.43670586],
+       [ 0.02206119, -0.14970321],
+       [-0.09940418, -1.85230234],
+       [-1.33206137, -0.46608604],
+       [ 0.52382704,  1.0242803 ],
+       [-1.29068894,  0.5738335 ],
+       [-0.12552181, -1.05820218],
+       [-0.12403107, -2.17595032],
+       [-0.61653086,  0.34050865],
+       [-1.60043576,  0.80197494]]), array([[-0.75331886,  1.04842266],
+       [-0.63206261, -1.3581507 ],
+       [-0.47080018, -0.32268522],
+       [-2.84032843,  2.43670586],
+       [ 0.02206119, -0.14970321],
+       [-0.09940418, -1.85230234],
+       [-1.33206137, -0.46608604],
+       [ 0.52382704,  1.0242803 ],
+       [-1.29068894,  0.5738335 ],
+       [-0.12552181, -1.05820218],
+       [-0.12403107, -2.17595032],
+       [-0.61653086,  0.34050865],
+       [-1.60043576,  0.80197494]])]
+<<hstack: [[-0.75331886  1.04842266 -0.75331886  1.04842266]
+ [-0.63206261 -1.3581507  -0.63206261 -1.3581507 ]
+ [-0.47080018 -0.32268522 -0.47080018 -0.32268522]
+ [-2.84032843  2.43670586 -2.84032843  2.43670586]
+ [ 0.02206119 -0.14970321  0.02206119 -0.14970321]
+ [-0.09940418 -1.85230234 -0.09940418 -1.85230234]
+ [-1.33206137 -0.46608604 -1.33206137 -0.46608604]
+ [ 0.52382704  1.0242803   0.52382704  1.0242803 ]
+ [-1.29068894  0.5738335  -1.29068894  0.5738335 ]
+ [-0.12552181 -1.05820218 -0.12552181 -1.05820218]
+ [-0.12403107 -2.17595032 -0.12403107 -2.17595032]
+ [-0.61653086  0.34050865 -0.61653086  0.34050865]
+ [-1.60043576  0.80197494 -1.60043576  0.80197494]]
+>>shrink_cov: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/analytic_shrinkage/nonlinshrink/nonlinshrink.py
+>>>dot: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/multiarray.py
+<<<dot: (array([[-0.75331886, -0.63206261, -0.47080018, -2.84032843,  0.02206119,
+        -0.09940418, -1.33206137,  0.52382704, -1.29068894, -0.12552181,
+        -0.12403107, -0.61653086, -1.60043576],
+       [ 1.04842266, -1.3581507 , -0.32268522,  2.43670586, -0.14970321,
+        -1.85230234, -0.46608604,  1.0242803 ,  0.5738335 , -1.05820218,
+        -2.17595032,  0.34050865,  0.80197494],
+       [-0.75331886, -0.63206261, -0.47080018, -2.84032843,  0.02206119,
+        -0.09940418, -1.33206137,  0.52382704, -1.29068894, -0.12552181,
+        -0.12403107, -0.61653086, -1.60043576],
+       [ 1.04842266, -1.3581507 , -0.32268522,  2.43670586, -0.14970321,
+        -1.85230234, -0.46608604,  1.0242803 ,  0.5738335 , -1.05820218,
+        -2.17595032,  0.34050865,  0.80197494]]), array([[-0.75331886,  1.04842266, -0.75331886,  1.04842266],
+       [-0.63206261, -1.3581507 , -0.63206261, -1.3581507 ],
+       [-0.47080018, -0.32268522, -0.47080018, -0.32268522],
+       [-2.84032843,  2.43670586, -2.84032843,  2.43670586],
+       [ 0.02206119, -0.14970321,  0.02206119, -0.14970321],
+       [-0.09940418, -1.85230234, -0.09940418, -1.85230234],
+       [-1.33206137, -0.46608604, -1.33206137, -0.46608604],
+       [ 0.52382704,  1.0242803 ,  0.52382704,  1.0242803 ],
+       [-1.29068894,  0.5738335 , -1.29068894,  0.5738335 ],
+       [-0.12552181, -1.05820218, -0.12552181, -1.05820218],
+       [-0.12403107, -2.17595032, -0.12403107, -2.17595032],
+       [-0.61653086,  0.34050865, -0.61653086,  0.34050865],
+       [-1.60043576,  0.80197494, -1.60043576,  0.80197494]]), None)
+>>>_eigvalsh_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<_eigvalsh_dispatcher: (array([[ 1.2272141 , -0.55335625,  1.2272141 , -0.55335625],
+       [-0.55335625,  1.58832249, -0.55335625,  1.58832249],
+       [ 1.2272141 , -0.55335625,  1.2272141 , -0.55335625],
+       [-0.55335625,  1.58832249, -0.55335625,  1.58832249]]),)
+>>>eigh: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+>>>>_makearray: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<<_makearray: (array([[ 1.2272141 , -0.55335625,  1.2272141 , -0.55335625],
+       [-0.55335625,  1.58832249, -0.55335625,  1.58832249],
+       [ 1.2272141 , -0.55335625,  1.2272141 , -0.55335625],
+       [-0.55335625,  1.58832249, -0.55335625,  1.58832249]]), <built-in method __array_prepare__ of numpy.ndarray object at 0x7fa477b4d050>)
+>>>>_assert_stacked_2d: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<<_assert_stacked_2d: None
+>>>>_assert_stacked_square: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<<_assert_stacked_square: None
+>>>>_commonType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+>>>>>isComplexType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<<<isComplexType: False
+>>>>>_realType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<<<_realType: <class 'numpy.float64'>
+<<<<_commonType: (<class 'numpy.float64'>, <class 'numpy.float64'>)
+>>>>get_linalg_error_extobj: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<<get_linalg_error_extobj: [8192, 1536, <function _raise_linalgerror_eigenvalues_nonconvergence at 0x7fa48e3cce00>]
+>>>>isComplexType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<<isComplexType: False
+>>>>_realType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<<_realType: <class 'numpy.float64'>
+>>>><lambda>: <string>
+<<<<<lambda>: EighResult(eigenvalues=array([1.51446349e-16, 5.27153833e-16, 1.65140094e+00, 3.97967224e+00]), eigenvectors=array([[-0.33248199, -0.62406388,  0.57231862, -0.41527267],
+       [ 0.62406388, -0.33248199,  0.41527267,  0.57231862],
+       [ 0.33248199,  0.62406388,  0.57231862, -0.41527267],
+       [-0.62406388,  0.33248199,  0.41527267,  0.57231862]]))
+<<<eigh: EighResult(eigenvalues=array([1.51446349e-16, 5.27153833e-16, 1.65140094e+00, 3.97967224e+00]), eigenvectors=array([[-0.33248199, -0.62406388,  0.57231862, -0.41527267],
+       [ 0.62406388, -0.33248199,  0.41527267,  0.57231862],
+       [ 0.33248199,  0.62406388,  0.57231862, -0.41527267],
+       [-0.62406388,  0.33248199,  0.41527267,  0.57231862]]))
+<<shrink_cov: None
+>>inner: /usr/lib/python3.11/typing.py
+<<inner: typing.Type[~E]
+>>inner: /usr/lib/python3.11/typing.py
+>>>__hash__: /usr/lib/python3.11/typing.py
+<<<__hash__: 8908687115524010631
+<<inner: typing.Tuple[typing.Type[~E], ~E, traceback]
+>>cast: /usr/lib/python3.11/typing.py
+<<cast: (<class 'ValueError'>, ValueError('Matrix is singular'), <traceback object at 0x7fa4779d9d40>)
+<test_singular: None
+>cast: /usr/lib/python3.11/typing.py
+<cast: None
+>__exit__: /usr/lib/python3.11/contextlib.py
+>>reset: <frozen codecs>
+>>>reset: <frozen codecs>
+<<<reset: None
+<<reset: None
+>>reset: <frozen codecs>
+<<reset: None
+>>decode: <frozen codecs>
+<<decode: 
+>>reset: <frozen codecs>
+>>>reset: <frozen codecs>
+<<<reset: None
+<<reset: None
+>>reset: <frozen codecs>
+<<reset: None
+>>reset: <frozen codecs>
+>>>reset: <frozen codecs>
+<<<reset: None
+<<reset: None
+>>reset: <frozen codecs>
+<<reset: None
+>>decode: <frozen codecs>
+<<decode: 
+>>reset: <frozen codecs>
+>>>reset: <frozen codecs>
+<<<reset: None
+<<reset: None
+>>reset: <frozen codecs>
+<<reset: None
+<__exit__: False
+>getLogger: /usr/lib/python3.11/logging/__init__.py
+<getLogger: <RootLogger root (WARNING)>
+>removeHandler: /usr/lib/python3.11/logging/__init__.py
+>>_acquireLock: /usr/lib/python3.11/logging/__init__.py
+<<_acquireLock: None
+>>_releaseLock: /usr/lib/python3.11/logging/__init__.py
+<<_releaseLock: None
+<removeHandler: None
+>getLogger: /usr/lib/python3.11/logging/__init__.py
+<getLogger: <RootLogger root (WARNING)>
+>removeHandler: /usr/lib/python3.11/logging/__init__.py
+>>_acquireLock: /usr/lib/python3.11/logging/__init__.py
+<<_acquireLock: None
+>>_releaseLock: /usr/lib/python3.11/logging/__init__.py
+<<_releaseLock: None
+<removeHandler: None
+>__hash__: /usr/lib/python3.11/pathlib.py
+<__hash__: -8452545354329954521
+>__eq__: /usr/lib/python3.11/pathlib.py
+>>_cparts: /usr/lib/python3.11/pathlib.py
+<<_cparts: ['/', 'home', 'eugenio', 'Área de trabalho', 'Grad', 'TT', 'projetos-TT', 'analytic_shrinkage', 'nonlinshrink', 'test', 'test_analytic_shrinkage_copy.py']
+>>_cparts: /usr/lib/python3.11/pathlib.py
+<<_cparts: ['/', 'home', 'eugenio', 'Área de trabalho', 'Grad', 'TT', 'projetos-TT', 'analytic_shrinkage', 'nonlinshrink', 'test', 'test_analytic_shrinkage_copy.py']
+<__eq__: True
+>__hash__: /usr/lib/python3.11/pathlib.py
+<__hash__: 5645248148157726380
+>pytest_runtest_makereport: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/Analise/analise.py
+<pytest_runtest_makereport: None
+>cast: /usr/lib/python3.11/typing.py
+<cast: None
+>pytest_runtest_makereport: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/Analise/analise.py
+<pytest_runtest_makereport: None
+>__hash__: /usr/lib/python3.11/pathlib.py
+<__hash__: -8452545354329954521
+>__eq__: /usr/lib/python3.11/pathlib.py
+>>_cparts: /usr/lib/python3.11/pathlib.py
+<<_cparts: ['/', 'home', 'eugenio', 'Área de trabalho', 'Grad', 'TT', 'projetos-TT', 'analytic_shrinkage', 'nonlinshrink', 'test', 'test_analytic_shrinkage_copy.py']
+>>_cparts: /usr/lib/python3.11/pathlib.py
+<<_cparts: ['/', 'home', 'eugenio', 'Área de trabalho', 'Grad', 'TT', 'projetos-TT', 'analytic_shrinkage', 'nonlinshrink', 'test', 'test_analytic_shrinkage_copy.py']
+<__eq__: True
+>__hash__: /usr/lib/python3.11/pathlib.py
+<__hash__: 5645248148157726380
+>getLogger: /usr/lib/python3.11/logging/__init__.py
+<getLogger: <RootLogger root (WARNING)>
+>addHandler: /usr/lib/python3.11/logging/__init__.py
+>>_acquireLock: /usr/lib/python3.11/logging/__init__.py
+<<_acquireLock: None
+>>_releaseLock: /usr/lib/python3.11/logging/__init__.py
+<<_releaseLock: None
+<addHandler: None
+>getLogger: /usr/lib/python3.11/logging/__init__.py
+<getLogger: <RootLogger root (WARNING)>
+>addHandler: /usr/lib/python3.11/logging/__init__.py
+>>_acquireLock: /usr/lib/python3.11/logging/__init__.py
+<<_acquireLock: None
+>>_releaseLock: /usr/lib/python3.11/logging/__init__.py
+<<_releaseLock: None
+<addHandler: None
+>cast: /usr/lib/python3.11/typing.py
+<cast: {'setup': [], 'call': []}
+>helper: /usr/lib/python3.11/contextlib.py
+>>__init__: /usr/lib/python3.11/contextlib.py
+<<__init__: None
+<helper: <contextlib._GeneratorContextManager object at 0x7fa4778eb3d0>
+>__enter__: /usr/lib/python3.11/contextlib.py
+<__enter__: None
+>__setitem__: <frozen os>
+>>encode: <frozen os>
+<<encode: b'PYTEST_CURRENT_TEST'
+>>encode: <frozen os>
+<<encode: b'analytic_shrinkage/nonlinshrink/test/test_analytic_shrinkage_copy.py::test_singular (teardown)'
+<__setitem__: None
+>end: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/conftest.py

@@ -3,4 +3,3 @@ __pycache__
 .~lock.*
 Tests*.csv
 analytic_shrinkage/*
-Test-*

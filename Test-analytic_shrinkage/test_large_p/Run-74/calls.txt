@@ -1,0 +1,1582 @@
+>__exit__: /usr/lib/python3.11/contextlib.py
+>>reset: <frozen codecs>
+>>>reset: <frozen codecs>
+<<<reset: None
+<<reset: None
+>>reset: <frozen codecs>
+<<reset: None
+>>decode: <frozen codecs>
+<<decode: 
+>>reset: <frozen codecs>
+>>>reset: <frozen codecs>
+<<<reset: None
+<<reset: None
+>>reset: <frozen codecs>
+<<reset: None
+>>reset: <frozen codecs>
+>>>reset: <frozen codecs>
+<<<reset: None
+<<reset: None
+>>reset: <frozen codecs>
+<<reset: None
+>>decode: <frozen codecs>
+<<decode: 
+>>reset: <frozen codecs>
+>>>reset: <frozen codecs>
+<<<reset: None
+<<reset: None
+>>reset: <frozen codecs>
+<<reset: None
+<__exit__: False
+>getLogger: /usr/lib/python3.11/logging/__init__.py
+<getLogger: <RootLogger root (WARNING)>
+>removeHandler: /usr/lib/python3.11/logging/__init__.py
+>>_acquireLock: /usr/lib/python3.11/logging/__init__.py
+<<_acquireLock: None
+>>_releaseLock: /usr/lib/python3.11/logging/__init__.py
+<<_releaseLock: None
+<removeHandler: None
+>getLogger: /usr/lib/python3.11/logging/__init__.py
+<getLogger: <RootLogger root (WARNING)>
+>removeHandler: /usr/lib/python3.11/logging/__init__.py
+>>_acquireLock: /usr/lib/python3.11/logging/__init__.py
+<<_acquireLock: None
+>>_releaseLock: /usr/lib/python3.11/logging/__init__.py
+<<_releaseLock: None
+<removeHandler: None
+>__hash__: /usr/lib/python3.11/pathlib.py
+<__hash__: -8452545354329954521
+>__eq__: /usr/lib/python3.11/pathlib.py
+>>_cparts: /usr/lib/python3.11/pathlib.py
+<<_cparts: ['/', 'home', 'eugenio', 'Área de trabalho', 'Grad', 'TT', 'projetos-TT', 'analytic_shrinkage', 'nonlinshrink', 'test', 'test_analytic_shrinkage_copy.py']
+>>_cparts: /usr/lib/python3.11/pathlib.py
+<<_cparts: ['/', 'home', 'eugenio', 'Área de trabalho', 'Grad', 'TT', 'projetos-TT', 'analytic_shrinkage', 'nonlinshrink', 'test', 'test_analytic_shrinkage_copy.py']
+<__eq__: True
+>__hash__: /usr/lib/python3.11/pathlib.py
+<__hash__: 5645248148157726380
+>pytest_runtest_makereport: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/Analise/analise.py
+<pytest_runtest_makereport: None
+>cast: /usr/lib/python3.11/typing.py
+<cast: None
+>pytest_runtest_makereport: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/Analise/analise.py
+<pytest_runtest_makereport: None
+>__hash__: /usr/lib/python3.11/pathlib.py
+<__hash__: -8452545354329954521
+>__eq__: /usr/lib/python3.11/pathlib.py
+>>_cparts: /usr/lib/python3.11/pathlib.py
+<<_cparts: ['/', 'home', 'eugenio', 'Área de trabalho', 'Grad', 'TT', 'projetos-TT', 'analytic_shrinkage', 'nonlinshrink', 'test', 'test_analytic_shrinkage_copy.py']
+>>_cparts: /usr/lib/python3.11/pathlib.py
+<<_cparts: ['/', 'home', 'eugenio', 'Área de trabalho', 'Grad', 'TT', 'projetos-TT', 'analytic_shrinkage', 'nonlinshrink', 'test', 'test_analytic_shrinkage_copy.py']
+<__eq__: True
+>__hash__: /usr/lib/python3.11/pathlib.py
+<__hash__: 5645248148157726380
+>getLogger: /usr/lib/python3.11/logging/__init__.py
+<getLogger: <RootLogger root (WARNING)>
+>addHandler: /usr/lib/python3.11/logging/__init__.py
+>>_acquireLock: /usr/lib/python3.11/logging/__init__.py
+<<_acquireLock: None
+>>_releaseLock: /usr/lib/python3.11/logging/__init__.py
+<<_releaseLock: None
+<addHandler: None
+>getLogger: /usr/lib/python3.11/logging/__init__.py
+<getLogger: <RootLogger root (WARNING)>
+>addHandler: /usr/lib/python3.11/logging/__init__.py
+>>_acquireLock: /usr/lib/python3.11/logging/__init__.py
+<<_acquireLock: None
+>>_releaseLock: /usr/lib/python3.11/logging/__init__.py
+<<_releaseLock: None
+<addHandler: None
+>cast: /usr/lib/python3.11/typing.py
+<cast: {'setup': []}
+>helper: /usr/lib/python3.11/contextlib.py
+>>__init__: /usr/lib/python3.11/contextlib.py
+<<__init__: None
+<helper: <contextlib._GeneratorContextManager object at 0x7fa477354250>
+>__enter__: /usr/lib/python3.11/contextlib.py
+<__enter__: None
+>cast: /usr/lib/python3.11/typing.py
+<cast: None
+>__setitem__: <frozen os>
+>>encode: <frozen os>
+<<encode: b'PYTEST_CURRENT_TEST'
+>>encode: <frozen os>
+<<encode: b'analytic_shrinkage/nonlinshrink/test/test_analytic_shrinkage_copy.py::test_large_p (call)'
+<__setitem__: None
+>__hash__: /usr/lib/python3.11/pathlib.py
+<__hash__: -8452545354329954521
+>__eq__: /usr/lib/python3.11/pathlib.py
+>>_cparts: /usr/lib/python3.11/pathlib.py
+<<_cparts: ['/', 'home', 'eugenio', 'Área de trabalho', 'Grad', 'TT', 'projetos-TT', 'analytic_shrinkage', 'nonlinshrink', 'test', 'test_analytic_shrinkage_copy.py']
+>>_cparts: /usr/lib/python3.11/pathlib.py
+<<_cparts: ['/', 'home', 'eugenio', 'Área de trabalho', 'Grad', 'TT', 'projetos-TT', 'analytic_shrinkage', 'nonlinshrink', 'test', 'test_analytic_shrinkage_copy.py']
+<__eq__: True
+>__hash__: /usr/lib/python3.11/pathlib.py
+<__hash__: 5645248148157726380
+>iscoroutinefunction: /usr/lib/python3.11/inspect.py
+>>_has_code_flag: /usr/lib/python3.11/inspect.py
+>>>ismethod: /usr/lib/python3.11/inspect.py
+<<<ismethod: False
+>>>_unwrap_partial: /usr/lib/python3.11/functools.py
+<<<_unwrap_partial: <function test_large_p at 0x7fa479e33380>
+>>>isfunction: /usr/lib/python3.11/inspect.py
+<<<isfunction: True
+<<_has_code_flag: False
+<iscoroutinefunction: False
+>isasyncgenfunction: /usr/lib/python3.11/inspect.py
+>>_has_code_flag: /usr/lib/python3.11/inspect.py
+>>>ismethod: /usr/lib/python3.11/inspect.py
+<<<ismethod: False
+>>>_unwrap_partial: /usr/lib/python3.11/functools.py
+<<<_unwrap_partial: <function test_large_p at 0x7fa479e33380>
+>>>isfunction: /usr/lib/python3.11/inspect.py
+<<<isfunction: True
+<<_has_code_flag: False
+<isasyncgenfunction: False
+>test_large_p: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/analytic_shrinkage/nonlinshrink/test/test_analytic_shrinkage_copy.py
+>>eye: /home/eugenio/.local/lib/python3.11/site-packages/numpy/lib/twodim_base.py
+<<eye: [[1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]]
+>>_handle_fromlist: <frozen importlib._bootstrap>
+<<_handle_fromlist: <module 'numpy.linalg' from '/home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/__init__.py'>
+>>_svd_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<_svd_dispatcher: (array([[1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1.]]),)
+>>svd: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+>>>_makearray: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<_makearray: (array([[1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1.]]), <built-in method __array_prepare__ of numpy.ndarray object at 0x7fa477b0a1f0>)
+>>>_assert_stacked_2d: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<_assert_stacked_2d: None
+>>>_commonType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+>>>>isComplexType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<<isComplexType: False
+>>>>_realType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<<_realType: <class 'numpy.float64'>
+<<<_commonType: (<class 'numpy.float64'>, <class 'numpy.float64'>)
+>>>get_linalg_error_extobj: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<get_linalg_error_extobj: [8192, 1536, <function _raise_linalgerror_svd_nonconvergence at 0x7fa48e3ccea0>]
+>>>isComplexType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<isComplexType: False
+>>>_realType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<_realType: <class 'numpy.float64'>
+>>><lambda>: <string>
+<<<<lambda>: SVDResult(U=array([[1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1.]]), S=array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.]), Vh=array([[1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1.]]))
+<<svd: SVDResult(U=array([[1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1.]]), S=array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.]), Vh=array([[1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1.]]))
+>>dot: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/multiarray.py
+<<dot: (array([[1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1.]]), array([[1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1.]]), None)
+>>_allclose_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/numeric.py
+<<_allclose_dispatcher: (array([[1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1.]]), array([[1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1.]]))
+>>allclose: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/numeric.py
+>>>_isclose_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/numeric.py
+<<<_isclose_dispatcher: (array([[1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1.]]), array([[1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1.]]))
+>>>isclose: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/numeric.py
+>>>>result_type: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/multiarray.py
+<<<<result_type: (array([[1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1.]]), 1.0)
+>>>>_all_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<<_all_dispatcher: (array([[ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True]]), None, None)
+>>>>all: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>>>_wrapreduction: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>>>><dictcomp>: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<<<<<dictcomp>: {}
+<<<<<_wrapreduction: True
+<<<<all: True
+>>>>_all_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<<_all_dispatcher: (array([[ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True]]), None, None)
+>>>>all: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>>>_wrapreduction: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>>>><dictcomp>: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<<<<<dictcomp>: {}
+<<<<<_wrapreduction: True
+<<<<all: True
+>>>>within_tol: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/numeric.py
+>>>>>__init__: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+<<<<<__init__: None
+>>>>>__enter__: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+>>>>>>seterr: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+>>>>>>>geterr: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+<<<<<<<geterr: {'divide': 'warn', 'over': 'warn', 'under': 'ignore', 'invalid': 'warn'}
+<<<<<<seterr: {'divide': 'warn', 'over': 'warn', 'under': 'ignore', 'invalid': 'warn'}
+<<<<<__enter__: None
+>>>>>helper: /usr/lib/python3.11/contextlib.py
+>>>>>>__init__: /usr/lib/python3.11/contextlib.py
+<<<<<<__init__: None
+<<<<<helper: <contextlib._GeneratorContextManager object at 0x7fa4772d1e90>
+>>>>>__enter__: /usr/lib/python3.11/contextlib.py
+>>>>>>_no_nep50_warning: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+<<<<<<_no_nep50_warning: None
+<<<<<__enter__: None
+>>>>>__exit__: /usr/lib/python3.11/contextlib.py
+>>>>>>_no_nep50_warning: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+<<<<<<_no_nep50_warning: None
+<<<<<__exit__: False
+>>>>>__exit__: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+>>>>>>seterr: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+>>>>>>>geterr: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+<<<<<<<geterr: {'divide': 'warn', 'over': 'warn', 'under': 'ignore', 'invalid': 'ignore'}
+<<<<<<seterr: {'divide': 'warn', 'over': 'warn', 'under': 'ignore', 'invalid': 'ignore'}
+<<<<<__exit__: None
+<<<<within_tol: [[ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]]
+<<<isclose: [[ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]
+ [ True  True  True  True  True  True  True  True  True  True  True  True
+   True]]
+>>>_all_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<_all_dispatcher: (array([[ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True],
+       [ True,  True,  True,  True,  True,  True,  True,  True,  True,
+         True,  True,  True,  True]]), None, None)
+>>>all: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>>_wrapreduction: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>>><dictcomp>: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<<<<dictcomp>: {}
+<<<<_wrapreduction: True
+<<<all: True
+<<allclose: True
+>>dot: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/multiarray.py
+<<dot: (array([[ 0.06296956, -0.2634796 , -1.37707041,  0.61941761, -0.25618296,
+        -0.62205446,  2.01784543, -0.70170084,  0.84266432,  0.4014217 ,
+        -1.34498471,  0.53831182, -0.90879137],
+       [ 0.65664666,  0.03777908,  1.11464258, -0.04751962, -1.16217391,
+        -0.07792711,  0.74520846, -0.34756196,  0.35641145, -0.61483667,
+        -1.22601104, -0.24794728, -0.65294486],
+       [ 0.3901342 ,  0.25028514,  0.85784674, -1.92993169,  1.96307081,
+        -1.73388746,  1.22618227,  0.94018277, -1.41598053, -1.25792275,
+         1.19402109, -1.46202348, -0.4573293 ],
+       [-1.55134585, -0.41401758, -0.15540724,  0.11590482, -0.91137584,
+         1.28001273,  1.59654838, -0.28617754, -0.79408283, -0.55544728,
+        -0.23743351, -0.84294114, -0.17385274],
+       [-1.51353709,  0.02020471,  0.41880941, -0.69935574, -1.20455346,
+        -0.53428109, -1.63761454,  1.47092151, -0.14759949, -1.58338946,
+        -0.64493295, -0.39161239, -0.17854483],
+       [ 1.08988377, -0.2149798 , -0.55950731,  0.06838847, -1.12061863,
+         0.26582168, -0.61887505, -0.90860636,  1.1950007 ,  0.36505329,
+        -0.00267377,  0.060839  , -2.18604152],
+       [-0.21778345,  0.97734325,  1.77841411,  0.75464445,  0.1744938 ,
+         0.09643795, -1.44596935,  0.09317697,  1.0213988 , -0.78313076,
+        -0.99790139, -0.46096162, -0.34717112],
+       [ 2.19414655,  0.46357101, -0.71299967,  1.4489418 , -0.45835714,
+        -0.00772861,  0.58109925, -0.17925457,  1.53121103,  0.36347871,
+         0.32004594, -0.12268057,  1.71811837],
+       [ 0.32289906,  0.80939092, -0.1801293 ,  1.15715328,  1.12842393,
+        -0.68791781,  0.22329108, -0.37588641,  0.31768365, -0.40132282,
+        -1.22471526, -0.14824938, -2.12880972],
+       [-0.72524987,  0.93841368,  2.50344362,  0.04967754, -1.1839053 ,
+         1.13199527,  0.6152743 , -0.20722233,  0.40638802, -0.85761474,
+        -1.02986266,  0.10284329,  1.45974935],
+       [-0.44994186, -0.0025046 ,  0.32203914,  0.47762115,  1.29287186,
+        -0.36464525,  0.1332108 , -1.64455603, -0.12256537, -0.8158407 ,
+        -1.98545333, -0.23692515, -1.3454649 ],
+       [ 0.79689694, -0.30957285, -0.13825658, -0.12806083,  1.11094134,
+         2.41785423,  0.02602115, -0.71166686,  0.59482937, -0.88449638,
+        -0.28681316,  0.66880962, -0.30492042]]), array([[1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1.]]), None)
+>>shrink_cov: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/analytic_shrinkage/nonlinshrink/nonlinshrink.py
+>>>dot: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/multiarray.py
+<<<dot: (array([[ 0.06296956,  0.65664666,  0.3901342 , -1.55134585, -1.51353709,
+         1.08988377, -0.21778345,  2.19414655,  0.32289906, -0.72524987,
+        -0.44994186,  0.79689694],
+       [-0.2634796 ,  0.03777908,  0.25028514, -0.41401758,  0.02020471,
+        -0.2149798 ,  0.97734325,  0.46357101,  0.80939092,  0.93841368,
+        -0.0025046 , -0.30957285],
+       [-1.37707041,  1.11464258,  0.85784674, -0.15540724,  0.41880941,
+        -0.55950731,  1.77841411, -0.71299967, -0.1801293 ,  2.50344362,
+         0.32203914, -0.13825658],
+       [ 0.61941761, -0.04751962, -1.92993169,  0.11590482, -0.69935574,
+         0.06838847,  0.75464445,  1.4489418 ,  1.15715328,  0.04967754,
+         0.47762115, -0.12806083],
+       [-0.25618296, -1.16217391,  1.96307081, -0.91137584, -1.20455346,
+        -1.12061863,  0.1744938 , -0.45835714,  1.12842393, -1.1839053 ,
+         1.29287186,  1.11094134],
+       [-0.62205446, -0.07792711, -1.73388746,  1.28001273, -0.53428109,
+         0.26582168,  0.09643795, -0.00772861, -0.68791781,  1.13199527,
+        -0.36464525,  2.41785423],
+       [ 2.01784543,  0.74520846,  1.22618227,  1.59654838, -1.63761454,
+        -0.61887505, -1.44596935,  0.58109925,  0.22329108,  0.6152743 ,
+         0.1332108 ,  0.02602115],
+       [-0.70170084, -0.34756196,  0.94018277, -0.28617754,  1.47092151,
+        -0.90860636,  0.09317697, -0.17925457, -0.37588641, -0.20722233,
+        -1.64455603, -0.71166686],
+       [ 0.84266432,  0.35641145, -1.41598053, -0.79408283, -0.14759949,
+         1.1950007 ,  1.0213988 ,  1.53121103,  0.31768365,  0.40638802,
+        -0.12256537,  0.59482937],
+       [ 0.4014217 , -0.61483667, -1.25792275, -0.55544728, -1.58338946,
+         0.36505329, -0.78313076,  0.36347871, -0.40132282, -0.85761474,
+        -0.8158407 , -0.88449638],
+       [-1.34498471, -1.22601104,  1.19402109, -0.23743351, -0.64493295,
+        -0.00267377, -0.99790139,  0.32004594, -1.22471526, -1.02986266,
+        -1.98545333, -0.28681316],
+       [ 0.53831182, -0.24794728, -1.46202348, -0.84294114, -0.39161239,
+         0.060839  , -0.46096162, -0.12268057, -0.14824938,  0.10284329,
+        -0.23692515,  0.66880962],
+       [-0.90879137, -0.65294486, -0.4573293 , -0.17385274, -0.17854483,
+        -2.18604152, -0.34717112,  1.71811837, -2.12880972,  1.45974935,
+        -1.3454649 , -0.30492042]]), array([[ 0.06296956, -0.2634796 , -1.37707041,  0.61941761, -0.25618296,
+        -0.62205446,  2.01784543, -0.70170084,  0.84266432,  0.4014217 ,
+        -1.34498471,  0.53831182, -0.90879137],
+       [ 0.65664666,  0.03777908,  1.11464258, -0.04751962, -1.16217391,
+        -0.07792711,  0.74520846, -0.34756196,  0.35641145, -0.61483667,
+        -1.22601104, -0.24794728, -0.65294486],
+       [ 0.3901342 ,  0.25028514,  0.85784674, -1.92993169,  1.96307081,
+        -1.73388746,  1.22618227,  0.94018277, -1.41598053, -1.25792275,
+         1.19402109, -1.46202348, -0.4573293 ],
+       [-1.55134585, -0.41401758, -0.15540724,  0.11590482, -0.91137584,
+         1.28001273,  1.59654838, -0.28617754, -0.79408283, -0.55544728,
+        -0.23743351, -0.84294114, -0.17385274],
+       [-1.51353709,  0.02020471,  0.41880941, -0.69935574, -1.20455346,
+        -0.53428109, -1.63761454,  1.47092151, -0.14759949, -1.58338946,
+        -0.64493295, -0.39161239, -0.17854483],
+       [ 1.08988377, -0.2149798 , -0.55950731,  0.06838847, -1.12061863,
+         0.26582168, -0.61887505, -0.90860636,  1.1950007 ,  0.36505329,
+        -0.00267377,  0.060839  , -2.18604152],
+       [-0.21778345,  0.97734325,  1.77841411,  0.75464445,  0.1744938 ,
+         0.09643795, -1.44596935,  0.09317697,  1.0213988 , -0.78313076,
+        -0.99790139, -0.46096162, -0.34717112],
+       [ 2.19414655,  0.46357101, -0.71299967,  1.4489418 , -0.45835714,
+        -0.00772861,  0.58109925, -0.17925457,  1.53121103,  0.36347871,
+         0.32004594, -0.12268057,  1.71811837],
+       [ 0.32289906,  0.80939092, -0.1801293 ,  1.15715328,  1.12842393,
+        -0.68791781,  0.22329108, -0.37588641,  0.31768365, -0.40132282,
+        -1.22471526, -0.14824938, -2.12880972],
+       [-0.72524987,  0.93841368,  2.50344362,  0.04967754, -1.1839053 ,
+         1.13199527,  0.6152743 , -0.20722233,  0.40638802, -0.85761474,
+        -1.02986266,  0.10284329,  1.45974935],
+       [-0.44994186, -0.0025046 ,  0.32203914,  0.47762115,  1.29287186,
+        -0.36464525,  0.1332108 , -1.64455603, -0.12256537, -0.8158407 ,
+        -1.98545333, -0.23692515, -1.3454649 ],
+       [ 0.79689694, -0.30957285, -0.13825658, -0.12806083,  1.11094134,
+         2.41785423,  0.02602115, -0.71166686,  0.59482937, -0.88449638,
+        -0.28681316,  0.66880962, -0.30492042]]), None)
+>>>_eigvalsh_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<_eigvalsh_dispatcher: (array([[ 1.06684351,  0.051896  , -0.34194157,  0.2703    ,  0.20709344,
+        -0.05369844,  0.133222  , -0.24084018,  0.497221  ,  0.32579737,
+         0.23778476,  0.13464563, -0.00377188],
+       [ 0.051896  ,  0.26276666,  0.37214934,  0.14216983,  0.04350549,
+        -0.08519448, -0.09597989,  0.04035852,  0.1390549 , -0.14791619,
+        -0.16651054, -0.07720385,  0.07003183],
+       [-0.34194157,  0.37214934,  1.20673992, -0.2095239 , -0.10513946,
+         0.11616926, -0.24419727,  0.16379452, -0.08514166, -0.58044318,
+        -0.30683816, -0.24631826,  0.25924944],
+       [ 0.2703    ,  0.14216983, -0.2095239 ,  0.73939131, -0.17018173,
+         0.19523825,  0.01967111, -0.39046899,  0.54776605,  0.24381608,
+        -0.44376116,  0.20469147, -0.0384181 ],
+       [ 0.20709344,  0.04350549, -0.10513946, -0.17018173,  1.2190405 ,
+        -0.32134331,  0.12009617, -0.08838975, -0.33260806, -0.13595433,
+         0.14503845, -0.11871509, -0.34497041],
+       [-0.05369844, -0.08519448,  0.11616926,  0.19523825, -0.32134331,
+         1.09474414, -0.02266838, -0.30391383,  0.2578612 , -0.03356875,
+        -0.12413747,  0.270354  ,  0.29370001],
+       [ 0.133222  , -0.09597989, -0.24419727,  0.01967111,  0.12009617,
+        -0.02266838,  1.21830504, -0.29278307, -0.1502432 ,  0.07368912,
+        -0.08624459, -0.08517704,  0.01854946],
+       [-0.24084018,  0.04035852,  0.16379452, -0.39046899, -0.08838975,
+        -0.30391383, -0.29278307,  0.66702336, -0.31056531, -0.13256916,
+         0.46724495, -0.17742371,  0.39959226],
+       [ 0.497221  ,  0.1390549 , -0.08514166,  0.54776605, -0.33260806,
+         0.2578612 , -0.1502432 , -0.31056531,  0.74543951,  0.15548881,
+        -0.35371312,  0.24985   , -0.05184985],
+       [ 0.32579737, -0.14791619, -0.58044318,  0.24381608, -0.13595433,
+        -0.03356875,  0.07368912, -0.13256916,  0.15548881,  0.6800287 ,
+         0.33416979,  0.26729786,  0.17161537],
+       [ 0.23778476, -0.16651054, -0.30683816, -0.44376116,  0.14503845,
+        -0.12413747, -0.08624459,  0.46724495, -0.35371312,  0.33416979,
+         1.07443012, -0.07818486,  0.53316807],
+       [ 0.13464563, -0.07720385, -0.24631826,  0.20469147, -0.11871509,
+         0.270354  , -0.08517704, -0.17742371,  0.24985   ,  0.26729786,
+        -0.07818486,  0.34332601,  0.07954951],
+       [-0.00377188,  0.07003183,  0.25924944, -0.0384181 , -0.34497041,
+         0.29370001,  0.01854946,  0.39959226, -0.05184985,  0.17161537,
+         0.53316807,  0.07954951,  1.4950566 ]]),)
+>>>eigh: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+>>>>_makearray: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<<_makearray: (array([[ 1.06684351,  0.051896  , -0.34194157,  0.2703    ,  0.20709344,
+        -0.05369844,  0.133222  , -0.24084018,  0.497221  ,  0.32579737,
+         0.23778476,  0.13464563, -0.00377188],
+       [ 0.051896  ,  0.26276666,  0.37214934,  0.14216983,  0.04350549,
+        -0.08519448, -0.09597989,  0.04035852,  0.1390549 , -0.14791619,
+        -0.16651054, -0.07720385,  0.07003183],
+       [-0.34194157,  0.37214934,  1.20673992, -0.2095239 , -0.10513946,
+         0.11616926, -0.24419727,  0.16379452, -0.08514166, -0.58044318,
+        -0.30683816, -0.24631826,  0.25924944],
+       [ 0.2703    ,  0.14216983, -0.2095239 ,  0.73939131, -0.17018173,
+         0.19523825,  0.01967111, -0.39046899,  0.54776605,  0.24381608,
+        -0.44376116,  0.20469147, -0.0384181 ],
+       [ 0.20709344,  0.04350549, -0.10513946, -0.17018173,  1.2190405 ,
+        -0.32134331,  0.12009617, -0.08838975, -0.33260806, -0.13595433,
+         0.14503845, -0.11871509, -0.34497041],
+       [-0.05369844, -0.08519448,  0.11616926,  0.19523825, -0.32134331,
+         1.09474414, -0.02266838, -0.30391383,  0.2578612 , -0.03356875,
+        -0.12413747,  0.270354  ,  0.29370001],
+       [ 0.133222  , -0.09597989, -0.24419727,  0.01967111,  0.12009617,
+        -0.02266838,  1.21830504, -0.29278307, -0.1502432 ,  0.07368912,
+        -0.08624459, -0.08517704,  0.01854946],
+       [-0.24084018,  0.04035852,  0.16379452, -0.39046899, -0.08838975,
+        -0.30391383, -0.29278307,  0.66702336, -0.31056531, -0.13256916,
+         0.46724495, -0.17742371,  0.39959226],
+       [ 0.497221  ,  0.1390549 , -0.08514166,  0.54776605, -0.33260806,
+         0.2578612 , -0.1502432 , -0.31056531,  0.74543951,  0.15548881,
+        -0.35371312,  0.24985   , -0.05184985],
+       [ 0.32579737, -0.14791619, -0.58044318,  0.24381608, -0.13595433,
+        -0.03356875,  0.07368912, -0.13256916,  0.15548881,  0.6800287 ,
+         0.33416979,  0.26729786,  0.17161537],
+       [ 0.23778476, -0.16651054, -0.30683816, -0.44376116,  0.14503845,
+        -0.12413747, -0.08624459,  0.46724495, -0.35371312,  0.33416979,
+         1.07443012, -0.07818486,  0.53316807],
+       [ 0.13464563, -0.07720385, -0.24631826,  0.20469147, -0.11871509,
+         0.270354  , -0.08517704, -0.17742371,  0.24985   ,  0.26729786,
+        -0.07818486,  0.34332601,  0.07954951],
+       [-0.00377188,  0.07003183,  0.25924944, -0.0384181 , -0.34497041,
+         0.29370001,  0.01854946,  0.39959226, -0.05184985,  0.17161537,
+         0.53316807,  0.07954951,  1.4950566 ]]), <built-in method __array_prepare__ of numpy.ndarray object at 0x7fa477b086f0>)
+>>>>_assert_stacked_2d: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<<_assert_stacked_2d: None
+>>>>_assert_stacked_square: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<<_assert_stacked_square: None
+>>>>_commonType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+>>>>>isComplexType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<<<isComplexType: False
+>>>>>_realType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<<<_realType: <class 'numpy.float64'>
+<<<<_commonType: (<class 'numpy.float64'>, <class 'numpy.float64'>)
+>>>>get_linalg_error_extobj: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<<get_linalg_error_extobj: [8192, 1536, <function _raise_linalgerror_eigenvalues_nonconvergence at 0x7fa48e3cce00>]
+>>>>isComplexType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<<isComplexType: False
+>>>>_realType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+<<<<_realType: <class 'numpy.float64'>
+>>>><lambda>: <string>
+<<<<<lambda>: EighResult(eigenvalues=array([-8.67022026e-17,  1.46843724e-02,  4.24921961e-02,  1.18913736e-01,
+        2.07726799e-01,  2.83311449e-01,  5.83070931e-01,  9.09981755e-01,
+        1.17102227e+00,  1.31399281e+00,  2.20242461e+00,  2.27279124e+00,
+        2.69272321e+00]), eigenvectors=array([[-0.1047955 , -0.00861648, -0.43027964, -0.15499711, -0.14541478,
+        -0.04059014,  0.45829721, -0.02978272,  0.52838343, -0.23410948,
+         0.00417108, -0.31623161, -0.33473347],
+       [-0.43639467,  0.63796426,  0.06603618,  0.39204424,  0.26376255,
+         0.02460065, -0.10978638, -0.15369723,  0.30915471, -0.12412064,
+         0.02752565,  0.16268736,  0.02103948],
+       [ 0.25731793, -0.25193931, -0.06189151,  0.11735984,  0.02046472,
+         0.51329061,  0.16481188, -0.02477954,  0.4288326 , -0.01339276,
+         0.13777133,  0.50824507,  0.31571567],
+       [ 0.4252152 , -0.07542699, -0.30332022, -0.00823453,  0.52772066,
+        -0.13003538, -0.43625094, -0.14994032,  0.10073002, -0.06900697,
+         0.11843819,  0.09734355, -0.41812043],
+       [-0.01941802, -0.19802144,  0.14084635,  0.10768301, -0.04013038,
+        -0.06704567, -0.4264233 ,  0.48951815,  0.45997822, -0.03744925,
+        -0.50164377, -0.17127408,  0.0862729 ],
+       [-0.22047844, -0.08960867, -0.10881684,  0.15628503,  0.23026633,
+        -0.12744072,  0.20776845,  0.7064704 , -0.0652061 ,  0.27864426,
+         0.3860623 ,  0.17601571, -0.18341613],
+       [ 0.08863262, -0.04847391,  0.05200442,  0.27930001,  0.01620303,
+        -0.04452554,  0.14374947, -0.29798886,  0.19317242,  0.83009792,
+        -0.17095439, -0.1585508 , -0.12897037],
+       [-0.08732112, -0.39316799, -0.28541553,  0.54763818,  0.01113126,
+        -0.43959472,  0.02289567, -0.19003404, -0.06278875, -0.1982663 ,
+         0.11343133, -0.11437799,  0.39650832],
+       [ 0.07003046, -0.24572861,  0.70548026,  0.19220656, -0.10950148,
+        -0.21727523,  0.13829476, -0.11822149,  0.16462117, -0.24607868,
+         0.19888216,  0.11270129, -0.40970236],
+       [-0.37712238, -0.34505113,  0.00898947,  0.19731953,  0.10789657,
+         0.63403515, -0.20406124, -0.09461179, -0.15663279, -0.05588807,
+         0.1332747 , -0.37416315, -0.22371964],
+       [ 0.43561817,  0.21941865,  0.2476542 ,  0.10895864,  0.39753565,
+         0.12186827,  0.26687297,  0.16986833,  0.01689519, -0.10948648,
+         0.14077578, -0.55297481,  0.27937982],
+       [ 0.37873236,  0.30216587, -0.18446325,  0.46658362, -0.58865842,
+         0.15095392, -0.17172907,  0.17934324, -0.10987635, -0.04168439,
+         0.14698304, -0.05407248, -0.21031329],
+       [-0.0822292 ,  0.02645994,  0.07534691, -0.29841036, -0.21718865,
+        -0.12066667, -0.3908473 , -0.06934219,  0.33182579,  0.20006317,
+         0.65168679, -0.21400918,  0.24058638]]))
+<<<eigh: EighResult(eigenvalues=array([-8.67022026e-17,  1.46843724e-02,  4.24921961e-02,  1.18913736e-01,
+        2.07726799e-01,  2.83311449e-01,  5.83070931e-01,  9.09981755e-01,
+        1.17102227e+00,  1.31399281e+00,  2.20242461e+00,  2.27279124e+00,
+        2.69272321e+00]), eigenvectors=array([[-0.1047955 , -0.00861648, -0.43027964, -0.15499711, -0.14541478,
+        -0.04059014,  0.45829721, -0.02978272,  0.52838343, -0.23410948,
+         0.00417108, -0.31623161, -0.33473347],
+       [-0.43639467,  0.63796426,  0.06603618,  0.39204424,  0.26376255,
+         0.02460065, -0.10978638, -0.15369723,  0.30915471, -0.12412064,
+         0.02752565,  0.16268736,  0.02103948],
+       [ 0.25731793, -0.25193931, -0.06189151,  0.11735984,  0.02046472,
+         0.51329061,  0.16481188, -0.02477954,  0.4288326 , -0.01339276,
+         0.13777133,  0.50824507,  0.31571567],
+       [ 0.4252152 , -0.07542699, -0.30332022, -0.00823453,  0.52772066,
+        -0.13003538, -0.43625094, -0.14994032,  0.10073002, -0.06900697,
+         0.11843819,  0.09734355, -0.41812043],
+       [-0.01941802, -0.19802144,  0.14084635,  0.10768301, -0.04013038,
+        -0.06704567, -0.4264233 ,  0.48951815,  0.45997822, -0.03744925,
+        -0.50164377, -0.17127408,  0.0862729 ],
+       [-0.22047844, -0.08960867, -0.10881684,  0.15628503,  0.23026633,
+        -0.12744072,  0.20776845,  0.7064704 , -0.0652061 ,  0.27864426,
+         0.3860623 ,  0.17601571, -0.18341613],
+       [ 0.08863262, -0.04847391,  0.05200442,  0.27930001,  0.01620303,
+        -0.04452554,  0.14374947, -0.29798886,  0.19317242,  0.83009792,
+        -0.17095439, -0.1585508 , -0.12897037],
+       [-0.08732112, -0.39316799, -0.28541553,  0.54763818,  0.01113126,
+        -0.43959472,  0.02289567, -0.19003404, -0.06278875, -0.1982663 ,
+         0.11343133, -0.11437799,  0.39650832],
+       [ 0.07003046, -0.24572861,  0.70548026,  0.19220656, -0.10950148,
+        -0.21727523,  0.13829476, -0.11822149,  0.16462117, -0.24607868,
+         0.19888216,  0.11270129, -0.40970236],
+       [-0.37712238, -0.34505113,  0.00898947,  0.19731953,  0.10789657,
+         0.63403515, -0.20406124, -0.09461179, -0.15663279, -0.05588807,
+         0.1332747 , -0.37416315, -0.22371964],
+       [ 0.43561817,  0.21941865,  0.2476542 ,  0.10895864,  0.39753565,
+         0.12186827,  0.26687297,  0.16986833,  0.01689519, -0.10948648,
+         0.14077578, -0.55297481,  0.27937982],
+       [ 0.37873236,  0.30216587, -0.18446325,  0.46658362, -0.58865842,
+         0.15095392, -0.17172907,  0.17934324, -0.10987635, -0.04168439,
+         0.14698304, -0.05407248, -0.21031329],
+       [-0.0822292 ,  0.02645994,  0.07534691, -0.29841036, -0.21718865,
+        -0.12066667, -0.3908473 , -0.06934219,  0.33182579,  0.20006317,
+         0.65168679, -0.21400918,  0.24058638]]))
+>>>repmat: /home/eugenio/.local/lib/python3.11/site-packages/numpy/matlib.py
+<<<repmat: [[0.01468437 0.0424922  0.11891374 0.2077268  0.28331145 0.58307093
+  0.90998176 1.17102227 1.31399281 2.20242461 2.27279124 2.69272321]
+ [0.01468437 0.0424922  0.11891374 0.2077268  0.28331145 0.58307093
+  0.90998176 1.17102227 1.31399281 2.20242461 2.27279124 2.69272321]
+ [0.01468437 0.0424922  0.11891374 0.2077268  0.28331145 0.58307093
+  0.90998176 1.17102227 1.31399281 2.20242461 2.27279124 2.69272321]
+ [0.01468437 0.0424922  0.11891374 0.2077268  0.28331145 0.58307093
+  0.90998176 1.17102227 1.31399281 2.20242461 2.27279124 2.69272321]
+ [0.01468437 0.0424922  0.11891374 0.2077268  0.28331145 0.58307093
+  0.90998176 1.17102227 1.31399281 2.20242461 2.27279124 2.69272321]
+ [0.01468437 0.0424922  0.11891374 0.2077268  0.28331145 0.58307093
+  0.90998176 1.17102227 1.31399281 2.20242461 2.27279124 2.69272321]
+ [0.01468437 0.0424922  0.11891374 0.2077268  0.28331145 0.58307093
+  0.90998176 1.17102227 1.31399281 2.20242461 2.27279124 2.69272321]
+ [0.01468437 0.0424922  0.11891374 0.2077268  0.28331145 0.58307093
+  0.90998176 1.17102227 1.31399281 2.20242461 2.27279124 2.69272321]
+ [0.01468437 0.0424922  0.11891374 0.2077268  0.28331145 0.58307093
+  0.90998176 1.17102227 1.31399281 2.20242461 2.27279124 2.69272321]
+ [0.01468437 0.0424922  0.11891374 0.2077268  0.28331145 0.58307093
+  0.90998176 1.17102227 1.31399281 2.20242461 2.27279124 2.69272321]
+ [0.01468437 0.0424922  0.11891374 0.2077268  0.28331145 0.58307093
+  0.90998176 1.17102227 1.31399281 2.20242461 2.27279124 2.69272321]
+ [0.01468437 0.0424922  0.11891374 0.2077268  0.28331145 0.58307093
+  0.90998176 1.17102227 1.31399281 2.20242461 2.27279124 2.69272321]]
+>>>_mean_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<_mean_dispatcher: (array([[1.55909182e+02, 2.96898101e+01, 3.74700980e+00, 1.04344286e+00,
+        4.65109019e-01, 1.50788592e-02, 0.00000000e+00, 0.00000000e+00,
+        0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00],
+       [0.00000000e+00, 5.38787988e+01, 1.09170619e+01, 3.71103618e+00,
+        1.96025743e+00, 3.88442503e-01, 1.19051263e-01, 5.16157322e-02,
+        3.20718215e-02, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00],
+       [0.00000000e+00, 0.00000000e+00, 1.92528514e+01, 8.90937580e+00,
+        5.22856012e+00, 1.31808248e+00, 5.22751984e-01, 3.00682199e-01,
+        2.31480113e-01, 6.42903446e-02, 5.89571820e-02, 3.59195767e-02],
+       [0.00000000e+00, 0.00000000e+00, 7.99465382e+00, 1.10213439e+01,
+        7.47800336e+00, 2.22078635e+00, 9.45171312e-01, 5.68201267e-01,
+        4.47697627e-01, 1.45658483e-01, 1.35554401e-01, 9.11477861e-02],
+       [0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 9.49166290e+00,
+        8.08096000e+00, 2.83859091e+00, 1.26509570e+00, 7.77302830e-01,
+        6.18565223e-01, 2.12115606e-01, 1.98202551e-01, 1.36622491e-01],
+       [0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00,
+        0.00000000e+00, 3.92650081e+00, 2.17551984e+00, 1.43841576e+00,
+        1.17718114e+00, 4.50400300e-01, 4.23657068e-01, 3.03139088e-01],
+       [0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00,
+        0.00000000e+00, 2.63258604e+00, 2.51590592e+00, 1.85322517e+00,
+        1.56967401e+00, 6.64244961e-01, 6.27653144e-01, 4.59555444e-01],
+       [0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00,
+        0.00000000e+00, 0.00000000e+00, 2.29887130e+00, 1.95506827e+00,
+        1.72072129e+00, 8.00522160e-01, 7.59170530e-01, 5.65588726e-01],
+       [0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00,
+        0.00000000e+00, 0.00000000e+00, 1.99603003e+00, 1.92451843e+00,
+        1.74234476e+00, 8.62184265e-01, 8.19394028e-01, 6.16562318e-01],
+       [0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00,
+        0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 3.65160230e-01,
+        9.07356300e-01, 1.03950368e+00, 1.00630798e+00, 8.20677937e-01],
+       [0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00,
+        0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 1.40819459e-01,
+        7.69850821e-01, 1.03839133e+00, 1.00732018e+00, 8.28551190e-01],
+       [0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00,
+        0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00,
+        0.00000000e+00, 9.85499247e-01, 9.71271410e-01, 8.50227931e-01]]), None, None)
+>>>mean: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>>_mean: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_methods.py
+>>>>>_count_reduce_items: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_methods.py
+<<<<<_count_reduce_items: 12
+>>>>>helper: /usr/lib/python3.11/contextlib.py
+>>>>>>__init__: /usr/lib/python3.11/contextlib.py
+<<<<<<__init__: None
+<<<<<helper: <contextlib._GeneratorContextManager object at 0x7fa4772d1e90>
+>>>>>__enter__: /usr/lib/python3.11/contextlib.py
+>>>>>>_no_nep50_warning: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+<<<<<<_no_nep50_warning: None
+<<<<<__enter__: None
+>>>>>__exit__: /usr/lib/python3.11/contextlib.py
+>>>>>>_no_nep50_warning: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+<<<<<<_no_nep50_warning: None
+<<<<<__exit__: False
+<<<<_mean: [15.90580268  5.92152797  2.99357926  2.58735152  1.96825985  0.82456783
+  0.86023706  0.67499519  0.66341949  0.34491718  0.31541108  0.23391655]
+<<<mean: [15.90580268  5.92152797  2.99357926  2.58735152  1.96825985  0.82456783
+  0.86023706  0.67499519  0.66341949  0.34491718  0.31541108  0.23391655]
+>>>_mean_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<_mean_dispatcher: (array([[  0.        ,  12.84883227,   4.85658264,   2.65077747,
+          1.88427355,   0.84799263,   0.5189513 ,   0.39797255,
+          0.35300438,   0.20753835,   0.20098333,   0.16911229],
+       [-12.13757914,   0.        ,   4.54495398,   2.8200182 ,
+          2.06022503,   0.94716866,   0.58044544,   0.43950965,
+          0.38699523,   0.21721829,   0.20994775,   0.17513442],
+       [ -3.06559637,  -4.44820817,   0.        ,   1.92326469,
+          1.78882364,   1.00474336,   0.63691644,   0.48599951,
+          0.42886177,   0.24339143,   0.23510545,   0.1950404 ],
+       [ -1.65073619,  -1.95139882,  -4.86343454,   0.        ,
+          0.9188654 ,   0.92779891,   0.64079085,   0.50069604,
+          0.44507928,   0.25679453,   0.24815971,   0.20621784],
+       [ -1.18562724,  -1.32973213,  -2.18794866,  -1.66997209,
+          0.        ,   0.79597236,   0.61579688,   0.49590582,
+          0.44504286,   0.26290427,   0.25425612,   0.21196286],
+       [ -0.56009493,  -0.58952757,  -0.69460659,  -0.90505172,
+         -1.38724465,   0.        ,   0.37686699,   0.38913433,
+          0.37447945,   0.26128776,   0.25410496,   0.21713303],
+       [ -0.35555362,  -0.36710037,  -0.40413082,  -0.46111872,
+         -0.52960482,  -0.84867386,   0.        ,   0.18721647,
+          0.22634272,   0.23185996,   0.22790374,   0.20403348],
+       [ -0.27528258,  -0.28213341,  -0.30328596,  -0.33342721,
+         -0.36584873,  -0.75127036,  -0.30633482,   0.        ,
+          0.0825489 ,   0.1957072 ,   0.19501161,   0.18479513],
+       [ -0.24499005,  -0.25039527,  -0.26685565,  -0.28969756,
+         -0.31342968,  -0.50994221,  -0.45323813,  -0.10382373,
+          0.        ,   0.17253888,   0.17378326,   0.17181933],
+       [ -0.14549836,  -0.14738118,  -0.1528708 ,  -0.15990965,
+         -0.16655887,  -0.20170492,  -0.27610193,  -0.49199668,
+         -0.42268048,   0.        ,   0.01363194,   0.06690154],
+       [ -0.1409643 ,  -0.14273061,  -0.14787063,  -0.15443921,
+         -0.16062075,  -0.19288224,  -0.25824574,  -0.46198472,
+         -0.43680388,  -0.01451661,   0.        ,   0.05748113],
+       [ -0.11886001,  -0.12011236,  -0.12372308,  -0.12826395,
+         -0.13246151,  -0.15315312,  -0.18852732,  -0.24141773,
+         -0.30423057,  -0.09941365,  -0.08040174,   0.        ]]), None, None)
+>>>mean: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>>_mean: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_methods.py
+>>>>>_count_reduce_items: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_methods.py
+<<<<<_count_reduce_items: 12
+>>>>>helper: /usr/lib/python3.11/contextlib.py
+>>>>>>__init__: /usr/lib/python3.11/contextlib.py
+<<<<<<__init__: None
+<<<<<helper: <contextlib._GeneratorContextManager object at 0x7fa477355410>
+>>>>>__enter__: /usr/lib/python3.11/contextlib.py
+>>>>>>_no_nep50_warning: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+<<<<<<_no_nep50_warning: None
+<<<<<__enter__: None
+>>>>>__exit__: /usr/lib/python3.11/contextlib.py
+>>>>>>_no_nep50_warning: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+<<<<<<_no_nep50_warning: None
+<<<<<__exit__: False
+<<<<_mean: [ 2.07800173  0.02033646 -0.04763815 -0.36009725 -0.27428658 -0.18862658
+ -0.15740215 -0.16329335 -0.15951923 -0.17368078 -0.17113146 -0.14088042]
+<<<mean: [ 2.07800173  0.02033646 -0.04763815 -0.36009725 -0.27428658 -0.18862658
+ -0.15740215 -0.16329335 -0.15951923 -0.17368078 -0.17113146 -0.14088042]
+>>>_mean_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<_mean_dispatcher: (array([68.09960762, 23.53373306,  8.40945742,  4.81401536,  3.5296844 ,
+        1.7150572 ,  1.09892313,  0.85395472,  0.76103917,  0.45404505,
+        0.43998762,  0.37137126]), None, None)
+>>>mean: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>>_mean: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_methods.py
+>>>>>_count_reduce_items: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_methods.py
+<<<<<_count_reduce_items: 12
+<<<<_mean: 9.506739667944908
+<<<mean: 9.506739667944908
+>>>ones: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/numeric.py
+>>>>copyto: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/multiarray.py
+<<<<copyto: (array([9.8696044]), 1, None)
+<<<ones: [1.]
+>>>concatenate: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/multiarray.py
+<<<concatenate: [array([0.89664339]), array([0.21049229, 0.60440139, 0.84325259, 0.55252378, 0.69977972,
+       1.5505619 , 1.03071361, 1.11039148, 1.02866703, 1.05638452,
+       1.10134214, 1.44705796])]
+>>>_diag_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/lib/twodim_base.py
+<<<_diag_dispatcher: (array([0.89664339, 0.21049229, 0.60440139, 0.84325259, 0.55252378,
+       0.69977972, 1.5505619 , 1.03071361, 1.11039148, 1.02866703,
+       1.05638452, 1.10134214, 1.44705796]),)
+>>>diag: /home/eugenio/.local/lib/python3.11/site-packages/numpy/lib/twodim_base.py
+<<<diag: [[0.89664339 0.         0.         0.         0.         0.
+  0.         0.         0.         0.         0.         0.
+  0.        ]
+ [0.         0.21049229 0.         0.         0.         0.
+  0.         0.         0.         0.         0.         0.
+  0.        ]
+ [0.         0.         0.60440139 0.         0.         0.
+  0.         0.         0.         0.         0.         0.
+  0.        ]
+ [0.         0.         0.         0.84325259 0.         0.
+  0.         0.         0.         0.         0.         0.
+  0.        ]
+ [0.         0.         0.         0.         0.55252378 0.
+  0.         0.         0.         0.         0.         0.
+  0.        ]
+ [0.         0.         0.         0.         0.         0.69977972
+  0.         0.         0.         0.         0.         0.
+  0.        ]
+ [0.         0.         0.         0.         0.         0.
+  1.5505619  0.         0.         0.         0.         0.
+  0.        ]
+ [0.         0.         0.         0.         0.         0.
+  0.         1.03071361 0.         0.         0.         0.
+  0.        ]
+ [0.         0.         0.         0.         0.         0.
+  0.         0.         1.11039148 0.         0.         0.
+  0.        ]
+ [0.         0.         0.         0.         0.         0.
+  0.         0.         0.         1.02866703 0.         0.
+  0.        ]
+ [0.         0.         0.         0.         0.         0.
+  0.         0.         0.         0.         1.05638452 0.
+  0.        ]
+ [0.         0.         0.         0.         0.         0.
+  0.         0.         0.         0.         0.         1.10134214
+  0.        ]
+ [0.         0.         0.         0.         0.         0.
+  0.         0.         0.         0.         0.         0.
+  1.44705796]]
+>>>dot: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/multiarray.py
+<<<dot: (array([[-0.1047955 , -0.00861648, -0.43027964, -0.15499711, -0.14541478,
+        -0.04059014,  0.45829721, -0.02978272,  0.52838343, -0.23410948,
+         0.00417108, -0.31623161, -0.33473347],
+       [-0.43639467,  0.63796426,  0.06603618,  0.39204424,  0.26376255,
+         0.02460065, -0.10978638, -0.15369723,  0.30915471, -0.12412064,
+         0.02752565,  0.16268736,  0.02103948],
+       [ 0.25731793, -0.25193931, -0.06189151,  0.11735984,  0.02046472,
+         0.51329061,  0.16481188, -0.02477954,  0.4288326 , -0.01339276,
+         0.13777133,  0.50824507,  0.31571567],
+       [ 0.4252152 , -0.07542699, -0.30332022, -0.00823453,  0.52772066,
+        -0.13003538, -0.43625094, -0.14994032,  0.10073002, -0.06900697,
+         0.11843819,  0.09734355, -0.41812043],
+       [-0.01941802, -0.19802144,  0.14084635,  0.10768301, -0.04013038,
+        -0.06704567, -0.4264233 ,  0.48951815,  0.45997822, -0.03744925,
+        -0.50164377, -0.17127408,  0.0862729 ],
+       [-0.22047844, -0.08960867, -0.10881684,  0.15628503,  0.23026633,
+        -0.12744072,  0.20776845,  0.7064704 , -0.0652061 ,  0.27864426,
+         0.3860623 ,  0.17601571, -0.18341613],
+       [ 0.08863262, -0.04847391,  0.05200442,  0.27930001,  0.01620303,
+        -0.04452554,  0.14374947, -0.29798886,  0.19317242,  0.83009792,
+        -0.17095439, -0.1585508 , -0.12897037],
+       [-0.08732112, -0.39316799, -0.28541553,  0.54763818,  0.01113126,
+        -0.43959472,  0.02289567, -0.19003404, -0.06278875, -0.1982663 ,
+         0.11343133, -0.11437799,  0.39650832],
+       [ 0.07003046, -0.24572861,  0.70548026,  0.19220656, -0.10950148,
+        -0.21727523,  0.13829476, -0.11822149,  0.16462117, -0.24607868,
+         0.19888216,  0.11270129, -0.40970236],
+       [-0.37712238, -0.34505113,  0.00898947,  0.19731953,  0.10789657,
+         0.63403515, -0.20406124, -0.09461179, -0.15663279, -0.05588807,
+         0.1332747 , -0.37416315, -0.22371964],
+       [ 0.43561817,  0.21941865,  0.2476542 ,  0.10895864,  0.39753565,
+         0.12186827,  0.26687297,  0.16986833,  0.01689519, -0.10948648,
+         0.14077578, -0.55297481,  0.27937982],
+       [ 0.37873236,  0.30216587, -0.18446325,  0.46658362, -0.58865842,
+         0.15095392, -0.17172907,  0.17934324, -0.10987635, -0.04168439,
+         0.14698304, -0.05407248, -0.21031329],
+       [-0.0822292 ,  0.02645994,  0.07534691, -0.29841036, -0.21718865,
+        -0.12066667, -0.3908473 , -0.06934219,  0.33182579,  0.20006317,
+         0.65168679, -0.21400918,  0.24058638]]), array([[0.89664339, 0.        , 0.        , 0.        , 0.        ,
+        0.        , 0.        , 0.        , 0.        , 0.        ,
+        0.        , 0.        , 0.        ],
+       [0.        , 0.21049229, 0.        , 0.        , 0.        ,
+        0.        , 0.        , 0.        , 0.        , 0.        ,
+        0.        , 0.        , 0.        ],
+       [0.        , 0.        , 0.60440139, 0.        , 0.        ,
+        0.        , 0.        , 0.        , 0.        , 0.        ,
+        0.        , 0.        , 0.        ],
+       [0.        , 0.        , 0.        , 0.84325259, 0.        ,
+        0.        , 0.        , 0.        , 0.        , 0.        ,
+        0.        , 0.        , 0.        ],
+       [0.        , 0.        , 0.        , 0.        , 0.55252378,
+        0.        , 0.        , 0.        , 0.        , 0.        ,
+        0.        , 0.        , 0.        ],
+       [0.        , 0.        , 0.        , 0.        , 0.        ,
+        0.69977972, 0.        , 0.        , 0.        , 0.        ,
+        0.        , 0.        , 0.        ],
+       [0.        , 0.        , 0.        , 0.        , 0.        ,
+        0.        , 1.5505619 , 0.        , 0.        , 0.        ,
+        0.        , 0.        , 0.        ],
+       [0.        , 0.        , 0.        , 0.        , 0.        ,
+        0.        , 0.        , 1.03071361, 0.        , 0.        ,
+        0.        , 0.        , 0.        ],
+       [0.        , 0.        , 0.        , 0.        , 0.        ,
+        0.        , 0.        , 0.        , 1.11039148, 0.        ,
+        0.        , 0.        , 0.        ],
+       [0.        , 0.        , 0.        , 0.        , 0.        ,
+        0.        , 0.        , 0.        , 0.        , 1.02866703,
+        0.        , 0.        , 0.        ],
+       [0.        , 0.        , 0.        , 0.        , 0.        ,
+        0.        , 0.        , 0.        , 0.        , 0.        ,
+        1.05638452, 0.        , 0.        ],
+       [0.        , 0.        , 0.        , 0.        , 0.        ,
+        0.        , 0.        , 0.        , 0.        , 0.        ,
+        0.        , 1.10134214, 0.        ],
+       [0.        , 0.        , 0.        , 0.        , 0.        ,
+        0.        , 0.        , 0.        , 0.        , 0.        ,
+        0.        , 0.        , 1.44705796]]), None)
+>>>dot: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/multiarray.py
+<<<dot: (array([[-0.09396419, -0.0018137 , -0.26006161, -0.13070171, -0.08034513,
+        -0.02840416,  0.7106182 , -0.03069745,  0.58671245, -0.2408207 ,
+         0.00440626, -0.3482792 , -0.48437874],
+       [-0.3912904 ,  0.13428656,  0.03991236,  0.33059232,  0.14573508,
+         0.01721504, -0.17023058, -0.15841782,  0.34328275, -0.12767881,
+         0.02907767,  0.17917445,  0.03044535],
+       [ 0.23072242, -0.05303128, -0.03740731,  0.09896399,  0.01130725,
+         0.35919036,  0.25555102, -0.0255406 ,  0.47617206, -0.01377669,
+         0.1455395 ,  0.55975172,  0.45685888],
+       [ 0.3812664 , -0.0158768 , -0.18332716, -0.00694379,  0.29157821,
+        -0.09099612, -0.67643408, -0.15454553,  0.11184976, -0.07098519,
+         0.12511627,  0.10720855, -0.60504449],
+       [-0.01741104, -0.04168199,  0.08512773,  0.09080397, -0.02217299,
+        -0.0469172 , -0.66119573,  0.50455301,  0.5107559 , -0.03852281,
+        -0.52992871, -0.18863137,  0.12484189],
+       [-0.19769054, -0.01886193, -0.06576905,  0.13178775,  0.12722762,
+        -0.08918043,  0.32215784,  0.72816865, -0.0724043 ,  0.28663216,
+         0.40783023,  0.19385352, -0.26541377],
+       [ 0.07947185, -0.01020338,  0.03143154,  0.23552046,  0.00895256,
+        -0.03115807,  0.22289245, -0.30714117,  0.21449701,  0.85389436,
+        -0.18059357, -0.17461868, -0.18662761],
+       [-0.0782959 , -0.08275883, -0.17250555,  0.46179731,  0.00615029,
+        -0.30761947,  0.03550116, -0.19587067, -0.0697201 , -0.20395001,
+         0.1198271 , -0.1259693 ,  0.57377052],
+       [ 0.06279235, -0.05172398,  0.42639325,  0.16207868, -0.06050217,
+        -0.1520448 ,  0.21443459, -0.1218525 ,  0.18279395, -0.25313302,
+         0.21009603,  0.12412268, -0.59286306],
+       [-0.33814429, -0.0726306 ,  0.00543325,  0.1663902 ,  0.05961542,
+         0.44368494, -0.31640959, -0.09751766, -0.17392372, -0.05749022,
+         0.14078933, -0.41208165, -0.32373528],
+       [ 0.39059416,  0.04618593,  0.14968254,  0.09187965,  0.2196479 ,
+         0.08528095,  0.41380305,  0.1750856 ,  0.01876028, -0.11262513,
+         0.14871335, -0.60901446,  0.40427879],
+       [ 0.33958787,  0.06360359, -0.11148984,  0.39344785, -0.32524778,
+         0.10563449, -0.26627655,  0.18485151, -0.12200576, -0.04287936,
+         0.1552706 , -0.05955231, -0.30433552],
+       [-0.07373027,  0.00556961,  0.04553978, -0.25163531, -0.12000189,
+        -0.08444009, -0.60603293, -0.07147194,  0.36845653,  0.20579839,
+         0.68843183, -0.23569732,  0.34814244]]), array([[-0.1047955 , -0.43639467,  0.25731793,  0.4252152 , -0.01941802,
+        -0.22047844,  0.08863262, -0.08732112,  0.07003046, -0.37712238,
+         0.43561817,  0.37873236, -0.0822292 ],
+       [-0.00861648,  0.63796426, -0.25193931, -0.07542699, -0.19802144,
+        -0.08960867, -0.04847391, -0.39316799, -0.24572861, -0.34505113,
+         0.21941865,  0.30216587,  0.02645994],
+       [-0.43027964,  0.06603618, -0.06189151, -0.30332022,  0.14084635,
+        -0.10881684,  0.05200442, -0.28541553,  0.70548026,  0.00898947,
+         0.2476542 , -0.18446325,  0.07534691],
+       [-0.15499711,  0.39204424,  0.11735984, -0.00823453,  0.10768301,
+         0.15628503,  0.27930001,  0.54763818,  0.19220656,  0.19731953,
+         0.10895864,  0.46658362, -0.29841036],
+       [-0.14541478,  0.26376255,  0.02046472,  0.52772066, -0.04013038,
+         0.23026633,  0.01620303,  0.01113126, -0.10950148,  0.10789657,
+         0.39753565, -0.58865842, -0.21718865],
+       [-0.04059014,  0.02460065,  0.51329061, -0.13003538, -0.06704567,
+        -0.12744072, -0.04452554, -0.43959472, -0.21727523,  0.63403515,
+         0.12186827,  0.15095392, -0.12066667],
+       [ 0.45829721, -0.10978638,  0.16481188, -0.43625094, -0.4264233 ,
+         0.20776845,  0.14374947,  0.02289567,  0.13829476, -0.20406124,
+         0.26687297, -0.17172907, -0.3908473 ],
+       [-0.02978272, -0.15369723, -0.02477954, -0.14994032,  0.48951815,
+         0.7064704 , -0.29798886, -0.19003404, -0.11822149, -0.09461179,
+         0.16986833,  0.17934324, -0.06934219],
+       [ 0.52838343,  0.30915471,  0.4288326 ,  0.10073002,  0.45997822,
+        -0.0652061 ,  0.19317242, -0.06278875,  0.16462117, -0.15663279,
+         0.01689519, -0.10987635,  0.33182579],
+       [-0.23410948, -0.12412064, -0.01339276, -0.06900697, -0.03744925,
+         0.27864426,  0.83009792, -0.1982663 , -0.24607868, -0.05588807,
+        -0.10948648, -0.04168439,  0.20006317],
+       [ 0.00417108,  0.02752565,  0.13777133,  0.11843819, -0.50164377,
+         0.3860623 , -0.17095439,  0.11343133,  0.19888216,  0.1332747 ,
+         0.14077578,  0.14698304,  0.65168679],
+       [-0.31623161,  0.16268736,  0.50824507,  0.09734355, -0.17127408,
+         0.17601571, -0.1585508 , -0.11437799,  0.11270129, -0.37416315,
+        -0.55297481, -0.05407248, -0.21400918],
+       [-0.33473347,  0.02103948,  0.31571567, -0.41812043,  0.0862729 ,
+        -0.18341613, -0.12897037,  0.39650832, -0.40970236, -0.22371964,
+         0.27937982, -0.21031329,  0.24058638]]), None)
+<<shrink_cov: [[ 1.12012574e+00  2.07904976e-02  4.18648978e-03 -5.91056494e-02
+  -6.68962213e-02  6.37090470e-02  8.33607282e-02 -9.55550897e-02
+   2.18070621e-01 -2.33690813e-05  1.23215251e-01 -6.67539609e-02
+  -1.20272085e-01]
+ [ 2.07904976e-02  6.23135292e-01  1.43101651e-01  3.28905324e-02
+   1.30302546e-01 -1.51426631e-02  5.71694143e-04  1.69922568e-01
+   1.08220212e-01  1.26574668e-01 -1.74090912e-01 -8.73120431e-02
+   6.01692588e-02]
+ [ 4.18648978e-03  1.43101651e-01  9.67172778e-01 -1.06137914e-01
+  -4.45229016e-02  1.32884409e-03 -1.47519791e-02  2.49756400e-02
+  -3.24682613e-02 -2.36357361e-01  5.06701604e-02 -3.31725270e-02
+   4.35839275e-02]
+ [-5.91056494e-02  3.28905324e-02 -1.06137914e-01  9.97355165e-01
+   9.71479906e-02 -8.36856161e-02 -1.69918001e-02 -1.52324378e-01
+   1.33234449e-01  8.34669827e-02 -1.86552452e-01  2.03759434e-01
+   1.15179971e-01]
+ [-6.68962213e-02  1.30302546e-01 -4.45229016e-02  9.71479906e-02
+   1.10862533e+00 -7.22727333e-02 -4.23154526e-02 -6.07700522e-02
+  -1.36174296e-01 -1.11455522e-02 -1.36015951e-02  6.90195242e-02
+   1.00394425e-01]
+ [ 6.37090470e-02 -1.51426631e-02  1.32884409e-03 -8.36856161e-02
+  -7.22727333e-02  1.01989513e+00  9.85743579e-03 -1.08193321e-01
+   6.28799088e-02 -3.44539998e-02  6.52064368e-04  8.12527131e-02
+  -2.80489694e-02]
+ [ 8.33607282e-02  5.71694143e-04 -1.47519791e-02 -1.69918001e-02
+  -4.23154526e-02  9.85743579e-03  1.03293101e+00 -6.29301678e-02
+  -5.50853944e-03 -1.32086752e-02  2.02953020e-03 -9.24083898e-03
+  -2.19341372e-02]
+ [-9.55550897e-02  1.69922568e-01  2.49756400e-02 -1.52324378e-01
+  -6.07700522e-02 -1.08193321e-01 -6.29301678e-02  8.15158976e-01
+  -1.10585519e-01 -7.83785505e-02  1.64465456e-01  2.12610510e-02
+   6.80876533e-02]
+ [ 2.18070621e-01  1.08220212e-01 -3.24682613e-02  1.33234449e-01
+  -1.36174296e-01  6.28799088e-02 -5.50853944e-03 -1.10585519e-01
+   8.23846384e-01 -5.46842517e-03 -4.06823343e-02  9.84298004e-02
+  -8.89132712e-02]
+ [-2.33690813e-05  1.26574668e-01 -2.36357361e-01  8.34669827e-02
+  -1.11455522e-02 -3.44539998e-02 -1.32086752e-02 -7.83785505e-02
+  -5.46842517e-03  8.22831873e-01 -6.39772440e-03  1.27918787e-01
+   7.34239487e-02]
+ [ 1.23215251e-01 -1.74090912e-01  5.06701604e-02 -1.86552452e-01
+  -1.36015951e-02  6.52064368e-04  2.02953020e-03  1.64465456e-01
+  -4.06823343e-02 -6.39772440e-03  9.48549935e-01 -6.54315181e-03
+   2.93000702e-02]
+ [-6.67539609e-02 -8.73120431e-02 -3.31725270e-02  2.03759434e-01
+   6.90195242e-02  8.12527131e-02 -9.24083898e-03  2.12610510e-02
+   9.84298004e-02  1.27918787e-01 -6.54315181e-03  7.43499964e-01
+  -1.12510746e-02]
+ [-1.20272085e-01  6.01692588e-02  4.35839275e-02  1.15179971e-01
+   1.00394425e-01 -2.80489694e-02 -2.19341372e-02  6.80876533e-02
+  -8.89132712e-02  7.34239487e-02  2.93000702e-02 -1.12510746e-02
+   1.10908423e+00]]
+>>eye: /home/eugenio/.local/lib/python3.11/site-packages/numpy/lib/twodim_base.py
+<<eye: [[1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]]
+>>_sum_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<_sum_dispatcher: (array([ 2.07904976e-02,  4.18648978e-03, -5.91056494e-02, -6.68962213e-02,
+        6.37090470e-02,  8.33607282e-02, -9.55550897e-02,  2.18070621e-01,
+       -2.33690813e-05,  1.23215251e-01, -6.67539609e-02, -1.20272085e-01,
+        2.07904976e-02,  1.43101651e-01,  3.28905324e-02,  1.30302546e-01,
+       -1.51426631e-02,  5.71694143e-04,  1.69922568e-01,  1.08220212e-01,
+        1.26574668e-01, -1.74090912e-01, -8.73120431e-02,  6.01692588e-02,
+        4.18648978e-03,  1.43101651e-01, -1.06137914e-01, -4.45229016e-02,
+        1.32884409e-03, -1.47519791e-02,  2.49756400e-02, -3.24682613e-02,
+       -2.36357361e-01,  5.06701604e-02, -3.31725270e-02,  4.35839275e-02,
+       -5.91056494e-02,  3.28905324e-02, -1.06137914e-01,  9.71479906e-02,
+       -8.36856161e-02, -1.69918001e-02, -1.52324378e-01,  1.33234449e-01,
+        8.34669827e-02, -1.86552452e-01,  2.03759434e-01,  1.15179971e-01,
+       -6.68962213e-02,  1.30302546e-01, -4.45229016e-02,  9.71479906e-02,
+       -7.22727333e-02, -4.23154526e-02, -6.07700522e-02, -1.36174296e-01,
+       -1.11455522e-02, -1.36015951e-02,  6.90195242e-02,  1.00394425e-01,
+        6.37090470e-02, -1.51426631e-02,  1.32884409e-03, -8.36856161e-02,
+       -7.22727333e-02,  9.85743579e-03, -1.08193321e-01,  6.28799088e-02,
+       -3.44539998e-02,  6.52064368e-04,  8.12527131e-02, -2.80489694e-02,
+        8.33607282e-02,  5.71694143e-04, -1.47519791e-02, -1.69918001e-02,
+       -4.23154526e-02,  9.85743579e-03, -6.29301678e-02, -5.50853944e-03,
+       -1.32086752e-02,  2.02953020e-03, -9.24083898e-03, -2.19341372e-02,
+       -9.55550897e-02,  1.69922568e-01,  2.49756400e-02, -1.52324378e-01,
+       -6.07700522e-02, -1.08193321e-01, -6.29301678e-02, -1.10585519e-01,
+       -7.83785505e-02,  1.64465456e-01,  2.12610510e-02,  6.80876533e-02,
+        2.18070621e-01,  1.08220212e-01, -3.24682613e-02,  1.33234449e-01,
+       -1.36174296e-01,  6.28799088e-02, -5.50853944e-03, -1.10585519e-01,
+       -5.46842517e-03, -4.06823343e-02,  9.84298004e-02, -8.89132712e-02,
+       -2.33690813e-05,  1.26574668e-01, -2.36357361e-01,  8.34669827e-02,
+       -1.11455522e-02, -3.44539998e-02, -1.32086752e-02, -7.83785505e-02,
+       -5.46842517e-03, -6.39772440e-03,  1.27918787e-01,  7.34239487e-02,
+        1.23215251e-01, -1.74090912e-01,  5.06701604e-02, -1.86552452e-01,
+       -1.36015951e-02,  6.52064368e-04,  2.02953020e-03,  1.64465456e-01,
+       -4.06823343e-02, -6.39772440e-03, -6.54315181e-03,  2.93000702e-02,
+       -6.67539609e-02, -8.73120431e-02, -3.31725270e-02,  2.03759434e-01,
+        6.90195242e-02,  8.12527131e-02, -9.24083898e-03,  2.12610510e-02,
+        9.84298004e-02,  1.27918787e-01, -6.54315181e-03, -1.12510746e-02,
+       -1.20272085e-01,  6.01692588e-02,  4.35839275e-02,  1.15179971e-01,
+        1.00394425e-01, -2.80489694e-02, -2.19341372e-02,  6.80876533e-02,
+       -8.89132712e-02,  7.34239487e-02,  2.93000702e-02, -1.12510746e-02]), None)
+>>sum: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>_wrapreduction: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>><dictcomp>: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<<<dictcomp>: {}
+<<<_wrapreduction: 0.7745399316119687
+<<sum: 0.7745399316119687
+>>n_choose_k: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/analytic_shrinkage/nonlinshrink/test/test_analytic_shrinkage_copy.py
+>>>factorial: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/analytic_shrinkage/nonlinshrink/test/test_analytic_shrinkage_copy.py
+>>>>_prod_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<<_prod_dispatcher: (range(1, 14), None)
+>>>>prod: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>>>_wrapreduction: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>>>><dictcomp>: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<<<<<dictcomp>: {}
+<<<<<_wrapreduction: 6227020800
+<<<<prod: 6227020800
+<<<factorial: 6227020800
+>>>factorial: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/analytic_shrinkage/nonlinshrink/test/test_analytic_shrinkage_copy.py
+>>>>_prod_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<<_prod_dispatcher: (range(1, 3), None)
+>>>>prod: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>>>_wrapreduction: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>>>><dictcomp>: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<<<<<dictcomp>: {}
+<<<<<_wrapreduction: 2
+<<<<prod: 2
+<<<factorial: 2
+>>>factorial: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/analytic_shrinkage/nonlinshrink/test/test_analytic_shrinkage_copy.py
+>>>>_prod_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<<_prod_dispatcher: (range(1, 12), None)
+>>>>prod: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>>>_wrapreduction: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>>>><dictcomp>: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<<<<<dictcomp>: {}
+<<<<<_wrapreduction: 39916800
+<<<<prod: 39916800
+<<<factorial: 39916800
+<<n_choose_k: 78.0
+>>_diag_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/lib/twodim_base.py
+<<_diag_dispatcher: (array([[ 1.12012574e+00,  2.07904976e-02,  4.18648978e-03,
+        -5.91056494e-02, -6.68962213e-02,  6.37090470e-02,
+         8.33607282e-02, -9.55550897e-02,  2.18070621e-01,
+        -2.33690813e-05,  1.23215251e-01, -6.67539609e-02,
+        -1.20272085e-01],
+       [ 2.07904976e-02,  6.23135292e-01,  1.43101651e-01,
+         3.28905324e-02,  1.30302546e-01, -1.51426631e-02,
+         5.71694143e-04,  1.69922568e-01,  1.08220212e-01,
+         1.26574668e-01, -1.74090912e-01, -8.73120431e-02,
+         6.01692588e-02],
+       [ 4.18648978e-03,  1.43101651e-01,  9.67172778e-01,
+        -1.06137914e-01, -4.45229016e-02,  1.32884409e-03,
+        -1.47519791e-02,  2.49756400e-02, -3.24682613e-02,
+        -2.36357361e-01,  5.06701604e-02, -3.31725270e-02,
+         4.35839275e-02],
+       [-5.91056494e-02,  3.28905324e-02, -1.06137914e-01,
+         9.97355165e-01,  9.71479906e-02, -8.36856161e-02,
+        -1.69918001e-02, -1.52324378e-01,  1.33234449e-01,
+         8.34669827e-02, -1.86552452e-01,  2.03759434e-01,
+         1.15179971e-01],
+       [-6.68962213e-02,  1.30302546e-01, -4.45229016e-02,
+         9.71479906e-02,  1.10862533e+00, -7.22727333e-02,
+        -4.23154526e-02, -6.07700522e-02, -1.36174296e-01,
+        -1.11455522e-02, -1.36015951e-02,  6.90195242e-02,
+         1.00394425e-01],
+       [ 6.37090470e-02, -1.51426631e-02,  1.32884409e-03,
+        -8.36856161e-02, -7.22727333e-02,  1.01989513e+00,
+         9.85743579e-03, -1.08193321e-01,  6.28799088e-02,
+        -3.44539998e-02,  6.52064368e-04,  8.12527131e-02,
+        -2.80489694e-02],
+       [ 8.33607282e-02,  5.71694143e-04, -1.47519791e-02,
+        -1.69918001e-02, -4.23154526e-02,  9.85743579e-03,
+         1.03293101e+00, -6.29301678e-02, -5.50853944e-03,
+        -1.32086752e-02,  2.02953020e-03, -9.24083898e-03,
+        -2.19341372e-02],
+       [-9.55550897e-02,  1.69922568e-01,  2.49756400e-02,
+        -1.52324378e-01, -6.07700522e-02, -1.08193321e-01,
+        -6.29301678e-02,  8.15158976e-01, -1.10585519e-01,
+        -7.83785505e-02,  1.64465456e-01,  2.12610510e-02,
+         6.80876533e-02],
+       [ 2.18070621e-01,  1.08220212e-01, -3.24682613e-02,
+         1.33234449e-01, -1.36174296e-01,  6.28799088e-02,
+        -5.50853944e-03, -1.10585519e-01,  8.23846384e-01,
+        -5.46842517e-03, -4.06823343e-02,  9.84298004e-02,
+        -8.89132712e-02],
+       [-2.33690813e-05,  1.26574668e-01, -2.36357361e-01,
+         8.34669827e-02, -1.11455522e-02, -3.44539998e-02,
+        -1.32086752e-02, -7.83785505e-02, -5.46842517e-03,
+         8.22831873e-01, -6.39772440e-03,  1.27918787e-01,
+         7.34239487e-02],
+       [ 1.23215251e-01, -1.74090912e-01,  5.06701604e-02,
+        -1.86552452e-01, -1.36015951e-02,  6.52064368e-04,
+         2.02953020e-03,  1.64465456e-01, -4.06823343e-02,
+        -6.39772440e-03,  9.48549935e-01, -6.54315181e-03,
+         2.93000702e-02],
+       [-6.67539609e-02, -8.73120431e-02, -3.31725270e-02,
+         2.03759434e-01,  6.90195242e-02,  8.12527131e-02,
+        -9.24083898e-03,  2.12610510e-02,  9.84298004e-02,
+         1.27918787e-01, -6.54315181e-03,  7.43499964e-01,
+        -1.12510746e-02],
+       [-1.20272085e-01,  6.01692588e-02,  4.35839275e-02,
+         1.15179971e-01,  1.00394425e-01, -2.80489694e-02,
+        -2.19341372e-02,  6.80876533e-02, -8.89132712e-02,
+         7.34239487e-02,  2.93000702e-02, -1.12510746e-02,
+         1.10908423e+00]]),)
+>>diag: /home/eugenio/.local/lib/python3.11/site-packages/numpy/lib/twodim_base.py
+>>>_diagonal_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<_diagonal_dispatcher: (array([[ 1.12012574e+00,  2.07904976e-02,  4.18648978e-03,
+        -5.91056494e-02, -6.68962213e-02,  6.37090470e-02,
+         8.33607282e-02, -9.55550897e-02,  2.18070621e-01,
+        -2.33690813e-05,  1.23215251e-01, -6.67539609e-02,
+        -1.20272085e-01],
+       [ 2.07904976e-02,  6.23135292e-01,  1.43101651e-01,
+         3.28905324e-02,  1.30302546e-01, -1.51426631e-02,
+         5.71694143e-04,  1.69922568e-01,  1.08220212e-01,
+         1.26574668e-01, -1.74090912e-01, -8.73120431e-02,
+         6.01692588e-02],
+       [ 4.18648978e-03,  1.43101651e-01,  9.67172778e-01,
+        -1.06137914e-01, -4.45229016e-02,  1.32884409e-03,
+        -1.47519791e-02,  2.49756400e-02, -3.24682613e-02,
+        -2.36357361e-01,  5.06701604e-02, -3.31725270e-02,
+         4.35839275e-02],
+       [-5.91056494e-02,  3.28905324e-02, -1.06137914e-01,
+         9.97355165e-01,  9.71479906e-02, -8.36856161e-02,
+        -1.69918001e-02, -1.52324378e-01,  1.33234449e-01,
+         8.34669827e-02, -1.86552452e-01,  2.03759434e-01,
+         1.15179971e-01],
+       [-6.68962213e-02,  1.30302546e-01, -4.45229016e-02,
+         9.71479906e-02,  1.10862533e+00, -7.22727333e-02,
+        -4.23154526e-02, -6.07700522e-02, -1.36174296e-01,
+        -1.11455522e-02, -1.36015951e-02,  6.90195242e-02,
+         1.00394425e-01],
+       [ 6.37090470e-02, -1.51426631e-02,  1.32884409e-03,
+        -8.36856161e-02, -7.22727333e-02,  1.01989513e+00,
+         9.85743579e-03, -1.08193321e-01,  6.28799088e-02,
+        -3.44539998e-02,  6.52064368e-04,  8.12527131e-02,
+        -2.80489694e-02],
+       [ 8.33607282e-02,  5.71694143e-04, -1.47519791e-02,
+        -1.69918001e-02, -4.23154526e-02,  9.85743579e-03,
+         1.03293101e+00, -6.29301678e-02, -5.50853944e-03,
+        -1.32086752e-02,  2.02953020e-03, -9.24083898e-03,
+        -2.19341372e-02],
+       [-9.55550897e-02,  1.69922568e-01,  2.49756400e-02,
+        -1.52324378e-01, -6.07700522e-02, -1.08193321e-01,
+        -6.29301678e-02,  8.15158976e-01, -1.10585519e-01,
+        -7.83785505e-02,  1.64465456e-01,  2.12610510e-02,
+         6.80876533e-02],
+       [ 2.18070621e-01,  1.08220212e-01, -3.24682613e-02,
+         1.33234449e-01, -1.36174296e-01,  6.28799088e-02,
+        -5.50853944e-03, -1.10585519e-01,  8.23846384e-01,
+        -5.46842517e-03, -4.06823343e-02,  9.84298004e-02,
+        -8.89132712e-02],
+       [-2.33690813e-05,  1.26574668e-01, -2.36357361e-01,
+         8.34669827e-02, -1.11455522e-02, -3.44539998e-02,
+        -1.32086752e-02, -7.83785505e-02, -5.46842517e-03,
+         8.22831873e-01, -6.39772440e-03,  1.27918787e-01,
+         7.34239487e-02],
+       [ 1.23215251e-01, -1.74090912e-01,  5.06701604e-02,
+        -1.86552452e-01, -1.36015951e-02,  6.52064368e-04,
+         2.02953020e-03,  1.64465456e-01, -4.06823343e-02,
+        -6.39772440e-03,  9.48549935e-01, -6.54315181e-03,
+         2.93000702e-02],
+       [-6.67539609e-02, -8.73120431e-02, -3.31725270e-02,
+         2.03759434e-01,  6.90195242e-02,  8.12527131e-02,
+        -9.24083898e-03,  2.12610510e-02,  9.84298004e-02,
+         1.27918787e-01, -6.54315181e-03,  7.43499964e-01,
+        -1.12510746e-02],
+       [-1.20272085e-01,  6.01692588e-02,  4.35839275e-02,
+         1.15179971e-01,  1.00394425e-01, -2.80489694e-02,
+        -2.19341372e-02,  6.80876533e-02, -8.89132712e-02,
+         7.34239487e-02,  2.93000702e-02, -1.12510746e-02,
+         1.10908423e+00]]),)
+>>>diagonal: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<diagonal: [1.12012574 0.62313529 0.96717278 0.99735516 1.10862533 1.01989513
+ 1.03293101 0.81515898 0.82384638 0.82283187 0.94854994 0.74349996
+ 1.10908423]
+<<diag: [1.12012574 0.62313529 0.96717278 0.99735516 1.10862533 1.01989513
+ 1.03293101 0.81515898 0.82384638 0.82283187 0.94854994 0.74349996
+ 1.10908423]
+>>_sum_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<_sum_dispatcher: (array([1.12012574, 0.62313529, 0.96717278, 0.99735516, 1.10862533,
+       1.01989513, 1.03293101, 0.81515898, 0.82384638, 0.82283187,
+       0.94854994, 0.74349996, 1.10908423]), None)
+>>sum: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>_wrapreduction: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+>>>><dictcomp>: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+<<<<<dictcomp>: {}
+<<<_wrapreduction: 12.132211807182108
+<<sum: 12.132211807182108
+<test_large_p: None
+>cast: /usr/lib/python3.11/typing.py
+<cast: None
+>__exit__: /usr/lib/python3.11/contextlib.py
+>>reset: <frozen codecs>
+>>>reset: <frozen codecs>
+<<<reset: None
+<<reset: None
+>>reset: <frozen codecs>
+<<reset: None
+>>decode: <frozen codecs>
+<<decode: 
+>>reset: <frozen codecs>
+>>>reset: <frozen codecs>
+<<<reset: None
+<<reset: None
+>>reset: <frozen codecs>
+<<reset: None
+>>reset: <frozen codecs>
+>>>reset: <frozen codecs>
+<<<reset: None
+<<reset: None
+>>reset: <frozen codecs>
+<<reset: None
+>>decode: <frozen codecs>
+<<decode: 
+>>reset: <frozen codecs>
+>>>reset: <frozen codecs>
+<<<reset: None
+<<reset: None
+>>reset: <frozen codecs>
+<<reset: None
+<__exit__: False
+>getLogger: /usr/lib/python3.11/logging/__init__.py
+<getLogger: <RootLogger root (WARNING)>
+>removeHandler: /usr/lib/python3.11/logging/__init__.py
+>>_acquireLock: /usr/lib/python3.11/logging/__init__.py
+<<_acquireLock: None
+>>_releaseLock: /usr/lib/python3.11/logging/__init__.py
+<<_releaseLock: None
+<removeHandler: None
+>getLogger: /usr/lib/python3.11/logging/__init__.py
+<getLogger: <RootLogger root (WARNING)>
+>removeHandler: /usr/lib/python3.11/logging/__init__.py
+>>_acquireLock: /usr/lib/python3.11/logging/__init__.py
+<<_acquireLock: None
+>>_releaseLock: /usr/lib/python3.11/logging/__init__.py
+<<_releaseLock: None
+<removeHandler: None
+>__hash__: /usr/lib/python3.11/pathlib.py
+<__hash__: -8452545354329954521
+>__eq__: /usr/lib/python3.11/pathlib.py
+>>_cparts: /usr/lib/python3.11/pathlib.py
+<<_cparts: ['/', 'home', 'eugenio', 'Área de trabalho', 'Grad', 'TT', 'projetos-TT', 'analytic_shrinkage', 'nonlinshrink', 'test', 'test_analytic_shrinkage_copy.py']
+>>_cparts: /usr/lib/python3.11/pathlib.py
+<<_cparts: ['/', 'home', 'eugenio', 'Área de trabalho', 'Grad', 'TT', 'projetos-TT', 'analytic_shrinkage', 'nonlinshrink', 'test', 'test_analytic_shrinkage_copy.py']
+<__eq__: True
+>__hash__: /usr/lib/python3.11/pathlib.py
+<__hash__: 5645248148157726380
+>pytest_runtest_makereport: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/Analise/analise.py
+<pytest_runtest_makereport: None
+>cast: /usr/lib/python3.11/typing.py
+<cast: None
+>pytest_runtest_makereport: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/Analise/analise.py
+<pytest_runtest_makereport: None
+>__hash__: /usr/lib/python3.11/pathlib.py
+<__hash__: -8452545354329954521
+>__eq__: /usr/lib/python3.11/pathlib.py
+>>_cparts: /usr/lib/python3.11/pathlib.py
+<<_cparts: ['/', 'home', 'eugenio', 'Área de trabalho', 'Grad', 'TT', 'projetos-TT', 'analytic_shrinkage', 'nonlinshrink', 'test', 'test_analytic_shrinkage_copy.py']
+>>_cparts: /usr/lib/python3.11/pathlib.py
+<<_cparts: ['/', 'home', 'eugenio', 'Área de trabalho', 'Grad', 'TT', 'projetos-TT', 'analytic_shrinkage', 'nonlinshrink', 'test', 'test_analytic_shrinkage_copy.py']
+<__eq__: True
+>__hash__: /usr/lib/python3.11/pathlib.py
+<__hash__: 5645248148157726380
+>getLogger: /usr/lib/python3.11/logging/__init__.py
+<getLogger: <RootLogger root (WARNING)>
+>addHandler: /usr/lib/python3.11/logging/__init__.py
+>>_acquireLock: /usr/lib/python3.11/logging/__init__.py
+<<_acquireLock: None
+>>_releaseLock: /usr/lib/python3.11/logging/__init__.py
+<<_releaseLock: None
+<addHandler: None
+>getLogger: /usr/lib/python3.11/logging/__init__.py
+<getLogger: <RootLogger root (WARNING)>
+>addHandler: /usr/lib/python3.11/logging/__init__.py
+>>_acquireLock: /usr/lib/python3.11/logging/__init__.py
+<<_acquireLock: None
+>>_releaseLock: /usr/lib/python3.11/logging/__init__.py
+<<_releaseLock: None
+<addHandler: None
+>cast: /usr/lib/python3.11/typing.py
+<cast: {'setup': [], 'call': []}
+>helper: /usr/lib/python3.11/contextlib.py
+>>__init__: /usr/lib/python3.11/contextlib.py
+<<__init__: None
+<helper: <contextlib._GeneratorContextManager object at 0x7fa4773575d0>
+>__enter__: /usr/lib/python3.11/contextlib.py
+<__enter__: None
+>__setitem__: <frozen os>
+>>encode: <frozen os>
+<<encode: b'PYTEST_CURRENT_TEST'
+>>encode: <frozen os>
+<<encode: b'analytic_shrinkage/nonlinshrink/test/test_analytic_shrinkage_copy.py::test_large_p (teardown)'
+<__setitem__: None
+>end: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/conftest.py

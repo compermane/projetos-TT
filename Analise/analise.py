@@ -5,6 +5,7 @@ from ast import parse, walk, FunctionDef
 from shutil import copyfile
 from atexit import register
 from time import time
+from difflib import unified_diff
 import trace
 import subprocess
 import pytest
@@ -366,4 +367,73 @@ def profiling(modName: str):
                 with open(f"Stats-{test}.txt", "w") as f:
                     stats.stream = f
                     stats.print_stats()
-                    
+
+def readLines(fileName: str) -> list:
+    with open(fileName, "r") as f:
+        lines = f.readlines()
+    f.close()
+
+    return lines
+
+def traceDiff(dirName: str) -> None:
+    """Funcao para comparar o trace dos diversos testes de um repositório
+    :param dirName: diretório onde se encontram o trace dos testes
+    :return: None
+    """
+
+    def separateDiff(diff: list) -> list:
+        current_diff = []
+        all_diffs = []
+
+        for line in diff:
+            if line.startswith("@@"):
+                if current_diff:
+                    all_diffs.append(current_diff)
+                current_diff = [line]
+            else:
+                current_diff.append(line)
+
+        if current_diff:
+            all_diffs.append(current_diff)
+
+        return all_diffs
+
+    cwd = getcwd()
+    # Lista contento todos os diretórios dos testes
+    testDir = [dir for dir in listdir(dirName) if path.isdir(path.join(dirName, dir))]
+    testDir = testDir[::-1]
+
+    # Entra no diretorio dos contendo o trace dos testes
+    chdir(dirName)
+    for dir in testDir:
+        # Entra no diretório de um dos testes
+        chdir(dir)
+        runs = [run for run in listdir(".")]
+        print(runs)
+        
+        i = 0
+        """len(runs) - 1 """
+        while i < 1:
+            j = i + 1
+            mainRun = readLines(f"Run-{i}/calls.txt")
+            # len(runs)
+            while j < 2:
+                secondaryRun = readLines(f"Run-{j}/calls.txt")
+
+                # Código para encontrar o diff
+                diff = list()
+                for line in unified_diff(mainRun, secondaryRun, lineterm = ''):
+                    diff.append(line)
+                j += 1
+
+                separatedDiffs = separateDiff(diff)
+                for d in separatedDiffs:
+                    print(d)
+                # with open("test.txt", "w") as f:
+                #     for line in diff:
+                #         print(line, file = f)
+                #     f.close()
+
+            i += 1
+
+        chdir(cwd + "/" + dirName)

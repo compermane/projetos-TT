@@ -1,0 +1,672 @@
+--- 
++++ 
+@@ -91,7 +91,7 @@
+ >helper: /usr/lib/python3.11/contextlib.py
+
+ >>__init__: /usr/lib/python3.11/contextlib.py
+
+ <<__init__: None
+
+-<helper: <contextlib._GeneratorContextManager object at 0x7fa4779d6b50>
+
++<helper: <contextlib._GeneratorContextManager object at 0x7fa477bacad0>
+
+ >__enter__: /usr/lib/python3.11/contextlib.py
+
+ <__enter__: None
+
+ >cast: /usr/lib/python3.11/typing.py
+
+@@ -144,7 +144,7 @@
+ >>svd: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+
+ >>>_makearray: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+
+ <<<_makearray: (array([[1., 0.],
+
+-       [0., 1.]]), <built-in method __array_prepare__ of numpy.ndarray object at 0x7fa47787d1d0>)
+
++       [0., 1.]]), <built-in method __array_prepare__ of numpy.ndarray object at 0x7fa47787cd50>)
+
+ >>>_assert_stacked_2d: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+
+ <<<_assert_stacked_2d: None
+
+ >>>_commonType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+
+@@ -213,7 +213,7 @@
+ >>>>>helper: /usr/lib/python3.11/contextlib.py
+
+ >>>>>>__init__: /usr/lib/python3.11/contextlib.py
+
+ <<<<<<__init__: None
+
+-<<<<<helper: <contextlib._GeneratorContextManager object at 0x7fa477bf4250>
+
++<<<<<helper: <contextlib._GeneratorContextManager object at 0x7fa477276410>
+
+ >>>>>__enter__: /usr/lib/python3.11/contextlib.py
+
+ >>>>>>_no_nep50_warning: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+
+ <<<<<<_no_nep50_warning: None
+
+@@ -243,20 +243,20 @@
+ <<<all: True
+
+ <<allclose: True
+
+ >>dot: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/multiarray.py
+
+-<<dot: (array([[-3.58693776e-01,  1.91084893e-01],
+
+-       [-3.14636367e-01, -1.51126475e+00],
+
+-       [ 6.82657582e-01,  5.99614569e-01],
+
+-       [-4.93327596e-01, -1.21100284e+00],
+
+-       [-3.58806586e+00, -6.82319043e-01],
+
+-       [ 1.74091138e-04,  1.93355923e+00],
+
+-       [-3.42312491e-01,  6.42997150e-01],
+
+-       [-3.30295072e-01,  4.23233363e-02],
+
+-       [-1.56863041e-01, -1.07450865e-01],
+
+-       [ 9.11417391e-02, -1.26727045e-01],
+
+-       [-1.26343268e+00,  1.15938880e+00],
+
+-       [-1.69371779e+00,  1.25888491e+00],
+
+-       [ 9.35501941e-01, -4.99009448e-02],
+
+-       [ 7.81456628e-01,  7.77991058e-01]]), array([[1., 0.],
+
++<<dot: (array([[-1.05332776,  0.30259971],
+
++       [ 0.43124013,  0.47556307],
+
++       [ 0.32554819, -0.18038373],
+
++       [-0.12753288,  1.93000048],
+
++       [-0.85919105, -0.71039885],
+
++       [-0.04564406, -0.67850515],
+
++       [-0.43753774, -0.04622361],
+
++       [-0.02609667, -0.70001614],
+
++       [-0.33355067, -1.71615517],
+
++       [ 0.19988004,  1.24940241],
+
++       [-1.19251118, -0.43100937],
+
++       [-0.60235781, -0.90124109],
+
++       [-1.61291541,  0.6190977 ],
+
++       [ 1.46916337, -0.33063149]]), array([[1., 0.],
+
+        [0., 1.]]), None)
+
+ >>ones: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/numeric.py
+
+ >>>copyto: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/multiarray.py
+
+@@ -299,35 +299,35 @@
+ <<dot: (array([[ 1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,
+
+          1.],
+
+        [ 0.,  1.,  2.,  3.,  4.,  5.,  6.,  7.,  8.,  9., 10., 11., 12.,
+
+-        13.]]), array([[ 0.64130622,  1.19108489],
+
+-       [ 1.68536363,  0.48873525],
+
+-       [ 3.68265758,  3.59961457],
+
+-       [ 3.5066724 ,  2.78899716],
+
+-       [ 1.41193414,  4.31768096],
+
+-       [ 6.00017409,  7.93355923],
+
+-       [ 6.65768751,  7.64299715],
+
+-       [ 7.66970493,  8.04232334],
+
+-       [ 8.84313696,  8.89254913],
+
+-       [10.09114174,  9.87327295],
+
+-       [ 9.73656732, 12.1593888 ],
+
+-       [10.30628221, 13.25888491],
+
+-       [13.93550194, 12.95009906],
+
+-       [14.78145663, 14.77799106]]), None)
+
++        13.]]), array([[-0.05332776,  1.30259971],
+
++       [ 2.43124013,  2.47556307],
+
++       [ 3.32554819,  2.81961627],
+
++       [ 3.87246712,  5.93000048],
+
++       [ 4.14080895,  4.28960115],
+
++       [ 5.95435594,  5.32149485],
+
++       [ 6.56246226,  6.95377639],
+
++       [ 7.97390333,  7.29998386],
+
++       [ 8.66644933,  7.28384483],
+
++       [10.19988004, 11.24940241],
+
++       [ 9.80748882, 10.56899063],
+
++       [11.39764219, 11.09875891],
+
++       [11.38708459, 13.6190977 ],
+
++       [15.46916337, 13.66936851]]), None)
+
+ >>_solve_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+
+ <<_solve_dispatcher: (array([[ 14.,  91.],
+
+-       [ 91., 819.]]), array([[ 98.9495873 , 107.91717846],
+
+-       [880.53847079, 950.10426621]]))
+
++       [ 91., 819.]]), array([[101.1351665 , 103.88209877],
+
++       [884.55045641, 890.91581892]]))
+
+ >>solve: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+
+ >>>_makearray: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+
+ <<<_makearray: (array([[ 14.,  91.],
+
+-       [ 91., 819.]]), <built-in method __array_prepare__ of numpy.ndarray object at 0x7fa47787d2f0>)
+
++       [ 91., 819.]]), <built-in method __array_prepare__ of numpy.ndarray object at 0x7fa47787c4b0>)
+
+ >>>_assert_stacked_2d: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+
+ <<<_assert_stacked_2d: None
+
+ >>>_assert_stacked_square: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+
+ <<<_assert_stacked_square: None
+
+ >>>_makearray: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+
+-<<<_makearray: (array([[ 98.9495873 , 107.91717846],
+
+-       [880.53847079, 950.10426621]]), <built-in method __array_prepare__ of numpy.ndarray object at 0x7fa47787d770>)
+
++<<<_makearray: (array([[101.1351665 , 103.88209877],
+
++       [884.55045641, 890.91581892]]), <built-in method __array_prepare__ of numpy.ndarray object at 0x7fa47787d770>)
+
+ >>>_commonType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+
+ >>>>isComplexType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+
+ <<<<isComplexType: False
+
+@@ -342,8 +342,8 @@
+ <<<isComplexType: False
+
+ >>>get_linalg_error_extobj: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+
+ <<<get_linalg_error_extobj: [8192, 1536, <function _raise_linalgerror_singular at 0x7fa48e398720>]
+
+-<<solve: [[0.28593757 0.60429543]
+
+- [1.04336771 1.09293453]]
+
++<<solve: [[0.73331549 1.257802  ]
+
++ [0.99855769 0.94805352]]
+
+ >>dot: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/multiarray.py
+
+ <<dot: (array([[ 1.,  0.],
+
+        [ 1.,  1.],
+
+@@ -358,36 +358,36 @@
+        [ 1., 10.],
+
+        [ 1., 11.],
+
+        [ 1., 12.],
+
+-       [ 1., 13.]]), array([[0.28593757, 0.60429543],
+
+-       [1.04336771, 1.09293453]]), None)
+
++       [ 1., 13.]]), array([[0.73331549, 1.257802  ],
+
++       [0.99855769, 0.94805352]]), None)
+
+ >>shrink_cov: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/analytic_shrinkage/nonlinshrink/nonlinshrink.py
+
+ >>>dot: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/multiarray.py
+
+-<<<dot: (array([[ 0.35536866,  0.35605836,  1.3099846 ,  0.09063171, -3.04747426,
+
+-         0.49739799,  0.1115437 ,  0.08019341,  0.21025773,  0.41489481,
+
+-        -0.98304732, -1.45670014,  1.12915189,  0.93173887],
+
+-       [ 0.58678947, -1.20849471,  0.80945008, -1.09410187, -0.6583526 ,
+
+-         1.86459114,  0.48109453, -0.21251382, -0.45522255, -0.56743327,
+
+-         0.62574805,  0.63230962, -0.76941077, -0.0344533 ]]), array([[ 0.35536866,  0.58678947],
+
+-       [ 0.35605836, -1.20849471],
+
+-       [ 1.3099846 ,  0.80945008],
+
+-       [ 0.09063171, -1.09410187],
+
+-       [-3.04747426, -0.6583526 ],
+
+-       [ 0.49739799,  1.86459114],
+
+-       [ 0.1115437 ,  0.48109453],
+
+-       [ 0.08019341, -0.21251382],
+
+-       [ 0.21025773, -0.45522255],
+
+-       [ 0.41489481, -0.56743327],
+
+-       [-0.98304732,  0.62574805],
+
+-       [-1.45670014,  0.63230962],
+
+-       [ 1.12915189, -0.76941077],
+
+-       [ 0.93173887, -0.0344533 ]]), None)
+
++<<<dot: (array([[-0.78664324,  0.69936695,  0.59511732,  0.14347857, -0.58673729,
+
++         0.22825201, -0.16219936,  0.25068402, -0.05532767,  0.47954535,
+
++        -0.91140355, -0.31980787, -1.32892317,  1.75459793],
+
++       [ 0.04479771,  0.26970754, -0.33429278,  1.82803791, -0.76041495,
+
++        -0.67657478,  0.00765324, -0.59419281, -1.55838537,  1.45911868,
+
++        -0.16934662, -0.58763187,  0.9846534 ,  0.08687069]]), array([[-0.78664324,  0.04479771],
+
++       [ 0.69936695,  0.26970754],
+
++       [ 0.59511732, -0.33429278],
+
++       [ 0.14347857,  1.82803791],
+
++       [-0.58673729, -0.76041495],
+
++       [ 0.22825201, -0.67657478],
+
++       [-0.16219936,  0.00765324],
+
++       [ 0.25068402, -0.59419281],
+
++       [-0.05532767, -1.55838537],
+
++       [ 0.47954535,  1.45911868],
+
++       [-0.91140355, -0.16934662],
+
++       [-0.31980787, -0.58763187],
+
++       [-1.32892317,  0.9846534 ],
+
++       [ 1.75459793,  0.08687069]]), None)
+
+ >>>_eigvalsh_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+
+-<<<_eigvalsh_dispatcher: (array([[1.41487833, 0.07846403],
+
+-       [0.07846403, 0.81312968]]),)
+
++<<<_eigvalsh_dispatcher: (array([[0.66489936, 0.02753051],
+
++       [0.02753051, 0.90216682]]),)
+
+ >>>eigh: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+
+ >>>>_makearray: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+
+-<<<<_makearray: (array([[1.41487833, 0.07846403],
+
+-       [0.07846403, 0.81312968]]), <built-in method __array_prepare__ of numpy.ndarray object at 0x7fa47787d410>)
+
++<<<<_makearray: (array([[0.66489936, 0.02753051],
+
++       [0.02753051, 0.90216682]]), <built-in method __array_prepare__ of numpy.ndarray object at 0x7fa47787dcb0>)
+
+ >>>>_assert_stacked_2d: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+
+ <<<<_assert_stacked_2d: None
+
+ >>>>_assert_stacked_square: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+
+@@ -405,16 +405,16 @@
+ >>>>_realType: /home/eugenio/.local/lib/python3.11/site-packages/numpy/linalg/linalg.py
+
+ <<<<_realType: <class 'numpy.float64'>
+
+ >>>><lambda>: <string>
+
+-<<<<<lambda>: EighResult(eigenvalues=array([0.80306677, 1.42494124]), eigenvectors=array([[ 0.12720682, -0.99187621],
+
+-       [-0.99187621, -0.12720682]]))
+
+-<<<eigh: EighResult(eigenvalues=array([0.80306677, 1.42494124]), eigenvectors=array([[ 0.12720682, -0.99187621],
+
+-       [-0.99187621, -0.12720682]]))
+
++<<<<<lambda>: EighResult(eigenvalues=array([0.66174684, 0.90531934]), eigenvectors=array([[-0.9935075,  0.1137666],
+
++       [ 0.1137666,  0.9935075]]))
+
++<<<eigh: EighResult(eigenvalues=array([0.66174684, 0.90531934]), eigenvectors=array([[-0.9935075,  0.1137666],
+
++       [ 0.1137666,  0.9935075]]))
+
+ >>>repmat: /home/eugenio/.local/lib/python3.11/site-packages/numpy/matlib.py
+
+-<<<repmat: [[0.80306677 1.42494124]
+
+- [0.80306677 1.42494124]]
+
++<<<repmat: [[0.66174684 0.90531934]
+
++ [0.66174684 0.90531934]]
+
+ >>>_mean_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+
+-<<<_mean_dispatcher: (array([[2.85085696, 1.28588904],
+
+-       [1.05875906, 1.60668274]]), None, None)
+
++<<<_mean_dispatcher: (array([[3.45967424, 2.33696846],
+
++       [2.9683229 , 2.52886289]]), None, None)
+
+ >>>mean: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+
+ >>>>_mean: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_methods.py
+
+ >>>>>_count_reduce_items: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_methods.py
+
+@@ -422,7 +422,7 @@
+ >>>>>helper: /usr/lib/python3.11/contextlib.py
+
+ >>>>>>__init__: /usr/lib/python3.11/contextlib.py
+
+ <<<<<<__init__: None
+
+-<<<<<helper: <contextlib._GeneratorContextManager object at 0x7fa4775bc350>
+
++<<<<<helper: <contextlib._GeneratorContextManager object at 0x7fa48e3d2c50>
+
+ >>>>>__enter__: /usr/lib/python3.11/contextlib.py
+
+ >>>>>>_no_nep50_warning: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+
+ <<<<<<_no_nep50_warning: None
+
+@@ -431,11 +431,11 @@
+ >>>>>>_no_nep50_warning: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+
+ <<<<<<_no_nep50_warning: None
+
+ <<<<<__exit__: False
+
+-<<<<_mean: [2.068373  1.3327209]
+
+-<<<mean: [2.068373  1.3327209]
+
++<<<<_mean: [2.89832135 2.7485929 ]
+
++<<<mean: [2.89832135 2.7485929 ]
+
+ >>>_mean_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+
+-<<<_mean_dispatcher: (array([[ 0.        ,  0.28529597],
+
+-       [-0.72659308,  0.        ]]), None, None)
+
++<<<_mean_dispatcher: (array([[ 0.        ,  0.28985247],
+
++       [-0.5296434 ,  0.        ]]), None, None)
+
+ >>>mean: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+
+ >>>>_mean: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_methods.py
+
+ >>>>>_count_reduce_items: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_methods.py
+
+@@ -443,7 +443,7 @@
+ >>>>>helper: /usr/lib/python3.11/contextlib.py
+
+ >>>>>>__init__: /usr/lib/python3.11/contextlib.py
+
+ <<<<<<__init__: None
+
+-<<<<<helper: <contextlib._GeneratorContextManager object at 0x7fa4775bc350>
+
++<<<<<helper: <contextlib._GeneratorContextManager object at 0x7fa48e3d2c50>
+
+ >>>>>__enter__: /usr/lib/python3.11/contextlib.py
+
+ >>>>>>_no_nep50_warning: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+
+ <<<<<<_no_nep50_warning: None
+
+@@ -452,34 +452,34 @@
+ >>>>>>_no_nep50_warning: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/_ufunc_config.py
+
+ <<<<<<_no_nep50_warning: None
+
+ <<<<<__exit__: False
+
+-<<<<_mean: [ 0.14264799 -0.36329654]
+
+-<<<mean: [ 0.14264799 -0.36329654]
+
++<<<<_mean: [ 0.14492624 -0.2648217 ]
+
++<<<mean: [ 0.14492624 -0.2648217 ]
+
+ >>>_diag_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/lib/twodim_base.py
+
+-<<<_diag_dispatcher: (array([1.17550118, 1.07065761]),)
+
++<<<_diag_dispatcher: (array([0.91058222, 0.81531181]),)
+
+ >>>diag: /home/eugenio/.local/lib/python3.11/site-packages/numpy/lib/twodim_base.py
+
+-<<<diag: [[1.17550118 0.        ]
+
+- [0.         1.07065761]]
+
++<<<diag: [[0.91058222 0.        ]
+
++ [0.         0.81531181]]
+
+ >>>dot: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/multiarray.py
+
+-<<<dot: (array([[ 0.12720682, -0.99187621],
+
+-       [-0.99187621, -0.12720682]]), array([[1.17550118, 0.        ],
+
+-       [0.        , 1.07065761]]), None)
+
++<<<dot: (array([[-0.9935075,  0.1137666],
+
++       [ 0.1137666,  0.9935075]]), array([[0.91058222, 0.        ],
+
++       [0.        , 0.81531181]]), None)
+
+ >>>dot: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/multiarray.py
+
+-<<<dot: (array([[ 0.14953177, -1.06195981],
+
+-       [-1.16595166, -0.13619495]]), array([[ 0.12720682, -0.99187621],
+
+-       [-0.99187621, -0.12720682]]), None)
+
+-<<shrink_cov: [[ 1.07235414 -0.01322847]
+
+- [-0.01322847  1.17380465]]
+
++<<<dot: (array([[-0.90467027,  0.09275525],
+
++       [ 0.10359384,  0.8100184 ]]), array([[-0.9935075,  0.1137666],
+
++       [ 0.1137666,  0.9935075]]), None)
+
++<<shrink_cov: [[ 0.90934915 -0.01076822]
+
++ [-0.01076822  0.81654488]]
+
+ >>eye: /home/eugenio/.local/lib/python3.11/site-packages/numpy/lib/twodim_base.py
+
+ <<eye: [[1. 0.]
+
+  [0. 1.]]
+
+ >>_sum_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+
+-<<_sum_dispatcher: (array([-0.01322847, -0.01322847]), None)
+
++<<_sum_dispatcher: (array([-0.01076822, -0.01076822]), None)
+
+ >>sum: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+
+ >>>_wrapreduction: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+
+ >>>><dictcomp>: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+
+ <<<<<dictcomp>: {}
+
+-<<<_wrapreduction: -0.026456945525363394
+
+-<<sum: -0.026456945525363394
+
++<<<_wrapreduction: -0.02153644193820163
+
++<<sum: -0.02153644193820163
+
+ >>n_choose_k: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/analytic_shrinkage/nonlinshrink/test/test_analytic_shrinkage_copy.py
+
+ >>>factorial: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/analytic_shrinkage/nonlinshrink/test/test_analytic_shrinkage_copy.py
+
+ >>>>_prod_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+
+@@ -513,23 +513,23 @@
+ <<<factorial: 1.0
+
+ <<n_choose_k: 1.0
+
+ >>_diag_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/lib/twodim_base.py
+
+-<<_diag_dispatcher: (array([[ 1.07235414, -0.01322847],
+
+-       [-0.01322847,  1.17380465]]),)
+
++<<_diag_dispatcher: (array([[ 0.90934915, -0.01076822],
+
++       [-0.01076822,  0.81654488]]),)
+
+ >>diag: /home/eugenio/.local/lib/python3.11/site-packages/numpy/lib/twodim_base.py
+
+ >>>_diagonal_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+
+-<<<_diagonal_dispatcher: (array([[ 1.07235414, -0.01322847],
+
+-       [-0.01322847,  1.17380465]]),)
+
++<<<_diagonal_dispatcher: (array([[ 0.90934915, -0.01076822],
+
++       [-0.01076822,  0.81654488]]),)
+
+ >>>diagonal: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+
+-<<<diagonal: [1.07235414 1.17380465]
+
+-<<diag: [1.07235414 1.17380465]
+
++<<<diagonal: [0.90934915 0.81654488]
+
++<<diag: [0.90934915 0.81654488]
+
+ >>_sum_dispatcher: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+
+-<<_sum_dispatcher: (array([1.07235414, 1.17380465]), None)
+
++<<_sum_dispatcher: (array([0.90934915, 0.81654488]), None)
+
+ >>sum: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+
+ >>>_wrapreduction: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+
+ >>>><dictcomp>: /home/eugenio/.local/lib/python3.11/site-packages/numpy/core/fromnumeric.py
+
+ <<<<<dictcomp>: {}
+
+-<<<_wrapreduction: 2.2461587906923137
+
+-<<sum: 2.2461587906923137
+
++<<<_wrapreduction: 1.725894028291563
+
++<<sum: 1.725894028291563
+
+ <test_ols: None
+
+ >cast: /usr/lib/python3.11/typing.py
+
+ <cast: None
+
+@@ -626,7 +626,7 @@
+ >helper: /usr/lib/python3.11/contextlib.py
+
+ >>__init__: /usr/lib/python3.11/contextlib.py
+
+ <<__init__: None
+
+-<helper: <contextlib._GeneratorContextManager object at 0x7fa4779d7d10>
+
++<helper: <contextlib._GeneratorContextManager object at 0x7fa477cdaad0>
+
+ >__enter__: /usr/lib/python3.11/contextlib.py
+
+ <__enter__: None
+
+ >__setitem__: <frozen os>
+
