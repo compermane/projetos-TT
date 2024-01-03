@@ -413,11 +413,11 @@ def traceDiff(dirName: str) -> None:
         
         i = 0
         """len(runs) - 1 """
-        while i < 1:
+        while i < len(runs) - 2:
             j = i + 1
             mainRun = readLines(f"Run-{i}/calls.txt")
             # len(runs)
-            while j < 2:
+            while j < len(runs) - 1:
                 secondaryRun = readLines(f"Run-{j}/calls.txt")
 
                 # Código para encontrar o diff
@@ -427,12 +427,10 @@ def traceDiff(dirName: str) -> None:
                 j += 1
 
                 separatedDiffs = separateDiff(diff)
-                for d in separatedDiffs:
-                    print(d)
-                # with open("test.txt", "w") as f:
-                #     for line in diff:
-                #         print(line, file = f)
-                #     f.close()
+                with open("test.txt", "w") as f:
+                    for line in separatedDiffs:
+                        print(line, file = f)
+                    f.close()
 
             i += 1
 
