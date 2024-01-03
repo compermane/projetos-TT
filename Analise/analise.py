@@ -382,21 +382,24 @@ def traceDiff(dirName: str) -> None:
     """
 
     def separateDiff(diff: list) -> list:
-        current_diff = []
-        all_diffs = []
+        currentDiff = []
+        allDiffs = []
 
         for line in diff:
             if line.startswith("@@"):
-                if current_diff:
-                    all_diffs.append(current_diff)
-                current_diff = [line]
+                if currentDiff:
+                    if not any("at 0x" in line or "---" in line for line in currentDiff):
+                        allDiffs.append(currentDiff)
+                    currentDiff = [line]
+                else:
+                    currentDiff.append(line)
             else:
-                current_diff.append(line)
+                currentDiff.append(line)
 
-        if current_diff:
-            all_diffs.append(current_diff)
+        if currentDiff and not any("at 0x" in line or "---" in line for line in currentDiff):
+            allDiffs.append(currentDiff)
 
-        return all_diffs
+        return allDiffs
 
     cwd = getcwd()
     # Lista contento todos os diretórios dos testes
@@ -408,16 +411,13 @@ def traceDiff(dirName: str) -> None:
     for dir in testDir:
         # Entra no diretório de um dos testes
         chdir(dir)
-        runs = [run for run in listdir(".")]
-        print(runs)
+        runs = [run for run in listdir(".") if path.isdir(path.join(getcwd(), run))]
         
         i = 0
-        """len(runs) - 1 """
-        while i < len(runs) - 2:
+        while i < len(runs) - 1:
             j = i + 1
             mainRun = readLines(f"Run-{i}/calls.txt")
-            # len(runs)
-            while j < len(runs) - 1:
+            while j < len(runs):
                 secondaryRun = readLines(f"Run-{j}/calls.txt")
 
                 # Código para encontrar o diff
@@ -428,8 +428,9 @@ def traceDiff(dirName: str) -> None:
 
                 separatedDiffs = separateDiff(diff)
                 with open("test.txt", "w") as f:
-                    for line in separatedDiffs:
-                        print(line, file = f)
+                    for diff in separatedDiffs:
+                        for line in diff:
+                            print(line, file = f)
                     f.close()
 
             i += 1
