@@ -28,49 +28,16 @@ def trace_dir(request):
 def createTraceCalls(request) -> callable:
     """Faz o trace de chamadas para funções de uma função
     """
-
-    class Trace:
-        def __init__(self, counter, rootFile, rootFileNo, rootFuncName, childTrace = []):
-            self._counter = counter
-            self._rootFile = rootFile
-            self._rootFileNo = rootFileNo
-            self._rootFuncName = rootFuncName
-            self._childTrace = childTrace
-
-        @property
-        def counter(self):
-            return self._counter
-
-        @property
-        def rootFile(self):
-            return self._rootFile
-        
-        @property
-        def rootFileNo(self):
-            return self._rootFileNo
-        
-        @property
-        def rootFuncName(self):
-            return self._rootFuncName
-        
-        @property
-        def childTrace(self):
-            return self._childTrace
-        
-        def addCall(self, funcName: str, fileName: str, counter: int):
-            self.childTrace.append([funcName, fileName, self.rootFile, self.rootFileNo, self.rootFuncName, "CALL", counter])
-
-        def addReturn(self, funcName: str, returnValue: str, counter: int):
-            self.childTrace.append([funcName, returnValue, self.rootFile, self.rootFileNo, self.rootFuncName, "RETURN", counter])
-
     outputdir = request.config.getoption("--dir")
     traceBuffer = []
-    traceCounter = [0]
-    traceList = []
     callCounter = [1]
+    
+    rootFile = [""]
+    rootFileNo = [""]
+    rootFuncName = [""]
 
     def traceCalls(frame, event, arg):
-        nonlocal traceBuffer, callCounter, traceList, traceCounter
+        nonlocal traceBuffer, callCounter, rootFile, rootFileNo, rootFuncName
 
         if event not in ['call', 'return'] or frame == None:
             return
@@ -86,20 +53,17 @@ def createTraceCalls(request) -> callable:
 
         if event == 'call':
             if callCounter[0] == 1:
-                traceList.append(Trace(callCounter[0], fileName, line, funcName))
-            else:
-                currentTrace = traceList[traceCounter[0]]
-                currentTrace.addCall(funcName, fileName, callCounter[0])
+                rootFile[0] = fileName
+                rootFileNo[0] = line
+                rootFuncName[0] = funcName
+            traceBuffer.append(callCounter[0] * ">" + f"{funcName}: {fileName} ({rootFile[0]}, {rootFileNo[0]}, {rootFuncName[0]})\n")
             callCounter[0] += 1
         if event == 'return':
             callCounter[0] -= 1
-            currentTrace = traceList[traceCounter[0]]
             if arg is not None:
-                currentTrace.addReturn(funcName, arg, callCounter[0])
+                traceBuffer.append(callCounter[0] * "<" + f"{funcName}: {arg} ({rootFile[0]}, {rootFileNo[0]}, {rootFuncName[0]})\n")
             else:
-                currentTrace.addReturn(funcName, "None", callCounter[0])
-            if callCounter[0] == 1:
-                traceCounter[0] += 1
+                traceBuffer.append(callCounter[0] * "<" + f"{funcName}: None ({rootFile[0]}, {rootFileNo[0]}, {rootFuncName[0]})\n")
 
         return traceCalls
     
@@ -108,18 +72,9 @@ def createTraceCalls(request) -> callable:
         writeTrace()
 
     def writeTrace() -> None:
-        nonlocal traceBuffer, traceList
-        for trace in traceList:
-            traceBuffer.append(">" + f"{trace.rootFuncName}: {trace.rootFile}, {trace.rootFileNo} len: {len(traceList)} (raiz)\n")
-            for child in trace.childTrace:
-                if child[5] == "CALL":
-                    traceBuffer.append(child[6] * ">" + f"{child[0]}: {child[1]} (raiz: {child[2] + ', ' + child[3] + ', ' + child[4]}) {child[7]}\n")
-                else:
-                    traceBuffer.append(child[6] * "<" + f"{child[0]}: {child[1]} (raiz: {child[2] + ', ' + child[3] + ', ' + child[4]}) {child[7]}\n")
-
-
+        nonlocal traceBuffer
         if len(traceBuffer) > 0:
-            with open(outputdir + "calls.txt", "w") as f:
+            with open(outputdir + "calls.txt", "a") as f:
                 f.writelines(traceBuffer)
                 f.close()
 
