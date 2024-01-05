@@ -10,6 +10,7 @@ import trace
 import subprocess
 import pytest
 import cProfile, pstats
+import re
 
 class TestResult:
     def __init__(self):
@@ -94,17 +95,27 @@ def runMultipleTimes(modDir: str, modName: str, count: int):
                 chdir(cwd + "/" + f"Test-{modName}")
                 for testCase in tests[testFile]:
                     subprocess.run(['mkdir', testCase])
+                    runSummary = list()
+                    totalTime = 0
                     for run in range(count):
                         chdir(getcwd() + "/" + testCase)
                         subprocess.run(["mkdir", f"Run-{run}"])
                         runDir = getcwd() + "/" + f"Run-{run}"
                         chdir(runDir)
                         runResult = runTest(testFile, testCase, runDir)
+                        # Aqui, sera necessario botar um wait()?
+                        totalTime += runResult[1]
                         chdir(cwd + "/" + f"Test-{modName}" + "/" + testCase)
-                        with open("runsSummary.txt", 'a') as f:
-                            print(f"Run {run}: {runResult[0]} Tempo: {runResult[1]}", file = f)
-                        f.close()
+                        runSummary.append(f"Run {run}: {runResult[0]} Tempo: {runResult[1]}\n")
                         chdir(cwd + "/" + f"Test-{modName}")
+
+                    chdir(cwd + "/" + f"Test-{modName}" + "/" + testCase)
+                    with open("runsSummary.txt", "a") as f:
+                        f.writelines(runSummary)
+                        print(f"Tempo total: {totalTime}", file = f)
+                    f.close()
+                    chdir(cwd + "/" + f"Test-{modName}")
+
                 chdir(cwd)
 
 def runTest(dir: str, testName: str, outputDir: str) -> tuple:
@@ -374,6 +385,52 @@ def readLines(fileName: str) -> list:
     f.close()
 
     return lines
+
+# TODO: Adicionar metodo para comparacao de diffs (como pedido)
+def flakyFinder(dirName: str) -> tuple:
+    def extractRuns(line: str):
+        matchFailed = re.search(r'Run (\d+): (\bFAILED\b) Tempo: (\d+\.\d+)', line)
+        matchPassed = re.search(r'Run (\d+): (\bPASSED\b) Tempo: (\d+\.\d+)', line)
+        matchEnd = re.search(r"Tempo total: (\d+\.\d+)", line)
+        if matchFailed:
+            runNo = int(matchFailed.group(1))
+            status = matchFailed.group(2)
+            timeTaken = float(matchFailed.group(3))
+            return (runNo, status, timeTaken)
+        elif matchPassed:
+            runNo = int(matchPassed.group(1))
+            status = matchPassed.group(2)
+            timeTaken = float(matchPassed.group(3))
+            return (runNo, status, timeTaken)
+        elif matchEnd:
+            return ("END")
+        else:
+            return None
+        
+    cwd = getcwd()
+    tests = [test for test in listdir(getcwd() + f"/{dirName}") if path.isdir(path.join(getcwd() + f"/{dirName}", test))]
+    
+    for test in tests:
+        failedIndex = list()
+        passedIndex = list()
+        chdir(f"{cwd}/{dirName}/{test}")
+        with open("runsSummary.txt", "a+") as f:
+            f.seek(0)
+            i = 0
+            for line in f:
+                testResult = extractRuns(line)
+                if testResult[0] == "END":
+                    break
+                if testResult[1] == "FAILED":
+                    failedIndex.append(i)
+                elif testResult[1] == "PASSED":
+                    passedIndex.append(i)
+                i += 1
+            print(f"{test}, f: {len(failedIndex)}, p: {len(passedIndex)}")
+            if len(passedIndex) != 0 and len(failedIndex) != 0:
+                f.write("Veredito: FLAKY")
+        f.close()
+        chdir(cwd)
 
 def traceDiff(dirName: str) -> None:
     """Funcao para comparar o trace dos diversos testes de um repositório
