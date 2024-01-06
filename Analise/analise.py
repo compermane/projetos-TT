@@ -1,9 +1,9 @@
-# from AVL.Arvore.AVL import AVL, Node
+# 448
+from sys import settrace
 from os import chdir, listdir, getcwd, path, remove
 from pathlib import Path
 from ast import parse, walk, FunctionDef
 from shutil import copyfile
-from atexit import register
 from time import time
 from difflib import unified_diff
 import trace
@@ -11,15 +11,27 @@ import subprocess
 import pytest
 import cProfile, pstats
 import re
+import coverage
 
 class TestResult:
-    def __init__(self):
+    def __init__(self, cov = False, outputDir = ".", testName = ""):
+        self.testName = testName
+
         self.reports = []
         self.passed = 0
         self.failed = 0
         self.xfailed = 0
         self.skipped = 0
         self.total_duration = 0
+
+        self.traceBuffer = []
+        self.callCounter = [1]
+        self.rootFile = [""]
+        self.rootFileNo = [""]
+        self.rootFuncName = [""]
+
+        self.outputDir = outputDir
+        self.cov = cov
 
     @pytest.hookimpl(hookwrapper = True)
     def pytest_runtest_makereport(self, item, call):
@@ -38,51 +50,63 @@ class TestResult:
         self.skipped = len(terminalreporter.stats.get('skipped', []))
         self.total_duration = time() - terminalreporter._sessionstarttime
 
-def createTraceCalls(dir: str) -> callable:
-    """Faz o trace de chamadas para funções de uma função
-    """
-    traceBuffer = []
-    callCounter = [1]
-    
-    def traceCalls(frame, event, arg):
-        if event not in ['call', 'return'] or frame == None:
-            return
-        
-        code = frame.f_code
-        funcName = code.co_name
-        fileName = code.co_filename
+    @pytest.hookimpl(tryfirst = True)
+    def pytest_sessionstart(self, session):
+        traceCalls = self.createTraceCalls()
+        settrace(traceCalls)
 
-        # Ignora chamadas do pytest
-        if "pytest" in fileName:
-            return
-        
-        if event == 'call':
-            traceBuffer.append(callCounter[0] * ">" + f"{funcName}: {fileName}\n")
-            callCounter[0] += 1
-        if event == 'return':
-            callCounter[0] -= 1
-            if arg is not None:
-                try:
-                    traceBuffer.append(callCounter[0] * "<" + f"{funcName}: {arg}\n")
-                except AttributeError as e:
-                    traceBuffer.append(callCounter[0] * "<" + f"{funcName}: Objeto de retorno: {type(arg)} (Erro: {e})")
-            else:
-                traceBuffer.append(callCounter[0] * "<" + f"{funcName}: None\n")
+    @pytest.hookimpl(tryfirst = True)
+    def pytest_sessionfinish(self, session, exitstatus):
+        self.end(self.outputDir)
 
+    def createTraceCalls(self) -> callable:
+        """Faz o trace de chamadas para funções de uma função
+        """
+        def traceCalls(frame, event, arg):
+            if event not in ['call', 'return'] or frame == None:
+                return
+            
+            line = str(frame.f_lineno)
+            code = frame.f_code
+            funcName = code.co_name
+            fileName = code.co_filename
+
+            if self.callCounter[0] == 1:
+                self.rootFile[0] = fileName
+                self.rootFileNo[0] = line
+                self.rootFuncName[0] = funcName
+
+            # Ignora chamadas do pytest
+            if self.rootFuncName[0] not in self.testName:
+                return
+
+            if event == 'call':
+                self.traceBuffer.append(self.callCounter[0] * ">" + f"{funcName}: {fileName} ({self.rootFile[0]}, {self.rootFileNo[0]}, {self.rootFuncName[0]})\n")
+                self.callCounter[0] += 1
+            if event == 'return':
+                self.callCounter[0] -= 1
+                if arg is not None:
+                    self.traceBuffer.append(self.callCounter[0] * "<" + f"{funcName}: {arg} ({self.rootFile[0]}, {self.rootFileNo[0]}, {self.rootFuncName[0]})\n")
+                else:
+                    self.traceBuffer.append(self.callCounter[0] * "<" + f"{funcName}: None ({self.rootFile[0]}, {self.rootFileNo[0]}, {self.rootFuncName[0]})\n")
+
+            return traceCalls
+
+        settrace(traceCalls)
         return traceCalls
-    
-    def writeTrace() -> None:
-        if len(traceBuffer) > 0:
-            with open(dir + "/" + "calls.txt", "a") as f:
-                f.writelines(traceBuffer)
+
+    def end(self, outDir: str):
+        settrace(None)
+        self.writeTrace(outDir)
+
+    def writeTrace(self, outDir: str) -> None:
+        if len(self.traceBuffer) > 0:
+            with open(outDir + "/calls.txt", "a") as f:
+                f.writelines(self.traceBuffer)
                 f.close()
-    
-    register(writeTrace)
-    return traceCalls
 
 def runMultipleTimes(modDir: str, modName: str, count: int):
     dirList = getTestDir(modDir)
-    createTestFileCopy(modDir)
 
     cwd = getcwd()
     subprocess.run(["mkdir", f"Test-{modName}"])
@@ -90,33 +114,32 @@ def runMultipleTimes(modDir: str, modName: str, count: int):
     for dir in dirList:
         testFiles = getTestFiles(dir)
         for testFile in testFiles:
-            if "_copy" in testFile:
-                tests = getTestCases([testFile])
-                chdir(cwd + "/" + f"Test-{modName}")
-                for testCase in tests[testFile]:
-                    subprocess.run(['mkdir', testCase])
-                    runSummary = list()
-                    totalTime = 0
-                    for run in range(count):
-                        chdir(getcwd() + "/" + testCase)
-                        subprocess.run(["mkdir", f"Run-{run}"])
-                        runDir = getcwd() + "/" + f"Run-{run}"
-                        chdir(runDir)
-                        runResult = runTest(testFile, testCase, runDir)
-                        # Aqui, sera necessario botar um wait()?
-                        totalTime += runResult[1]
-                        chdir(cwd + "/" + f"Test-{modName}" + "/" + testCase)
-                        runSummary.append(f"Run {run}: {runResult[0]} Tempo: {runResult[1]}\n")
-                        chdir(cwd + "/" + f"Test-{modName}")
-
+            tests = getTestCases([testFile])
+            chdir(cwd + "/" + f"Test-{modName}")
+            for testCase in tests[testFile]:
+                subprocess.run(['mkdir', testCase])
+                runSummary = list()
+                totalTime = 0
+                for run in range(count):
+                    chdir(getcwd() + "/" + testCase)
+                    subprocess.run(["mkdir", f"Run-{run}"])
+                    runDir = getcwd() + "/" + f"Run-{run}"
+                    chdir(runDir)
+                    runResult = runTest(testFile, testCase, runDir)
+                    # Aqui, sera necessario botar um wait()?
+                    totalTime += runResult[1]
                     chdir(cwd + "/" + f"Test-{modName}" + "/" + testCase)
-                    with open("runsSummary.txt", "a") as f:
-                        f.writelines(runSummary)
-                        print(f"Tempo total: {totalTime}", file = f)
-                    f.close()
+                    runSummary.append(f"Run {run}: {runResult[0]} Tempo: {runResult[1]}\n")
                     chdir(cwd + "/" + f"Test-{modName}")
 
-                chdir(cwd)
+                chdir(cwd + "/" + f"Test-{modName}" + "/" + testCase)
+                with open("runsSummary.txt", "a") as f:
+                    f.writelines(runSummary)
+                    print(f"Tempo total: {totalTime}", file = f)
+                f.close()
+                chdir(cwd + "/" + f"Test-{modName}")
+
+            chdir(cwd)
 
 def runTest(dir: str, testName: str, outputDir: str) -> tuple:
     """Roda um teste, dado o diretório do arquivo de testes e o nome do teste
@@ -124,8 +147,9 @@ def runTest(dir: str, testName: str, outputDir: str) -> tuple:
     :param testName: nome do teste
     :returns: resultado do teste 
     """
-    testResult = TestResult()
-    pytest.main([f"{dir}::{testName}", "--dir=", outputDir], plugins=[testResult])
+    testResult = TestResult(cov = True, testName = testName)
+    # "--dir=", outputDir
+    pytest.main([f"{dir}::{testName}"], plugins=[testResult])
 
     if testResult.passed != 0:
         result = "PASSED"
@@ -204,20 +228,20 @@ def createTestFileCopy(modDir: str) -> None:
             copyfile(file, file[:-3] + "_copy.py")
     
     copied = file[:-3] + "_copy.py"
-    with open(copied, "r") as f:
-        copyContent = list()
-        for line in f: 
-            if "def test_" in line:
-                copyContent.append([line[:-4] + "(createTraceCalls):\n"])
-            else:
-                copyContent.append([line])
-        f.seek(0)
-        f.close()
+    # with open(copied, "r") as f:
+    #     copyContent = list()
+    #     for line in f: 
+    #         if "def test_" in line:
+    #             copyContent.append([line[:-4] + "(createTraceCalls):\n"])
+    #         else:
+    #             copyContent.append([line])
+    #     f.seek(0)
+    #     f.close()
 
-    with open(copied, "w") as f:
-        for line in copyContent:
-            f.write(line[0])
-        f.close()
+    # with open(copied, "w") as f:
+    #     for line in copyContent:
+    #         f.write(line[0])
+    #     f.close()
 
 # TODO: implementar uma função que busque por diretórios contendo testes
 def getTestDir(modDir: str, dirList = []) -> list:
@@ -406,7 +430,7 @@ def flakyFinder(dirName: str) -> tuple:
             return ("END")
         else:
             return None
-        
+    
     cwd = getcwd()
     tests = [test for test in listdir(getcwd() + f"/{dirName}") if path.isdir(path.join(getcwd() + f"/{dirName}", test))]
     
@@ -426,7 +450,6 @@ def flakyFinder(dirName: str) -> tuple:
                 elif testResult[1] == "PASSED":
                     passedIndex.append(i)
                 i += 1
-            print(f"{test}, f: {len(failedIndex)}, p: {len(passedIndex)}")
             if len(passedIndex) != 0 and len(failedIndex) != 0:
                 f.write("Veredito: FLAKY")
         f.close()
