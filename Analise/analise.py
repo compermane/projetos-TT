@@ -141,14 +141,13 @@ def runMultipleTimes(modDir: str, modName: str, count: int):
 
             chdir(cwd)
 
-def runTest(dir: str, testName: str, outputDir: str) -> tuple:
+def runTest(dir: str, testName: str) -> tuple:
     """Roda um teste, dado o diretório do arquivo de testes e o nome do teste
     :param dir: diretório do arquivo de testes
     :param testName: nome do teste
     :returns: resultado do teste 
     """
     testResult = TestResult(cov = True, testName = testName)
-    # "--dir=", outputDir
     pytest.main([f"{dir}::{testName}"], plugins=[testResult])
 
     if testResult.passed != 0:
@@ -213,37 +212,6 @@ def postAnalysis(name: str) -> None:
 
     writer.close()
 
-# TODO: Escrever a cópia dos testes considerando argumentos já escritos (a solução atual considera que os testes são escritos como
-# def test_foo(): mas os testes podem ser escritos como def test_bar(a1: str, a2: int, exp) -> None:)
-def createTestFileCopy(modDir: str) -> None:
-    """Cria cópias dos arquvios de teste dado o diretório de teste.
-    :param modDir: Diretório para o módulo
-    :returns: None
-    """
-    dirList = getTestDir(modDir)
-    
-    for dir in dirList:
-        fileList = getTestFiles(dir)
-        for file in fileList:
-            copyfile(file, file[:-3] + "_copy.py")
-    
-    copied = file[:-3] + "_copy.py"
-    # with open(copied, "r") as f:
-    #     copyContent = list()
-    #     for line in f: 
-    #         if "def test_" in line:
-    #             copyContent.append([line[:-4] + "(createTraceCalls):\n"])
-    #         else:
-    #             copyContent.append([line])
-    #     f.seek(0)
-    #     f.close()
-
-    # with open(copied, "w") as f:
-    #     for line in copyContent:
-    #         f.write(line[0])
-    #     f.close()
-
-# TODO: implementar uma função que busque por diretórios contendo testes
 def getTestDir(modDir: str, dirList = []) -> list:
     """Busca por diretórios em um diretório contendo testes
     :param modDir: Caminho para o diretório do módulo
@@ -430,7 +398,7 @@ def flakyFinder(dirName: str) -> tuple:
             return ("END")
         else:
             return None
-    
+        
     cwd = getcwd()
     tests = [test for test in listdir(getcwd() + f"/{dirName}") if path.isdir(path.join(getcwd() + f"/{dirName}", test))]
     
