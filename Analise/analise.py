@@ -6,6 +6,7 @@ from ast import parse, walk, FunctionDef
 from shutil import copyfile
 from time import time
 from difflib import unified_diff
+from typing import List
 import trace
 import subprocess
 import pytest
@@ -14,7 +15,7 @@ import re
 import coverage
 
 class TestResult:
-    def __init__(self, cov = False, outputDir = ".", testName = ""):
+    def __init__(self, trace = True, prof = False, cov = False, outputDir = ".", testName = ""):
         self.testName = testName
 
         self.reports = []
@@ -32,6 +33,11 @@ class TestResult:
 
         self.outputDir = outputDir
         self.cov = cov
+        self.trace = trace
+        self.prof = prof
+
+        if self.prof:
+            self.profiler = cProfile.Profile()
 
     @pytest.hookimpl(hookwrapper = True)
     def pytest_runtest_makereport(self, item, call):
@@ -52,13 +58,26 @@ class TestResult:
 
     @pytest.hookimpl(tryfirst = True)
     def pytest_sessionstart(self, session):
-        traceCalls = self.createTraceCalls()
-        settrace(traceCalls)
+        if self.trace:
+            traceCalls = self.createTraceCalls()
+            settrace(traceCalls)
+        
+        if self.prof:
+            self.profiler.enable()
 
     @pytest.hookimpl(tryfirst = True)
     def pytest_sessionfinish(self, session, exitstatus):
-        self.end(self.outputDir)
+        if self.trace:
+            self.end(self.outputDir)
 
+        if self.prof:
+            self.profiler.disable()
+            stats = pstats.Stats(self.profiler)
+            with open("Stats.txt", "w") as f:
+                stats.stream = f
+                stats.print_stats()
+            f.close()
+        
     def createTraceCalls(self) -> callable:
         """Faz o trace de chamadas para funções de uma função
         """
@@ -105,7 +124,7 @@ class TestResult:
                 f.writelines(self.traceBuffer)
                 f.close()
 
-def runMultipleTimes(modDir: str, modName: str, count: int):
+def runMultipleTimes(modDir: str, modName: str, count: int, params: List[bool]):
     dirList = getTestDir(modDir)
 
     cwd = getcwd()
@@ -125,7 +144,7 @@ def runMultipleTimes(modDir: str, modName: str, count: int):
                     subprocess.run(["mkdir", f"Run-{run}"])
                     runDir = getcwd() + "/" + f"Run-{run}"
                     chdir(runDir)
-                    runResult = runTest(testFile, testCase, runDir)
+                    runResult = runTest(testFile, testCase, params)
                     # Aqui, sera necessario botar um wait()?
                     totalTime += runResult[1]
                     chdir(cwd + "/" + f"Test-{modName}" + "/" + testCase)
@@ -141,13 +160,18 @@ def runMultipleTimes(modDir: str, modName: str, count: int):
 
             chdir(cwd)
 
-def runTest(dir: str, testName: str) -> tuple:
+def runTest(dir: str, testName: str, params: List[bool]) -> tuple:
     """Roda um teste, dado o diretório do arquivo de testes e o nome do teste
     :param dir: diretório do arquivo de testes
     :param testName: nome do teste
     :returns: resultado do teste 
     """
-    testResult = TestResult(cov = True, testName = testName)
+
+    includeTracing = params[0]
+    includeCoverage = params[1]
+    includeProfiling = params[2]
+
+    testResult = TestResult(trace = includeTracing, cov = includeCoverage, prof = includeProfiling, testName = testName)
     pytest.main([f"{dir}::{testName}"], plugins=[testResult])
 
     if testResult.passed != 0:
