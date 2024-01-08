@@ -1,4 +1,4 @@
-# 448
+# 448 716
 from sys import settrace
 from os import chdir, listdir, getcwd, path, remove
 from pathlib import Path
@@ -6,7 +6,7 @@ from ast import parse, walk, FunctionDef
 from shutil import copyfile
 from time import time
 from difflib import unified_diff
-from typing import List
+from typing import List, Tuple, Dict
 import trace
 import subprocess
 import pytest
@@ -73,11 +73,23 @@ class TestResult:
         if self.prof:
             self.profiler.disable()
             stats = pstats.Stats(self.profiler)
-            with open("Stats.txt", "w") as f:
-                stats.stream = f
-                stats.print_stats()
+            filteredStats = pstats.Stats()
+
+            for entry in stats.stats.items():
+                if not self.ignoreEntry(entry):
+                    filteredStats.stats[entry[0]] = entry[1]
+
+            with open("stats.txt", "w") as f:
+                filteredStats.stream = f
+                filteredStats.sort_stats("ncalls").print_stats()
             f.close()
-        
+    
+    def ignoreEntry(self, entry: Tuple[Tuple[str, str, str], Tuple]):
+        ignore = {"pytest", "pluggy", "builtins"}
+        fileName = entry[0][0]
+
+        return any(ignoredDir in fileName for ignoredDir in ignore)
+    
     def createTraceCalls(self) -> callable:
         """Faz o trace de chamadas para funções de uma função
         """
@@ -160,7 +172,7 @@ def runMultipleTimes(modDir: str, modName: str, count: int, params: List[bool]):
 
             chdir(cwd)
 
-def runTest(dir: str, testName: str, params: List[bool]) -> tuple:
+def runTest(dir: str, testName: str, params: List[bool]) -> Tuple[str, int]:
     """Roda um teste, dado o diretório do arquivo de testes e o nome do teste
     :param dir: diretório do arquivo de testes
     :param testName: nome do teste
@@ -236,7 +248,7 @@ def postAnalysis(name: str) -> None:
 
     writer.close()
 
-def getTestDir(modDir: str, dirList = []) -> list:
+def getTestDir(modDir: str, dirList = []) -> List[str]:
     """Busca por diretórios em um diretório contendo testes
     :param modDir: Caminho para o diretório do módulo
     :returns: Lista contendo os diretórios contendo testes (ex: ../foo/bar/test)
@@ -275,7 +287,7 @@ def cleanUp(modDir: str) -> None:
                 remove(path.join(getcwd(), file))
     chdir(cwd)
 
-def getTestCases(files: list) -> dict:
+def getTestCases(files: List[str]) -> Dict[str, str]:
     """Procura por casos de teste
     :param files: lista contendo o caminho para os arquivos de teste
     :returns: dicionario contendo nome dos casos de teste de acordo com seu arquivo (ex: {'..test/test_foo.py: [test_bar, test_fulano]'})
@@ -293,7 +305,7 @@ def getTestCases(files: list) -> dict:
         tests[file] = names
     return tests
 
-def getTestFiles(dir: str) -> list:
+def getTestFiles(dir: str) -> List[str]:
     """Procura por arquivos de teste
     :param dir: Diretório onde se quer procurar
     :returns: lista contendo aquivos dos testes (ex: ['../test/test_foo.py', '../test/test_bar.py'])
@@ -395,7 +407,7 @@ def profiling(modName: str):
                     stats.stream = f
                     stats.print_stats()
 
-def readLines(fileName: str) -> list:
+def readLines(fileName: str) -> List[str]:
     with open(fileName, "r") as f:
         lines = f.readlines()
     f.close()
@@ -453,7 +465,7 @@ def traceDiff(dirName: str) -> None:
     :return: None
     """
 
-    def separateDiff(diff: list) -> list:
+    def separateDiff(diff: List[str]) -> List[str]:
         currentDiff = []
         allDiffs = []
 
