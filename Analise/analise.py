@@ -7,6 +7,7 @@ from shutil import copyfile
 from time import time
 from difflib import unified_diff
 from typing import List, Tuple, Dict
+from random import choice
 import trace
 import subprocess
 import pytest
@@ -434,7 +435,7 @@ def flakyFinder(dirName: str) -> tuple:
             return ("END")
         else:
             return None
-        
+
     cwd = getcwd()
     tests = [test for test in listdir(getcwd() + f"/{dirName}") if path.isdir(path.join(getcwd() + f"/{dirName}", test))]
     
@@ -456,13 +457,102 @@ def flakyFinder(dirName: str) -> tuple:
                 i += 1
             if len(passedIndex) != 0 and len(failedIndex) != 0:
                 f.write("Veredito: FLAKY")
+                selectedPassed = choice(passedIndex)
+                selectedFailed = choice(failedIndex)
+
+                f.write(f"\nEntre as runs {selectedPassed} e {selectedFailed}: \n")
+                try:
+                    trace = traceDiff(f"Run-{selectedPassed}/calls.txt", f"Run-{selectedFailed}/calls.txt")
+                    if trace:
+                        f.write("\nNo trace, foram encontradas as diferencas: \n")
+                        for traceLine in trace:
+                            f.writelines(traceLine)
+                    else:
+                        f.write("\nNenhuma diferença encontrada no trace.")
+                except FileNotFoundError as e:
+                    print(f"Opção para trace não escolhida. Erro: {e}")
+
+                try:
+                    stats = traceDiff(f"Run-{selectedPassed}/stats.txt", f"Run-{selectedFailed}/stats.txt")
+                    if stats:
+                        f.write("\nNo profiler, foram encontradas as diferencas: \n")
+                        for statsLine in stats:
+                            f.writelines(statsLine)
+                    else:
+                        f.write("\nNenhuma diferença encontrada no profiler\n")
+                except FileNotFoundError as e:
+                    print(f"Opção para profiling não escolhida. Erro: {e}")
+
+            elif len(passedIndex) == 0 or len(failedIndex) == 0:
+                f.write("Veredito: NOT FLAKY")
+                if len(passedIndex) == 0:
+                    selectedFailedA = choice(failedIndex)
+                    selectedFailedB = choice(failedIndex)
+
+                    while selectedFailedA == selectedFailedB:
+                        selectedFailedB = choice(failedIndex)
+
+                    f.write(f"\nEntre as runs {selectedFailedA} e {selectedFailedB}: \n")    
+                    try:
+                        trace = traceDiff(f"Run-{selectedFailedA}/calls.txt", f"Run-{selectedFailedB}/calls.txt")
+                        if trace:
+                            f.write("\nNo trace, foram encontradas as diferencas: \n")
+                            for traceLine in trace:
+                                f.writelines(traceLine)
+                        else:
+                            f.write("\nNenhuma diferença encontrada no trace\n")
+                    except FileNotFoundError as e:
+                        print(f"Opção para trace não escolhida. Erro: {e}")
+
+                    try:
+                        stats = traceDiff(f"Run-{selectedFailedA}/stats.txt", f"Run-{selectedFailedA}/stats.txt")
+                        if stats:
+                            f.write("\nNo profiler, foram encontradas as diferencas: \n")
+                            for statsLine in stats:
+                                f.writelines(statsLine)
+                        else:
+                            f.write("\nNenhuma diferença encontrada no profiler\n")
+                    except FileNotFoundError as e:
+                        print(f"Opção para profiling não escolhida. Erro: {e}")
+
+                else:
+                    selectedPassedA = choice(passedIndex)
+                    selectedPassedB = choice(passedIndex)
+
+                    while selectedPassedA == selectedPassedB:
+                        selectedPassedB = choice(passedIndex)
+
+                    f.write(f"\nEntre as runs {selectedPassedA} e {selectedPassedB}: \n")
+                    try:
+                        trace = traceDiff(f"Run-{selectedPassedA}/calls.txt", f"Run-{selectedPassedB}/calls.txt")
+                        if trace:
+                            f.write("\nNo trace, foram encontradas as diferencas: \n")
+                            for traceLine in trace:
+                                f.writelines(traceLine)
+                        else:
+                            f.write("\nNenhuma diferença encontrada no trace\n")
+                    except FileNotFoundError as e:
+                        print(f"Opção para trace não escolhida. Erro: {e}")
+
+                    try:
+                        stats = traceDiff(f"Run-{selectedPassedA}/stats.txt", f"Run-{selectedPassedB}/stats.txt")
+                        if stats:
+                            f.write("\nNo profiler, foram encontradas as diferencas: \n")
+                            for statsLine in stats:
+                                f.writelines(statsLine)
+                        else:
+                            f.write("\nNenhuma diferença encontrada no profiler\n")
+                    except FileNotFoundError as e:
+                        print(f"Opção para profiling não escolhida. Erro: {e}")
+
         f.close()
         chdir(cwd)
 
-def traceDiff(dirName: str) -> None:
-    """Funcao para comparar o trace dos diversos testes de um repositório
-    :param dirName: diretório onde se encontram o trace dos testes
-    :return: None
+def traceDiff(runA: str, runB: str) -> List[str]:
+    """Funcao para comparar dois traces dos diversos testes de um repositório
+    :param runA: Caminho para o trace A
+    :param runB: Caminho para o trace B
+    :returns: Lista com as linhas do diff
     """
 
     def separateDiff(diff: List[str]) -> List[str]:
@@ -474,7 +564,7 @@ def traceDiff(dirName: str) -> None:
                 if currentDiff:
                     if not any("at 0x" in line or "---" in line for line in currentDiff):
                         allDiffs.append(currentDiff)
-                    currentDiff = [line]
+                    currentDiff = [line + "\n"]
                 else:
                     currentDiff.append(line)
             else:
@@ -485,38 +575,11 @@ def traceDiff(dirName: str) -> None:
 
         return allDiffs
 
-    cwd = getcwd()
-    # Lista contento todos os diretórios dos testes
-    testDir = [dir for dir in listdir(dirName) if path.isdir(path.join(dirName, dir))]
-    testDir = testDir[::-1]
+    linesA = readLines(runA)
+    linesB = readLines(runB)
 
-    # Entra no diretorio dos contendo o trace dos testes
-    chdir(dirName)
-    for dir in testDir:
-        # Entra no diretório de um dos testes
-        chdir(dir)
-        runs = [run for run in listdir(".") if path.isdir(path.join(getcwd(), run))]
-        
-        i = 0
-        while i < len(runs) - 1:
-            j = i + 1
-            mainRun = readLines(f"Run-{i}/calls.txt")
-            while j < len(runs):
-                secondaryRun = readLines(f"Run-{j}/calls.txt")
+    diff = list()
+    for line in unified_diff(linesA, linesB, lineterm = ""):
+        diff.append(line)
 
-                # Código para encontrar o diff
-                diff = list()
-                for line in unified_diff(mainRun, secondaryRun, lineterm = ''):
-                    diff.append(line)
-                j += 1
-
-                separatedDiffs = separateDiff(diff)
-                with open("test.txt", "w") as f:
-                    for diff in separatedDiffs:
-                        for line in diff:
-                            print(line, file = f)
-                    f.close()
-
-            i += 1
-
-        chdir(cwd + "/" + dirName)
+    return separateDiff(diff)
