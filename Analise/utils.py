@@ -2,6 +2,7 @@ import csv
 import re
 import subprocess
 from os import listdir, getcwd, path
+from sys import builtin_module_names
 from typing import List, Tuple
 
 class NoRepositoryNameException(Exception):
@@ -73,19 +74,14 @@ def getRepoName(gitUrl: str) -> str:
     else:
         raise NoRepositoryNameException(f"Nenhum nome de repositório para {gitUrl}")
 
-def pipping(repo: Repository) -> None:
-    def ignoreSpaces(dir: str) -> str:
-        return f"'{dir}'"
-    #subprocess.call('{venv_folder}/bin/pip install -r {filename}')
-    # subprocess.Popen("./flapy.sh run --plus-random-runs --out-dir %s %s %s" % (str(directory), str(csv), str(numRuns)), shell = True)
-    venvRepo = ignoreSpaces(path.abspath(f"venv-{repo.name}"))
-    requirementsFile = ignoreSpaces(path.abspath(path.join(repo.name, "requirements.txt")))
+def activating(repo: Repository) -> None:
+    venvPath = f"venv-{repo.name}"
+    activate = path.join(venvPath, "bin", "activate")
 
-    p1 = subprocess.Popen("./pipping.sh %s %s" % (venvRepo, requirementsFile))
-    p1.wait()
+    requirementsFile = path.abspath(path.join(repo.name, "requirements.txt"))
+    subprocess.call(f"source {activate}", shell = True, executable="/bin/bash" if "posix" in builtin_module_names else None)
+    subprocess.run([path.join(venvPath, "bin", "pip"), "install", "-r", path.join(repo.name, requirementsFile)], check=True)
 
-    print("\n\n\nBRUH\n\n\n")
-    return
 
 def venving(repo: Repository) -> None:
     p1 = subprocess.Popen(["python3", "-m", "venv", f"venv-{repo.name}"])
