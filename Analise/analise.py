@@ -8,7 +8,7 @@ from time import time
 from difflib import unified_diff
 from typing import List, Tuple, Dict
 from random import choice
-import trace
+import trace as trc
 import subprocess
 import pytest
 import cProfile, pstats
@@ -16,8 +16,9 @@ import re
 import coverage
 
 class TestResult:
-    def __init__(self, trace = True, prof = False, cov = False, outputDir = ".", testName = ""):
+    def __init__(self, trace = True, prof = False, cov = False, outputDir = ".", testName = "", modName = ""):
         self.testName = testName
+        self.modName = modName
 
         self.reports = []
         self.passed = 0
@@ -39,6 +40,9 @@ class TestResult:
 
         if self.prof:
             self.profiler = cProfile.Profile()
+
+        if self.cov:
+            self.coverage = coverage.Coverage()
 
     @pytest.hookimpl(hookwrapper = True)
     def pytest_runtest_makereport(self, item, call):
@@ -66,6 +70,9 @@ class TestResult:
         if self.prof:
             self.profiler.enable()
 
+        if self.cov:
+            self.coverage.start()
+
     @pytest.hookimpl(tryfirst = True)
     def pytest_sessionfinish(self, session, exitstatus):
         if self.trace:
@@ -83,6 +90,14 @@ class TestResult:
             with open("stats.txt", "w") as f:
                 filteredStats.stream = f
                 filteredStats.sort_stats("ncalls").print_stats()
+            f.close()
+
+        if self.cov:
+            self.coverage.stop()
+            self.coverage.save()
+
+            with open("coverage.txt", "w") as f:
+                self.coverage.report(file = f, show_missing = True)
             f.close()
     
     def ignoreEntry(self, entry: Tuple[Tuple[str, str, str], Tuple]):
@@ -327,10 +342,10 @@ def traceFuncs(dir: str, funcName: str, modName: str) -> None:
     def runTest(dir: str, funcName: str) -> None:
         pytest.main(["-v", f"{dir}::{funcName}"]) 
         
-    tracer = trace.Trace(
+    tracer = trc.Trace(
         count = 1,
         trace = 0,
-        ignoredirs = [pytest.__file__, trace.__file__]
+        ignoredirs = [pytest.__file__, trc.__file__]
     )
 
     tracer.runfunc(runTest, dir, funcName)
