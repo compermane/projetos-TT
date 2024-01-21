@@ -1,6 +1,0 @@
->bubbleSort: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/Algoritmos/codigos/ordenacao.py
-<bubbleSort: [0, 1, 2, 3, 4]
->bubbleSort: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/Algoritmos/codigos/ordenacao.py
-<bubbleSort: [0, 1, 2, 3, 4]
->bubbleSort: /home/eugenio/Área de trabalho/Grad/TT/projetos-TT/Algoritmos/codigos/ordenacao.py
-<bubbleSort: [0, 1, 2, 3, 4]
