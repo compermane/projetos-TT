@@ -1,3 +1,7 @@
+# TODO: - levar em consideração testes com o mesmo nome (criar pastas diferentes)
+#       - levar em consideração testes implementados na forma de classes
+#       - levar em consideração testes com múltiplos valores (parametrizados)
+#       - investigar por que a ferramenta roda todos os testes novamente após rodar um repositório
 from sys import settrace
 from os import chdir, listdir, getcwd, path, remove
 from pathlib import Path

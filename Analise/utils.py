@@ -66,9 +66,11 @@ def getRepoName(gitUrl: str) -> str:
     :param gitUrl: URL do github
     :returns: String do nome do repositório
     """
-    urlPattern = r'ĥttps?://github\.com/\w+/(\w+)$'
+    print(f"\n\n\n{gitUrl}\n\n\n")
+    urlPattern = r'https?://github\.com/[\w-]+/([\w-]+)$'
     match = re.match(urlPattern, gitUrl)
 
+    print(f"\n\n\n{match.group(1)}\n\n\n")
     if match:
         return match.group(1)
     else:
@@ -86,7 +88,10 @@ def activating(repo: Repository) -> None:
     subprocess.call(f"source {activate}", shell = True, executable="/bin/bash" if "posix" in builtin_module_names else None)
 
     # Instalação de dependências do repositório
-    subprocess.run([path.join(venvPath, "bin", "pip"), "install", "-r", path.join(repo.name, requirementsFile)], check=True)
+    try:
+        subprocess.run([path.join(venvPath, "bin", "pip"), "install", "-r", path.join(repo.name, requirementsFile)], check=True)
+    except:
+        print("Não há arquivo de requirements")
 
     # Instalação de dependências do plugin
     subprocess.run([path.join(venvPath, "bin", "pip"), "install", "-r", "requirements.txt"], check=True)

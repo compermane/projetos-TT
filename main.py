@@ -1,5 +1,6 @@
 from Analise import analise, utils
 from os import chdir, getcwd, path
+from typing import List
 import argparse
 
 def str_to_bool(value: str) -> bool:
@@ -20,8 +21,9 @@ def argsDefiner():
     parser = argparse.ArgumentParser()
 
     # Adicionando parâmetros command-line
-    parser.add_argument("repo_dir", help = "Diretorio para o repositorio", type = str)
-    parser.add_argument("repo_name", help = "Nome do repositorio", type = str)
+    parser.add_argument("--repo_dir", help = "Diretorio para o repositorio", type = str, default = "")
+    parser.add_argument("--repo_name", help = "Nome do repositorio", type = str, default = "")
+    parser.add_argument("--read-from-csv", help = "CSV com informações do repositório a ser lido", type = str, default = "")
     parser.add_argument("--output-dir", help = "Especificar o diretorio para onde os resultados de teste serao armazenados", default =  ".")
     parser.add_argument("--no-runs", help =  "Especificar a quantidade de rodadas que cada repositorio tera", type = str_to_int, default = 1)
     parser.add_argument("--include-test-tracing", help = "Determinar se a ferramenta deve executar o tracing de cada teste. O default eh True", type = str_to_bool, default = True)
@@ -31,17 +33,25 @@ def argsDefiner():
     # Adicionando os parametros
     args = parser.parse_args()
 
-    # Obtendo os parametros especificados
+    csvFile = args.read_from_csv
     tracing = args.include_test_tracing
     coverage = args.include_test_coverage
     profiling = args.include_test_profiling
-    repo = args.repo_dir
-    name = args.repo_name
-    noruns = args.no_runs
 
-    analise.runMultipleTimes(repo, name, noruns, [tracing, coverage, profiling])
+    if csvFile == "":
+        # Obtendo os parametros especificados
+        repo = args.repo_dir
+        name = args.repo_name
+        noruns = args.no_runs
 
-    analise.cleanUp(repo)
+        analise.runMultipleTimes(repo, name, noruns, [tracing, coverage, profiling])
+    else:
+        repos: List[utils.Repository] = utils.readCSV(csvFile)
+        for repo in repos:
+            utils.cloning(repo)
+            utils.venving(repo)
+            utils.activating(repo)
+            analise.runMultipleTimes(repo.name, repo.name, int(repo.noruns), [tracing, coverage, profiling])
 
 def test_trace() -> None:
     files = analise.getTestFiles("analytic_shrinkage/nonlinshrink/test")
