@@ -75,15 +75,27 @@ def getRepoName(gitUrl: str) -> str:
         raise NoRepositoryNameException(f"Nenhum nome de repositório para {gitUrl}")
 
 def activating(repo: Repository) -> None:
+    """Ativa um repositório, instalando suas depências dentro de seu venv
+    :param repo: Repositório a ter seu venv ativado
+    :returns: None
+    """
     venvPath = f"venv-{repo.name}"
     activate = path.join(venvPath, "bin", "activate")
 
     requirementsFile = path.abspath(path.join(repo.name, "requirements.txt"))
     subprocess.call(f"source {activate}", shell = True, executable="/bin/bash" if "posix" in builtin_module_names else None)
+
+    # Instalação de dependências do repositório
     subprocess.run([path.join(venvPath, "bin", "pip"), "install", "-r", path.join(repo.name, requirementsFile)], check=True)
 
+    # Instalação de dependências do plugin
+    subprocess.run([path.join(venvPath, "bin", "pip"), "install", "-r", "requirements.txt"], check=True)
 
 def venving(repo: Repository) -> None:
+    """Cria um virtual environment (venv; não confundir com a biblioteca virtual-environment) para um repositório
+    :param repo: Repositório a ser criado o venv
+    :returns: None
+    """
     p1 = subprocess.Popen(["python3", "-m", "venv", f"venv-{repo.name}"])
     p1.wait()
 
@@ -91,7 +103,7 @@ def venving(repo: Repository) -> None:
 
 def cloning(repo: Repository) -> None:
     """Faz o clone de um repositório e realiza o checkout para o commit indicado
-    :param repo: Repositório para se clonado
+    :param repo: Repositório para ser clonado
     :returns: None
     """
     p1 = subprocess.Popen(["git", "clone", repo.url])

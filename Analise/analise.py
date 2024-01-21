@@ -1,9 +1,7 @@
-# 448 716
 from sys import settrace
 from os import chdir, listdir, getcwd, path, remove
 from pathlib import Path
 from ast import parse, walk, FunctionDef
-from shutil import copyfile
 from time import time
 from difflib import unified_diff
 from typing import List, Tuple, Dict
@@ -62,16 +60,16 @@ class TestResult:
         self.total_duration = time() - terminalreporter._sessionstarttime
 
     @pytest.hookimpl(tryfirst = True)
-    def pytest_sessionstart(self, session):
-        if self.trace:
-            traceCalls = self.createTraceCalls()
-            settrace(traceCalls)
-        
+    def pytest_sessionstart(self, session):    
         if self.prof:
             self.profiler.enable()
 
         if self.cov:
             self.coverage.start()
+
+        if self.trace:
+            traceCalls = self.createTraceCalls()
+            settrace(traceCalls)
 
     @pytest.hookimpl(tryfirst = True)
     def pytest_sessionfinish(self, session, exitstatus):

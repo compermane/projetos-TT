@@ -1,5 +1,5 @@
-from Analise import analise
-from os import chdir, getcwd
+from Analise import analise, utils
+from os import chdir, getcwd, path
 import argparse
 
 def str_to_bool(value: str) -> bool:
@@ -34,12 +34,12 @@ def argsDefiner():
     # Obtendo os parametros especificados
     tracing = args.include_test_tracing
     coverage = args.include_test_coverage
+    profiling = args.include_test_profiling
     repo = args.repo_dir
     name = args.repo_name
     noruns = args.no_runs
 
-    if tracing:
-        analise.runMultipleTimes(repo, name, noruns)
+    analise.runMultipleTimes(repo, name, noruns, [tracing, coverage, profiling])
 
     analise.cleanUp(repo)
 
@@ -67,4 +67,9 @@ def test_profiler() -> None:
 if __name__ == "__main__":
     argsDefiner()
     # analise.traceDiff("Test-analytic_shrinkage")
-    analise.flakyFinder("Test-analytic_shrinkage")
+    # analise.flakyFinder("Test-analytic_shrinkage")
+    # print(path.abspath("analytic_shrinkage"))
+    # print(ignoreSpaces(path.abspath("analytic_shrinkage")))
+    # bruh = utils.Repository("analytic_shrinkage", 100)
+    # utils.venving(bruh)
+    # utils.activating(bruh)
