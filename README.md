@@ -12,7 +12,7 @@ python3 main.py --read-from-csv <csv-file> --output-dir <dir>
 Onde <csv-file> possui as colunas "RepoName", "Repo", "GitHash" e "#Runs".
 
 # Resultados
-Os resultados são postos no diretório indicado por <dir>. Então são criados outros diretórios para cada repositório xxx no formato "Test-xxx" e, para cada caso de teste em cada arquivo de teste, são criadas diretórios que contém dados sobre cada run individual. Esses dados podem ser sobre tracing, coverage ou profiling de testes.
+Os resultados são postos no diretório indicado pelo argumento "dir". Então são criados outros diretórios para cada repositório xxx no formato "Test-xxx" e, para cada caso de teste em cada arquivo de teste, são criadas diretórios que contém dados sobre cada run individual. Esses dados podem ser sobre tracing, coverage ou profiling de testes.
 
 # Tracing
 Armazena dados de tracing do teste da seguinte forma:
