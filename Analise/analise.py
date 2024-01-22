@@ -5,10 +5,10 @@
 from sys import settrace
 from os import chdir, listdir, getcwd, path, remove
 from pathlib import Path
-from ast import parse, walk, FunctionDef
+from ast import parse, walk, FunctionDef, ClassDef
 from time import time
 from difflib import unified_diff
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Optional
 from random import choice
 import trace as trc
 import subprocess
@@ -163,34 +163,90 @@ def runMultipleTimes(modDir: str, modName: str, count: int, params: List[bool]):
     for dir in dirList:
         testFiles = getTestFiles(dir)
         for testFile in testFiles:
-            tests = getTestCases([testFile])
             chdir(cwd + "/" + f"Test-{modName}")
-            for testCase in tests[testFile]:
-                subprocess.run(['mkdir', testCase])
-                runSummary = list()
-                totalTime = 0
-                for run in range(count):
-                    chdir(getcwd() + "/" + testCase)
-                    subprocess.run(["mkdir", f"Run-{run}"])
-                    runDir = getcwd() + "/" + f"Run-{run}"
-                    chdir(runDir)
-                    runResult = runTest(testFile, testCase, params)
-                    # Aqui, sera necessario botar um wait()?
-                    totalTime += runResult[1]
-                    chdir(cwd + "/" + f"Test-{modName}" + "/" + testCase)
-                    runSummary.append(f"Run {run}: {runResult[0]} Tempo: {runResult[1]}\n")
-                    chdir(cwd + "/" + f"Test-{modName}")
+            currentFile = "file_" + path.basename(testFile)[:-3]
 
-                chdir(cwd + "/" + f"Test-{modName}" + "/" + testCase)
-                with open("runsSummary.txt", "a") as f:
-                    f.writelines(runSummary)
-                    print(f"Tempo total: {totalTime}", file = f)
-                f.close()
-                chdir(cwd + "/" + f"Test-{modName}")
+            subprocess.run(["mkdir", currentFile])
+            chdir(path.abspath(currentFile))
+            if checkForTestClasses(testFile) is None:
+                tests = getTestCases([testFile])
 
-            chdir(cwd)
+                for testCase in tests[testFile]:
+                    subprocess.run(["mkdir", testCase])
+                    runSummary = list()
+                    totalTime = 0
 
-def runTest(dir: str, testName: str, params: List[bool]) -> Tuple[str, int]:
+                    for run in range(count):
+                        chdir(getcwd() + "/" + testCase)
+                        subprocess.run(["mkdir", f"Run-{run}"])
+                        runDir = getcwd() + "/" + f"Run-{run}"
+                        chdir(runDir)
+                        runResult = runTest(testFile, testCase, params)
+                        totalTime += runResult[1]
+                        chdir(cwd + "/" + f"Test-{modName}/{currentFile}/{testCase}")
+                        runSummary.append(f"Run {run}: {runResult[0]} Tempo: {runResult[1]}\n")
+                        chdir(cwd + "/" + f"Test-{modName}/{currentFile}")
+
+                    with open("runsSummary.txt", "a") as f:
+                        f.writelines(runSummary)
+                        print(f"Tempo total: {totalTime}", file = f)
+                    f.close()
+                    chdir(cwd + "/" + f"Test-{modName}/{currentFile}")
+
+                chdir(cwd)
+            else:
+                for className in checkForTestClasses(testFile):
+                    tests = getTestsFromClass(className, testFile)
+                    for test in tests:
+                        subprocess.run(["mkdir", f"{className}::{test}"])
+                        runSummary = list()
+                        totalTime = 0
+
+                        for run in range(count):
+                            chdir(getcwd() + f"/{className}::{test}")
+                            subprocess.run(["mkdir", f"Run-{run}"])
+                            runDir = getcwd() + "/" + f"Run-{run}"
+                            chdir(runDir)
+                            runResult = runTest(testFile, test, params, className)
+                            totalTime += runResult[1]
+                            chdir(cwd + "/" + f"Test-{modName}/{currentFile}/{className}::{test}")
+                            runSummary.append(f"Run {run}: {runResult[0]} Tempo: {runResult[1]}\n")
+                            chdir(cwd + "/" + f"Test-{modName}/{currentFile}")
+
+                        with open("runsSummary.txt", "a") as f:
+                            f.writelines(runSummary)
+                            print(f"Tempo total: {totalTime}", file = f)
+                        f.close()
+                        chdir(cwd + "/" + f"Test-{modName}/{currentFile}")
+
+                chdir(cwd)
+
+def checkForTestClasses(filePath: str) -> Optional[List[str]]:
+    with open(filePath, "r") as f:
+        content = f.read()
+    f.close()
+
+    tree = parse(content)
+    classNames = [node.name for node in walk(tree) if isinstance(node, ClassDef)]
+
+    return classNames if classNames != [] else None
+
+def getTestsFromClass(className: str, filePath: str) -> List[str]:
+    with open(filePath, "r") as f:
+        content = f.read()
+    f.close()
+
+    tree = parse(content)
+    tests = list()
+    for node in walk(tree):
+        if isinstance(node, ClassDef) and node.name == className:
+            for item in node.body:
+                if isinstance(item, FunctionDef):
+                    tests.append(item.name)
+
+    return tests
+
+def runTest(dir: str, testName: str, params: List[bool], className: Optional[str] = None) -> Tuple[str, int]:
     """Roda um teste, dado o diretório do arquivo de testes e o nome do teste
     :param dir: diretório do arquivo de testes
     :param testName: nome do teste
@@ -202,7 +258,12 @@ def runTest(dir: str, testName: str, params: List[bool]) -> Tuple[str, int]:
     includeProfiling = params[2]
 
     testResult = TestResult(trace = includeTracing, cov = includeCoverage, prof = includeProfiling, testName = testName)
-    pytest.main([f"{dir}::{testName}"], plugins=[testResult])
+
+    if className is None:
+        pytest.main([f"{dir}::{testName}"], plugins=[testResult])
+    else:
+        print(f"\n\n\n\n{testName}\n\n\n\n")
+        pytest.main([f"{dir}::{className}::{testName}"], plugins=[testResult])
 
     if testResult.passed != 0:
         result = "PASSED"
@@ -214,57 +275,6 @@ def runTest(dir: str, testName: str, params: List[bool]) -> Tuple[str, int]:
         result = "XFAILED"
 
     return (result, testResult.total_duration)
-
-def postAnalysis(name: str) -> None:
-    """Gera um arquivo texto contendo estatísticas sobre a analise
-    :param name: nome do arquivo
-    :returns: None
-    """
-    keywords = {
-        'Chamada de funcao': 0,
-        'Execucao de linha': 0,
-        'Retorno de valor': 0,
-        'Excecao': 0
-    }
-    funcoes = {}
-
-    with open('Analise/Resultados/funcoes.txt', 'r') as reader:
-        for i in reader:
-            func = i[:len(i) - 1]
-            if func in funcoes:
-                funcoes[func] += 1
-            else:
-                funcoes[func] = 1
-    reader.close()
-
-    with open(name, 'r') as reader:
-        for line in reader:
-            for word in line.split(" "):
-                match word:
-                    case 'Chamada':
-                        keywords['Chamada de funcao'] += 1
-                        break
-                    case 'interpretador':
-                        keywords['Execucao de linha'] += 1
-                        break
-                    case 'retornar':
-                        keywords['Retorno de valor'] += 1
-                        break
-                    case 'excecao':
-                        keywords['Excecao'] += 1
-                        break
-    reader.close()
-    
-    with open('Analise/Resultados/post.txt', 'w') as writer:
-        for i in keywords:
-            print(f"{i}: {keywords[i]} vezes", file = writer)
-        print(file = writer)
-
-        print("Funcoes chamadas: ", file = writer)
-        for j in funcoes:
-            print(f"{j} :{funcoes[j]} vezes", file = writer)
-
-    writer.close()
 
 def getTestDir(modDir: str, dirList = []) -> List[str]:
     """Busca por diretórios em um diretório contendo testes
