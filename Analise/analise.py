@@ -1,5 +1,4 @@
-# TODO: - levar em consideração testes com o mesmo nome (criar pastas diferentes)
-#       - levar em consideração testes implementados na forma de classes
+# TODO: - ajustar criação de runsSummary
 #       - levar em consideração testes com múltiplos valores (parametrizados)
 #       - investigar por que a ferramenta roda todos os testes novamente após rodar um repositório
 from sys import settrace
@@ -18,9 +17,10 @@ import re
 import coverage
 
 class TestResult:
-    def __init__(self, trace = True, prof = False, cov = False, outputDir = ".", testName = "", modName = ""):
+    def __init__(self, trace = True, prof = False, cov = False, outputDir = ".", testName = "", modName = "", testFileName = ""):
         self.testName = testName
         self.modName = modName
+        self.testFileName = testFileName
 
         self.reports = []
         self.passed = 0
@@ -43,8 +43,10 @@ class TestResult:
         if self.prof:
             self.profiler = cProfile.Profile()
 
-        if self.cov:
-            self.coverage = coverage.Coverage()
+        # if self.cov:
+            # self.coverage = coverage.Coverage()
+            # print(f"\n\n\n\n {getcwd()} \n\n\n\n")
+            # self.tracer = trc.Trace(count = 1, trace = 1, infile = self.testFileName)
 
     @pytest.hookimpl(hookwrapper = True)
     def pytest_runtest_makereport(self, item, call):
@@ -68,8 +70,8 @@ class TestResult:
         if self.prof:
             self.profiler.enable()
 
-        if self.cov:
-            self.coverage.start()
+        # if self.cov:
+        #     self.coverage.start()
 
         if self.trace:
             traceCalls = self.createTraceCalls()
@@ -94,13 +96,15 @@ class TestResult:
                 filteredStats.sort_stats("ncalls").print_stats()
             f.close()
 
-        if self.cov:
-            self.coverage.stop()
-            self.coverage.save()
+        # if self.cov:
+        #     resultado = self.tracer.results()
+        #     resultado.write_results(summary = True, coverdir = ".")
+        #     self.coverage.stop()
+        #     self.coverage.save()
 
-            with open("coverage.txt", "w") as f:
-                self.coverage.report(file = f, show_missing = True)
-            f.close()
+        #     with open("coverage.txt", "w") as f:
+        #         self.coverage.report(file = f, show_missing = True)
+        #     f.close()
     
     def ignoreEntry(self, entry: Tuple[Tuple[str, str, str], Tuple]):
         ignore = {"pytest", "pluggy", "builtins"}
@@ -181,7 +185,7 @@ def runMultipleTimes(modDir: str, modName: str, count: int, params: List[bool]):
                         subprocess.run(["mkdir", f"Run-{run}"])
                         runDir = getcwd() + "/" + f"Run-{run}"
                         chdir(runDir)
-                        runResult = runTest(testFile, testCase, params)
+                        runResult = runTest(testFile, testCase, params, testFileName = testFile)
                         totalTime += runResult[1]
                         chdir(cwd + "/" + f"Test-{modName}/{currentFile}/{testCase}")
                         runSummary.append(f"Run {run}: {runResult[0]} Tempo: {runResult[1]}\n")
@@ -207,7 +211,7 @@ def runMultipleTimes(modDir: str, modName: str, count: int, params: List[bool]):
                             subprocess.run(["mkdir", f"Run-{run}"])
                             runDir = getcwd() + "/" + f"Run-{run}"
                             chdir(runDir)
-                            runResult = runTest(testFile, test, params, className)
+                            runResult = runTest(testFile, test, params, className = className, testFileName = testFile)
                             totalTime += runResult[1]
                             chdir(cwd + "/" + f"Test-{modName}/{currentFile}/{className}::{test}")
                             runSummary.append(f"Run {run}: {runResult[0]} Tempo: {runResult[1]}\n")
@@ -246,7 +250,7 @@ def getTestsFromClass(className: str, filePath: str) -> List[str]:
 
     return tests
 
-def runTest(dir: str, testName: str, params: List[bool], className: Optional[str] = None) -> Tuple[str, int]:
+def runTest(dir: str, testName: str, params: List[bool], testFileName: str, className: Optional[str] = None) -> Tuple[str, int]:
     """Roda um teste, dado o diretório do arquivo de testes e o nome do teste
     :param dir: diretório do arquivo de testes
     :param testName: nome do teste
@@ -257,13 +261,19 @@ def runTest(dir: str, testName: str, params: List[bool], className: Optional[str
     includeCoverage = params[1]
     includeProfiling = params[2]
 
-    testResult = TestResult(trace = includeTracing, cov = includeCoverage, prof = includeProfiling, testName = testName)
+    testResult = TestResult(trace = includeTracing, cov = includeCoverage, prof = includeProfiling, testName = testName, testFileName = testFileName)
 
+    tracer = trc.Trace(count = 1, trace = 0)
     if className is None:
-        pytest.main([f"{dir}::{testName}"], plugins=[testResult])
+        if includeCoverage:
+            tracer.runfunc(pytest.main, [f"{dir}::{testName}"], plugins=[testResult])
+        else:
+            pytest.main([f"{dir}::{testName}"], plugins=[testResult])
     else:
-        print(f"\n\n\n\n{testName}\n\n\n\n")
-        pytest.main([f"{dir}::{className}::{testName}"], plugins=[testResult])
+        if includeCoverage:
+            tracer.runfunc(pytest.main, [f"{dir}::{className}::{testName}"], plugins=[testResult])
+        else:
+            pytest.main([f"{dir}::{className}::{testName}"], plugins=[testResult])
 
     if testResult.passed != 0:
         result = "PASSED"
@@ -273,6 +283,9 @@ def runTest(dir: str, testName: str, params: List[bool], className: Optional[str
         result = "SKIPPED"
     else:
         result = "XFAILED"
+    
+    results = tracer.results()
+    results.write_results(coverdir = ".", summary = True)
 
     return (result, testResult.total_duration)
 
@@ -442,7 +455,6 @@ def readLines(fileName: str) -> List[str]:
 
     return lines
 
-# TODO: Adicionar metodo para comparacao de diffs (como pedido)
 def flakyFinder(dirName: str) -> tuple:
     def extractRuns(line: str):
         matchFailed = re.search(r'Run (\d+): (\bFAILED\b) Tempo: (\d+\.\d+)', line)
