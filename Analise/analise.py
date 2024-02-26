@@ -10,13 +10,12 @@ from time import time
 from difflib import unified_diff
 from typing import List, Tuple, Dict, Optional
 from random import choice
-from . import TestCover
+from inspect import getmembers
 import trace as trc
 import subprocess
 import pytest
 import cProfile, pstats
 import re
-import coverage
 
 class TestResult:
     def __init__(self, trace = True, prof = False, cov = False, outputDir = ".", testName = "", modName = "", testFileName = ""):
@@ -123,7 +122,17 @@ class TestResult:
             if event == 'return':
                 self.callCounter[0] -= 1
                 if arg is not None:
-                    self.traceBuffer.append(self.callCounter[0] * "<" + f"{funcName}: {arg} ({self.rootFile[0]}, {self.rootFileNo[0]}, {self.rootFuncName[0]})\n")
+                    builtins = (int, float, str, complex, list, tuple, range, dict, set, frozenset, bool, bytes, bytearray)
+                    if isinstance(arg, object) and type(arg) not in builtins:
+                        attrs = getmembers(arg)
+                        returnObj = f"{type(arg)}:\n"
+                        for name, value in attrs:
+                            # Ignora builtins
+                            if not name.startswith("__") and not name.endswith("__"):
+                                returnObj += self.callCounter[0] * "\t" + f"{name}: {value}\n"
+                        self.traceBuffer.append(self.callCounter[0] * "<" + f"{funcName}: {returnObj} ({self.rootFile[0]}, {self.rootFileNo[0]}, {self.rootFuncName[0]})\n")
+                    else:
+                        self.traceBuffer.append(self.callCounter[0] * "<" + f"{funcName}: {arg} ({self.rootFile[0]}, {self.rootFileNo[0]}, {self.rootFuncName[0]})\n")
                 else:
                     self.traceBuffer.append(self.callCounter[0] * "<" + f"{funcName}: None ({self.rootFile[0]}, {self.rootFileNo[0]}, {self.rootFuncName[0]})\n")
 
