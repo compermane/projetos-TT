@@ -1,6 +1,7 @@
-# TODO: - ajustar criação de runsSummary
+# TODO: - ajustar criação de runsSummary (está sendo criado no lugar errado)
 #       - levar em consideração testes com múltiplos valores (parametrizados)
 #       - investigar por que a ferramenta roda todos os testes novamente após rodar um repositório
+#       - investigar o que a função de trace do tracer está rastreando (se é o que executa o teste ou se é o código do teste)
 from sys import settrace
 from os import chdir, listdir, getcwd, path, remove
 from pathlib import Path
@@ -9,6 +10,7 @@ from time import time
 from difflib import unified_diff
 from typing import List, Tuple, Dict, Optional
 from random import choice
+from . import TestCover
 import trace as trc
 import subprocess
 import pytest
@@ -43,11 +45,6 @@ class TestResult:
         if self.prof:
             self.profiler = cProfile.Profile()
 
-        # if self.cov:
-            # self.coverage = coverage.Coverage()
-            # print(f"\n\n\n\n {getcwd()} \n\n\n\n")
-            # self.tracer = trc.Trace(count = 1, trace = 1, infile = self.testFileName)
-
     @pytest.hookimpl(hookwrapper = True)
     def pytest_runtest_makereport(self, item, call):
         outcome = yield
@@ -69,9 +66,6 @@ class TestResult:
     def pytest_sessionstart(self, session):    
         if self.prof:
             self.profiler.enable()
-
-        # if self.cov:
-        #     self.coverage.start()
 
         if self.trace:
             traceCalls = self.createTraceCalls()
@@ -95,16 +89,6 @@ class TestResult:
                 filteredStats.stream = f
                 filteredStats.sort_stats("ncalls").print_stats()
             f.close()
-
-        # if self.cov:
-        #     resultado = self.tracer.results()
-        #     resultado.write_results(summary = True, coverdir = ".")
-        #     self.coverage.stop()
-        #     self.coverage.save()
-
-        #     with open("coverage.txt", "w") as f:
-        #         self.coverage.report(file = f, show_missing = True)
-        #     f.close()
     
     def ignoreEntry(self, entry: Tuple[Tuple[str, str, str], Tuple]):
         ignore = {"pytest", "pluggy", "builtins"}
@@ -263,17 +247,10 @@ def runTest(dir: str, testName: str, params: List[bool], testFileName: str, clas
 
     testResult = TestResult(trace = includeTracing, cov = includeCoverage, prof = includeProfiling, testName = testName, testFileName = testFileName)
 
-    tracer = trc.Trace(count = 1, trace = 0)
     if className is None:
-        if includeCoverage:
-            tracer.runfunc(pytest.main, [f"{dir}::{testName}"], plugins=[testResult])
-        else:
-            pytest.main([f"{dir}::{testName}"], plugins=[testResult])
+        pytest.main([f"{dir}::{testName}"], plugins=[testResult])
     else:
-        if includeCoverage:
-            tracer.runfunc(pytest.main, [f"{dir}::{className}::{testName}"], plugins=[testResult])
-        else:
-            pytest.main([f"{dir}::{className}::{testName}"], plugins=[testResult])
+        pytest.main([f"{dir}::{className}::{testName}"], plugins=[testResult])
 
     if testResult.passed != 0:
         result = "PASSED"
@@ -283,9 +260,6 @@ def runTest(dir: str, testName: str, params: List[bool], testFileName: str, clas
         result = "SKIPPED"
     else:
         result = "XFAILED"
-    
-    results = tracer.results()
-    results.write_results(coverdir = ".", summary = True)
 
     return (result, testResult.total_duration)
 
