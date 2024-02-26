@@ -3,6 +3,7 @@
 #       - investigar por que a ferramenta roda todos os testes novamente após rodar um repositório
 #       - investigar o que a função de trace do tracer está rastreando (se é o que executa o teste ou se é o código do teste)
 from sys import settrace
+import sys
 from os import chdir, listdir, getcwd, path, remove
 from pathlib import Path
 from ast import parse, walk, FunctionDef, ClassDef
@@ -44,6 +45,15 @@ class TestResult:
         if self.prof:
             self.profiler = cProfile.Profile()
 
+    def pytest_runtest_protocol(self, item, nextitem):
+        if self.cov:
+            testName = item.nodeid.split("::")[-1]
+            open(f"{testName}-cov.txt", "a").close()
+            with open(f"{testName}-cov.txt", "w") as traceFile:
+                sys.stdout = traceFile
+                tracer = trc.Trace(trace=1, count=1)
+                tracer.runctx("item.runtest()", globals(), locals())
+                sys.stdout = sys.__stdout__
     @pytest.hookimpl(hookwrapper = True)
     def pytest_runtest_makereport(self, item, call):
         outcome = yield
@@ -184,7 +194,9 @@ def runMultipleTimes(modDir: str, modName: str, count: int, params: List[bool]):
                         runSummary.append(f"Run {run}: {runResult[0]} Tempo: {runResult[1]}\n")
                         chdir(cwd + "/" + f"Test-{modName}/{currentFile}")
 
+                    chdir(cwd + "/" + f"Test-{modName}/{currentFile}/{testCase}")
                     with open("runsSummary.txt", "a") as f:
+                        print(f"\n\n\n\n {getcwd()} \n\n\n\n")
                         f.writelines(runSummary)
                         print(f"Tempo total: {totalTime}", file = f)
                     f.close()
