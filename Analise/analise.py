@@ -1,5 +1,4 @@
-# TODO: - ajustar criação de runsSummary (está sendo criado no lugar errado)
-#       - levar em consideração testes com múltiplos valores (parametrizados)
+# TODO: - levar em consideração testes com múltiplos valores (parametrizados)
 #       - investigar por que a ferramenta roda todos os testes novamente após rodar um repositório
 #       - investigar o que a função de trace do tracer está rastreando (se é o que executa o teste ou se é o código do teste)
 from sys import settrace
@@ -54,6 +53,7 @@ class TestResult:
                 tracer = trc.Trace(trace=1, count=1)
                 tracer.runctx("item.runtest()", globals(), locals())
                 sys.stdout = sys.__stdout__
+                
     @pytest.hookimpl(hookwrapper = True)
     def pytest_runtest_makereport(self, item, call):
         outcome = yield
@@ -196,7 +196,6 @@ def runMultipleTimes(modDir: str, modName: str, count: int, params: List[bool]):
 
                     chdir(cwd + "/" + f"Test-{modName}/{currentFile}/{testCase}")
                     with open("runsSummary.txt", "a") as f:
-                        print(f"\n\n\n\n {getcwd()} \n\n\n\n")
                         f.writelines(runSummary)
                         print(f"Tempo total: {totalTime}", file = f)
                     f.close()
@@ -229,6 +228,22 @@ def runMultipleTimes(modDir: str, modName: str, count: int, params: List[bool]):
                         chdir(cwd + "/" + f"Test-{modName}/{currentFile}")
 
                 chdir(cwd)
+
+def checkForTestParametrization(testPath: str, testName: str) -> bool:
+    with open(testPath, 'r') as file:
+        file_content = file.read()
+
+    test_function_pattern = rf"def\s+{testName}\s*\("
+    parametrize_pattern = r"@pytest.mark.parametrize\("
+    
+    match_test_function = re.search(test_function_pattern, file_content)
+    if match_test_function:
+        end_position = match_test_function.end()
+        test_function_content = file_content[end_position:]
+        match_parametrize = re.search(parametrize_pattern, test_function_content)
+        return match_parametrize is None
+    
+    return False
 
 def checkForTestClasses(filePath: str) -> Optional[List[str]]:
     with open(filePath, "r") as f:
@@ -304,25 +319,6 @@ def getTestDir(modDir: str, dirList = []) -> List[str]:
     chdir(cwd)
     return dirList
 
-def cleanUp(modDir: str) -> None:
-    """Exlui arquivos de copia de teste adicionados ao repositorio.
-    :param modDir: diretorio do repositorio
-    :returns: None
-    """
-    cwd = getcwd()
-    chdir(modDir)
-
-    files = list()
-    files = listdir(".")
-
-    for file in files:
-        if path.isdir(path.join(getcwd(), file)):
-            cleanUp(path.join(getcwd(), file))
-        else:
-            if "_copy.py" in file:
-                remove(path.join(getcwd(), file))
-    chdir(cwd)
-
 def getTestCases(files: List[str]) -> Dict[str, str]:
     """Procura por casos de teste
     :param files: lista contendo o caminho para os arquivos de teste
@@ -350,52 +346,6 @@ def getTestFiles(dir: str) -> List[str]:
     testFiles = dirPath.glob("test_*.py")
 
     return [str(file) for file in testFiles]
-
-def traceFuncs(dir: str, funcName: str, modName: str) -> None:
-    """Roda um teste específico do pytest
-    :param dir: Diretório onde se encontra o teste
-    :param funcName: Nome do teste
-    :param modName: Nome do módulo
-    :returns: Nada
-    """
-    subprocess.run(["mkdir", f"Test-{modName}"])
-    def runTest(dir: str, funcName: str) -> None:
-        pytest.main(["-v", f"{dir}::{funcName}"]) 
-        
-    tracer = trc.Trace(
-        count = 1,
-        trace = 0,
-        ignoredirs = [pytest.__file__, trc.__file__]
-    )
-
-    tracer.runfunc(runTest, dir, funcName)
-    res = tracer.results()
-    res.write_results(summary = True, coverdir = f"Test-{modName}")
-
-def refineCovers(modName: str, testFiles: str) -> None:
-    """Função para filtrar todos os arquivos gerados pelo trace da biblioteca trace. Mantém apenas os arquivos que tenha relação com o módulo modName
-    :param modName: Nome do módulo
-    :param testFiles: Arquivos de teste
-    :returns: None
-    """
-    cwd = getcwd()
-    chdir(f"Test-{modName}")
-
-    # Seleciona os arquivos para manter
-    files = list()
-    for file in listdir("."):
-        for testFile in testFiles:
-            tail = path.basename(testFile)
-            if tail[:-3] in file:
-                files.append(file)
-    # Deleta os não selecionados
-    for file in listdir("."):
-        if file not in files:
-            subprocess.run(["rm", file])
-
-    # Retorna para o diretorio de comeco
-    chdir(cwd)
-
 
 def getTestCoverage(modName: str, testName: str) -> None:
     """Gera arquivos de texto contendo o cover para um dado caso de teste.
@@ -426,22 +376,6 @@ def getTestCoverage(modName: str, testName: str) -> None:
                     w.close()
             f.close()
     chdir(cwd)
-
-def profiling(modName: str):
-    dirList = getTestDir(getcwd() + "/" + modName)
-    for dir in dirList:
-        fileList = getTestFiles(dir)
-        testList = getTestCases(fileList)
-        for file in fileList:
-            for test in testList[file]:
-                profiler = cProfile.Profile()
-                profiler.enable()
-                runTest(dir, modName, test)
-                profiler.disable()
-                stats = pstats.Stats(profiler)
-                with open(f"Stats-{test}.txt", "w") as f:
-                    stats.stream = f
-                    stats.print_stats()
 
 def readLines(fileName: str) -> List[str]:
     with open(fileName, "r") as f:
