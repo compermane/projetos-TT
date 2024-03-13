@@ -196,6 +196,12 @@ def runMultipleTimes(modDir: str, modName: str, count: int, params: List[bool]):
                                 chdir(cwd + "/" + f"Test-{modName}/{currentFile}/{testCase}-{param}")
                                 runSummary.append(f"Run {run}: {runResult[0]} Tempo: {runResult[1]}\n")
                                 chdir(cwd + "/" + f"Test-{modName}/{currentFile}")
+
+                            chdir(cwd + "/" + f"Test-{modName}/{currentFile}/{testCase}-{param}")
+                            with open("runsSummary.txt", "a") as f:
+                                f.writelines(runSummary)
+                                print(f"Tempo total: {totalTime}", file = f)
+                            f.close()
                             chdir(cwd + "/" + f"Test-{modName}/{currentFile}")
                     else:
                         for run in range(count):
@@ -212,11 +218,11 @@ def runMultipleTimes(modDir: str, modName: str, count: int, params: List[bool]):
 
                         chdir(cwd + "/" + f"Test-{modName}/{currentFile}/{testCase}")
 
-                    with open("runsSummary.txt", "a") as f:
-                        f.writelines(runSummary)
-                        print(f"Tempo total: {totalTime}", file = f)
-                    f.close()
-                    chdir(cwd + "/" + f"Test-{modName}/{currentFile}")
+                        with open("runsSummary.txt", "a") as f:
+                            f.writelines(runSummary)
+                            print(f"Tempo total: {totalTime}", file = f)
+                        f.close()
+                        chdir(cwd + "/" + f"Test-{modName}/{currentFile}")
 
                 chdir(cwd)
             else:
