@@ -5,7 +5,7 @@ from sys import settrace
 import sys
 from os import chdir, listdir, getcwd, path, remove
 from pathlib import Path
-from ast import parse, walk, FunctionDef, ClassDef
+from ast import parse, walk, literal_eval, FunctionDef, ClassDef
 from time import time
 from difflib import unified_diff
 from typing import List, Tuple, Dict, Optional
@@ -53,7 +53,7 @@ class TestResult:
                 tracer = trc.Trace(trace=1, count=1)
                 tracer.runctx("item.runtest()", globals(), locals())
                 sys.stdout = sys.__stdout__
-                
+
     @pytest.hookimpl(hookwrapper = True)
     def pytest_runtest_makereport(self, item, call):
         outcome = yield
@@ -179,22 +179,39 @@ def runMultipleTimes(modDir: str, modName: str, count: int, params: List[bool]):
                 tests = getTestCases([testFile])
 
                 for testCase in tests[testFile]:
-                    subprocess.run(["mkdir", testCase])
                     runSummary = list()
                     totalTime = 0
 
-                    for run in range(count):
-                        chdir(getcwd() + "/" + testCase)
-                        subprocess.run(["mkdir", f"Run-{run}"])
-                        runDir = getcwd() + "/" + f"Run-{run}"
-                        chdir(runDir)
-                        runResult = runTest(testFile, testCase, params, testFileName = testFile)
-                        totalTime += runResult[1]
-                        chdir(cwd + "/" + f"Test-{modName}/{currentFile}/{testCase}")
-                        runSummary.append(f"Run {run}: {runResult[0]} Tempo: {runResult[1]}\n")
-                        chdir(cwd + "/" + f"Test-{modName}/{currentFile}")
+                    if checkForTestParametrization(testFile, testCase):
+                        for param in getTestParameters(testFile, testCase):
+                            subprocess.run(["mkdir", f"{testCase}-{param}"])
+                            for run in range(count):
+                                chdir(getcwd() + "/" + testCase + "-" + param)
+                                subprocess.run(["mkdir", f"Run-{run}"])
+                                runDir = getcwd() + "/" + f"Run-{run}"
+                                chdir(runDir)
 
-                    chdir(cwd + "/" + f"Test-{modName}/{currentFile}/{testCase}")
+                                runResult = runTest(testFile, testCase, params, parameters = param) 
+                                totalTime += runResult[1]
+                                chdir(cwd + "/" + f"Test-{modName}/{currentFile}/{testCase}-{param}")
+                                runSummary.append(f"Run {run}: {runResult[0]} Tempo: {runResult[1]}\n")
+                                chdir(cwd + "/" + f"Test-{modName}/{currentFile}")
+                            chdir(cwd + "/" + f"Test-{modName}/{currentFile}")
+                    else:
+                        for run in range(count):
+                            subprocess.run(["mkdir", testCase])
+                            chdir(getcwd() + "/" + testCase)
+                            subprocess.run(["mkdir", f"Run-{run}"])
+                            runDir = getcwd() + "/" + f"Run-{run}"
+                            chdir(runDir)
+                            runResult = runTest(testFile, testCase, params)
+                            totalTime += runResult[1]
+                            chdir(cwd + "/" + f"Test-{modName}/{currentFile}/{testCase}")
+                            runSummary.append(f"Run {run}: {runResult[0]} Tempo: {runResult[1]}\n")
+                            chdir(cwd + "/" + f"Test-{modName}/{currentFile}")
+
+                        chdir(cwd + "/" + f"Test-{modName}/{currentFile}/{testCase}")
+
                     with open("runsSummary.txt", "a") as f:
                         f.writelines(runSummary)
                         print(f"Tempo total: {totalTime}", file = f)
@@ -215,7 +232,7 @@ def runMultipleTimes(modDir: str, modName: str, count: int, params: List[bool]):
                             subprocess.run(["mkdir", f"Run-{run}"])
                             runDir = getcwd() + "/" + f"Run-{run}"
                             chdir(runDir)
-                            runResult = runTest(testFile, test, params, className = className, testFileName = testFile)
+                            runResult = runTest(testFile, test, params, className = className)
                             totalTime += runResult[1]
                             chdir(cwd + "/" + f"Test-{modName}/{currentFile}/{className}::{test}")
                             runSummary.append(f"Run {run}: {runResult[0]} Tempo: {runResult[1]}\n")
@@ -229,19 +246,61 @@ def runMultipleTimes(modDir: str, modName: str, count: int, params: List[bool]):
 
                 chdir(cwd)
 
+def getTestParameters(testFilePath: str, testName: str) -> list:
+    parameters: List = []
+    foundParametrize: bool = False
+    foundFunction: bool = False
+    parametersPosition: int = 0
+    testFunctionPosition: int = 0
+
+    with open(testFilePath, "r") as file:
+        lines = file.readlines()
+
+
+    while True:
+        currentPosition: int = 0
+        for line in lines:
+            if "@pytest.mark.parametrize" in line:
+                parametersPosition = currentPosition
+                foundParametrize = True
+
+            elif "def test_" in line:
+                if testName in line:
+                    testFunctionPosition = currentPosition
+                    foundFunction = True
+                else:
+                    foundParametrize = False
+                    foundFunction = False
+
+            currentPosition += 1
+
+        if foundFunction and foundParametrize:
+            break
+    
+    pattern =  r"\(\s*((?:\s*\d+\s*,?\s*)+)\s*\)"
+    for lineNo in range(parametersPosition, testFunctionPosition):
+        tuples = re.findall(pattern, lines[lineNo])
+
+        for tupleStr in tuples:
+            formattedParams = "-".join(map(str.strip, tupleStr.strip("()").split(",")))
+            formattedParams = "[" + formattedParams + "]"
+            parameters.append(formattedParams)
+
+    return parameters
+
 def checkForTestParametrization(testPath: str, testName: str) -> bool:
     with open(testPath, 'r') as file:
-        file_content = file.read()
+        fileContent = file.read()
 
-    test_function_pattern = rf"def\s+{testName}\s*\("
-    parametrize_pattern = r"@pytest.mark.parametrize\("
+    testFunctionPattern = rf"def\s+{testName}\s*\("
+    parametrizePattern = r"@pytest.mark.parametrize\("
     
-    match_test_function = re.search(test_function_pattern, file_content)
-    if match_test_function:
-        end_position = match_test_function.end()
-        test_function_content = file_content[end_position:]
-        match_parametrize = re.search(parametrize_pattern, test_function_content)
-        return match_parametrize is None
+    matchTestFunction = re.search(testFunctionPattern, fileContent)
+    if matchTestFunction:
+        endPosition = matchTestFunction.end()
+        testFunctionContent = fileContent[endPosition:]
+        matchParametrize = re.search(parametrizePattern, testFunctionContent)
+        return matchParametrize is None
     
     return False
 
@@ -270,7 +329,7 @@ def getTestsFromClass(className: str, filePath: str) -> List[str]:
 
     return tests
 
-def runTest(dir: str, testName: str, params: List[bool], testFileName: str, className: Optional[str] = None) -> Tuple[str, int]:
+def runTest(dir: str, testName: str, params: List[bool], parameters: Optional[str] = None, className: Optional[str] = None) -> Tuple[str, int]:
     """Roda um teste, dado o diretório do arquivo de testes e o nome do teste
     :param dir: diretório do arquivo de testes
     :param testName: nome do teste
@@ -281,12 +340,18 @@ def runTest(dir: str, testName: str, params: List[bool], testFileName: str, clas
     includeCoverage = params[1]
     includeProfiling = params[2]
 
-    testResult = TestResult(trace = includeTracing, cov = includeCoverage, prof = includeProfiling, testName = testName, testFileName = testFileName)
+    testResult = TestResult(trace = includeTracing, cov = includeCoverage, prof = includeProfiling, testName = testName, testFileName = dir)
 
     if className is None:
-        pytest.main([f"{dir}::{testName}"], plugins=[testResult])
+        if parameters is None:
+            pytest.main([f"{dir}::{testName}"], plugins=[testResult])
+        else:
+            pytest.main([f"{dir}::{testName}{parameters}"], plugins=[testResult])
     else:
-        pytest.main([f"{dir}::{className}::{testName}"], plugins=[testResult])
+        if parameters is None:
+            pytest.main([f"{dir}::{className}::{testName}"], plugins=[testResult])
+        else:
+            pytest.main([f"{dir}::{className}::{testName}{parameters}"], plugins=[testResult])
 
     if testResult.passed != 0:
         result = "PASSED"
