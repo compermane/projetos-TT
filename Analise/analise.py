@@ -1,4 +1,4 @@
-# TODO: - levar em consideração testes com múltiplos valores (parametrizados)
+# TODO: 
 #       - investigar por que a ferramenta roda todos os testes novamente após rodar um repositório
 #       - investigar o que a função de trace do tracer está rastreando (se é o que executa o teste ou se é o código do teste)
 from sys import settrace
@@ -8,7 +8,7 @@ from pathlib import Path
 from ast import parse, walk, literal_eval, FunctionDef, ClassDef
 from time import time
 from difflib import unified_diff
-from typing import List, Tuple, Dict, Optional
+from typing import List, Tuple, Dict, Optional, Any
 from random import choice
 from inspect import getmembers
 import trace as trc
@@ -18,7 +18,9 @@ import cProfile, pstats
 import re
 
 class TestResult:
-    def __init__(self, trace = True, prof = False, cov = False, outputDir = ".", testName = "", modName = "", testFileName = ""):
+    def __init__(self, trace: bool = True, prof: bool = False, cov: bool = False, 
+                 outputDir: str = ".", testName: str = "", modName: str = "", testFileName: str = "",
+                 isParametrized: Optional[bool] = False, params: Optional[List[Any]] = []):
         self.testName = testName
         self.modName = modName
         self.testFileName = testFileName
@@ -44,15 +46,29 @@ class TestResult:
         if self.prof:
             self.profiler = cProfile.Profile()
 
+        if isParametrized:
+            self.params = getParamsValues(params)
+        else:
+            self.params = None
+    
     def pytest_runtest_protocol(self, item, nextitem):
         if self.cov:
             testName = item.nodeid.split("::")[-1]
             open(f"{testName}-cov.txt", "a").close()
             with open(f"{testName}-cov.txt", "w") as traceFile:
+
+                if self.params is not None:
+                    item.funcargs = {item.fixturenames[i]: self.params[i] for i in range(len(item.fixturenames))}
+                    locals_ = {**locals(), **item.funcargs}
+                else:
+                    locals_ = {**locals()}
+
                 sys.stdout = traceFile
-                tracer = trc.Trace(trace=1, count=1)
-                tracer.runctx("item.runtest()", globals(), locals())
-                sys.stdout = sys.__stdout__
+                try:
+                    tracer = trc.Trace(trace=1, count=1)
+                    tracer.runctx("item.runtest()", globals=globals(), locals=locals_)
+                finally:
+                    sys.stdout = sys.__stdout__
 
     @pytest.hookimpl(hookwrapper = True)
     def pytest_runtest_makereport(self, item, call):
@@ -191,7 +207,7 @@ def runMultipleTimes(modDir: str, modName: str, count: int, params: List[bool]):
                                 runDir = getcwd() + "/" + f"Run-{run}"
                                 chdir(runDir)
 
-                                runResult = runTest(testFile, testCase, params, parameters = param) 
+                                runResult = runTest(testFile, testCase, params, parameters = param, isParametrized = True) 
                                 totalTime += runResult[1]
                                 chdir(cwd + "/" + f"Test-{modName}/{currentFile}/{testCase}-{param}")
                                 runSummary.append(f"Run {run}: {runResult[0]} Tempo: {runResult[1]}\n")
@@ -252,7 +268,10 @@ def runMultipleTimes(modDir: str, modName: str, count: int, params: List[bool]):
 
                 chdir(cwd)
 
-def getTestParameters(testFilePath: str, testName: str) -> list:
+def getParamsValues(param: str) -> List[Any]:
+    return [eval(item) for item in param.strip('[]').split('-')]
+
+def getTestParameters(testFilePath: str, testName: str) -> List[str]:
     parameters: List = []
     foundParametrize: bool = False
     foundFunction: bool = False
@@ -335,7 +354,8 @@ def getTestsFromClass(className: str, filePath: str) -> List[str]:
 
     return tests
 
-def runTest(dir: str, testName: str, params: List[bool], parameters: Optional[str] = None, className: Optional[str] = None) -> Tuple[str, int]:
+def runTest(dir: str, testName: str, params: List[bool], className: Optional[str] = None,
+            isParametrized: Optional[bool] = False, parameters: Optional[List[Any]] = None) -> Tuple[str, int]:
     """Roda um teste, dado o diretório do arquivo de testes e o nome do teste
     :param dir: diretório do arquivo de testes
     :param testName: nome do teste
@@ -346,7 +366,9 @@ def runTest(dir: str, testName: str, params: List[bool], parameters: Optional[st
     includeCoverage = params[1]
     includeProfiling = params[2]
 
-    testResult = TestResult(trace = includeTracing, cov = includeCoverage, prof = includeProfiling, testName = testName, testFileName = dir)
+    testResult = TestResult(trace = includeTracing, cov = includeCoverage, prof = includeProfiling, 
+                            testName = testName, testFileName = dir,
+                            isParametrized = isParametrized, params = parameters)
 
     if className is None:
         if parameters is None:
