@@ -58,8 +58,11 @@ class TestResult:
             with open(f"{testName}-cov.txt", "w") as traceFile:
 
                 if self.params is not None:
-                    item.funcargs = {item.fixturenames[i]: self.params[i] for i in range(len(item.fixturenames))}
-                    locals_ = {**locals(), **item.funcargs}
+                    if len(self.params) != len(item.funcargs):
+                        raise Exception(f"Number of test arguments is different from the number of the given arguments: expected {len(item.funcargs)} got {len(self.params)}")
+                    else:
+                        item.funcargs = {item.fixturenames[i]: self.params[i] for i in range(len(item.fixturenames))}
+                        locals_ = {**locals(), **item.funcargs}
                 else:
                     locals_ = {**locals()}
 
@@ -269,9 +272,18 @@ def runMultipleTimes(modDir: str, modName: str, count: int, params: List[bool]):
                 chdir(cwd)
 
 def getParamsValues(param: str) -> List[Any]:
+    """Recebe parâmetros de um teste os retorna na forma de uma lista. Ex: [1-1-'Foo'] -> [1, 1, 'Foo']"
+    :param str: string dos parâmetros de um teste.
+    :returns: lista com os parâmetros
+    """
     return [eval(item) for item in param.strip('[]').split('-')]
 
 def getTestParameters(testFilePath: str, testName: str) -> List[str]:
+    """Gera uma lista com todos os parâmetros de um teste parametrizado. Útil na execução única de um teste parametrizado com um determinado parâmetro
+    :param testFilePath: caminho para o arquivo de teste do teste parametrizado. Aqui, é utilizado o absolute path.
+    :param testName: nome do teste.
+    :returns: lista com todos os parâmetros do teste. Ex: ['[1-1-'foo']', '[2-2-'bar']']
+    """
     parameters: List = []
     foundParametrize: bool = False
     foundFunction: bool = False
@@ -314,6 +326,11 @@ def getTestParameters(testFilePath: str, testName: str) -> List[str]:
     return parameters
 
 def checkForTestParametrization(testPath: str, testName: str) -> bool:
+    """Verifica se um teste é parametrizado.
+    :param testPath: caminho para o arquivo de teste do teste a ser verificado. Aqui é utilizado o absolute path.
+    :param testName: nome do teste a ser verificado.
+    :returns: bool, True caso o teste seja parametrizado e false caso contrário.
+    """
     with open(testPath, 'r') as file:
         fileContent = file.read()
 
@@ -330,6 +347,10 @@ def checkForTestParametrization(testPath: str, testName: str) -> bool:
     return False
 
 def checkForTestClasses(filePath: str) -> Optional[List[str]]:
+    """Verifica se existem classes declaradas no arquivo de testes.
+    :param filePath: caminho para o arquivo de testes. Aqui é utilizado o caminho absoluto.
+    :returns: lista com os nomes das classes, se existirem. None caso contrário.
+    """
     with open(filePath, "r") as f:
         content = f.read()
     f.close()
@@ -340,6 +361,11 @@ def checkForTestClasses(filePath: str) -> Optional[List[str]]:
     return classNames if classNames != [] else None
 
 def getTestsFromClass(className: str, filePath: str) -> List[str]:
+    """Fornece os testes declarados dentro de uma determinada classe.
+    :param className: nome da classe.
+    :param filePath: caminho para o arquivo de testes.
+    :returns: lista contendo os testes dentro da classe className.
+    """
     with open(filePath, "r") as f:
         content = f.read()
     f.close()
@@ -357,9 +383,13 @@ def getTestsFromClass(className: str, filePath: str) -> List[str]:
 def runTest(dir: str, testName: str, params: List[bool], className: Optional[str] = None,
             isParametrized: Optional[bool] = False, parameters: Optional[List[Any]] = None) -> Tuple[str, int]:
     """Roda um teste, dado o diretório do arquivo de testes e o nome do teste
-    :param dir: diretório do arquivo de testes
-    :param testName: nome do teste
-    :returns: resultado do teste 
+    :param dir: diretório do arquivo de testes.
+    :param testName: nome do teste.
+    :param params: parâmetros da ferramenta de análise (tracing, coverage e profiling).
+    :param className: nome da classe onde o teste está inserido. Opcional.
+    :param isParametrized: flag que indica se o teste é parametrizado. Opcional.
+    :param parameters: parâmetros de um teste paarametrizado. Opcional; mandatório caso isParametrized seja True.
+    :returns: resultado do teste, junto com sua duração.
     """
 
     includeTracing = params[0]
@@ -439,36 +469,6 @@ def getTestFiles(dir: str) -> List[str]:
     testFiles = dirPath.glob("test_*.py")
 
     return [str(file) for file in testFiles]
-
-def getTestCoverage(modName: str, testName: str) -> None:
-    """Gera arquivos de texto contendo o cover para um dado caso de teste.
-    :param modName: Módulo do teste
-    :param testName: Nome do teste
-    :returns: None
-    """
-    cwd = getcwd()
-    chdir(f"Test-{modName}")
-    files = [file for file in listdir(".") if path.isfile(path.join(getcwd(), file))]
-    print(files)
-    for file in files:
-        with open(file, "r") as f:
-            content = f.read()
-
-            if testName in content:
-                subprocess.run(["mkdir", testName])
-                chdir(testName)
-                with open(f"{testName}-cover.txt", "w") as w:
-                    f.seek(0)
-                    flag = False
-                    for line in f.readlines():
-                        if "def" in line and flag == True:
-                            break
-                        if testName in line or flag == True:
-                            print(line, file = w)
-                            flag = True
-                    w.close()
-            f.close()
-    chdir(cwd)
 
 def readLines(fileName: str) -> List[str]:
     with open(fileName, "r") as f:
