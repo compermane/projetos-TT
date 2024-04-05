@@ -1,6 +1,6 @@
-# TODO: 
+# TODO: - investigar como rodar testes com fixtures 
+#       - investigar outrs formas de declarar argumentos em parametrize
 #       - investigar por que a ferramenta roda todos os testes novamente após rodar um repositório
-#       - investigar o que a função de trace do tracer está rastreando (se é o que executa o teste ou se é o código do teste)
 from sys import settrace
 import sys
 from os import chdir, listdir, getcwd, path, remove
@@ -58,7 +58,7 @@ class TestResult:
             with open(f"{testName}-cov.txt", "w") as traceFile:
 
                 if self.params is not None:
-                    if len(self.params) != len(item.funcargs):
+                    if len(self.params) != len(item.fixturenames):
                         raise Exception(f"Number of test arguments is different from the number of the given arguments: expected {len(item.funcargs)} got {len(self.params)}")
                     else:
                         item.funcargs = {item.fixturenames[i]: self.params[i] for i in range(len(item.fixturenames))}
@@ -204,6 +204,8 @@ def runMultipleTimes(modDir: str, modName: str, count: int, params: List[bool]):
                     if checkForTestParametrization(testFile, testCase):
                         for param in getTestParameters(testFile, testCase):
                             subprocess.run(["mkdir", f"{testCase}-{param}"])
+                            runSummary = []
+                            totalTime = 0
                             for run in range(count):
                                 chdir(getcwd() + "/" + testCase + "-" + param)
                                 subprocess.run(["mkdir", f"Run-{run}"])
@@ -248,26 +250,49 @@ def runMultipleTimes(modDir: str, modName: str, count: int, params: List[bool]):
                 for className in checkForTestClasses(testFile):
                     tests = getTestsFromClass(className, testFile)
                     for test in tests:
-                        subprocess.run(["mkdir", f"{className}::{test}"])
-                        runSummary = list()
-                        totalTime = 0
+                        if checkForTestParametrization(testFile, test):
+                            for param in getTestParameters(testFile, test):
+                                subprocess.run(["mkdir", f"{className}::{test}-{param}"])
+                                runSummary = list()
+                                totalTime = 0
+                                for run in range(count):
+                                    chdir(getcwd() + f"/{className}::{test}-{param}")
+                                    subprocess.run(["mkdir", f"Run-{run}"])
+                                    runDir = getcwd() + f"/Run-{run}"
+                                    chdir(runDir)
+                                    runResult = runTest(testFile, test, params, className = className, isParametrized = True, parameters = param)
+                                    totalTime += runResult[1]
+                                    chdir(cwd + f"/Test-{modName}/{currentFile}/{className}::{test}-{param}")
+                                    runSummary.append(f"Run {run}: {runResult[0]} Tempo: {runResult[1]}\n")
+                                    chdir(cwd + f"/Test-{modName}/{currentFile}")
 
-                        for run in range(count):
-                            chdir(getcwd() + f"/{className}::{test}")
-                            subprocess.run(["mkdir", f"Run-{run}"])
-                            runDir = getcwd() + "/" + f"Run-{run}"
-                            chdir(runDir)
-                            runResult = runTest(testFile, test, params, className = className)
-                            totalTime += runResult[1]
-                            chdir(cwd + "/" + f"Test-{modName}/{currentFile}/{className}::{test}")
-                            runSummary.append(f"Run {run}: {runResult[0]} Tempo: {runResult[1]}\n")
+                                with open("runsSummary.txt", "a") as f:
+                                    f.writelines(runSummary)
+                                    print(f"Tempo total: {totalTime}", file = f)
+                                f.close()
+                                chdir(cwd + "/" + f"Test-{modName}/{currentFile}")
+
+                        else:
+                            subprocess.run(["mkdir", f"{className}::{test}"])
+                            runSummary = list()
+                            totalTime = 0
+
+                            for run in range(count):
+                                chdir(getcwd() + f"/{className}::{test}")
+                                subprocess.run(["mkdir", f"Run-{run}"])
+                                runDir = getcwd() + "/" + f"Run-{run}"
+                                chdir(runDir)
+                                runResult = runTest(testFile, test, params, className = className)
+                                totalTime += runResult[1]
+                                chdir(cwd + "/" + f"Test-{modName}/{currentFile}/{className}::{test}")
+                                runSummary.append(f"Run {run}: {runResult[0]} Tempo: {runResult[1]}\n")
+                                chdir(cwd + "/" + f"Test-{modName}/{currentFile}")
+
+                            with open("runsSummary.txt", "a") as f:
+                                f.writelines(runSummary)
+                                print(f"Tempo total: {totalTime}", file = f)
+                            f.close()
                             chdir(cwd + "/" + f"Test-{modName}/{currentFile}")
-
-                        with open("runsSummary.txt", "a") as f:
-                            f.writelines(runSummary)
-                            print(f"Tempo total: {totalTime}", file = f)
-                        f.close()
-                        chdir(cwd + "/" + f"Test-{modName}/{currentFile}")
 
                 chdir(cwd)
 
