@@ -1,9 +1,15 @@
 import csv
 import re
 import subprocess
-from os import listdir, getcwd, path
+import pytest
+import virtualenv
+import contextlib
+import shutil
+from . import analise
+from os import path, getcwd, chdir
 from sys import builtin_module_names
-from typing import List, Tuple
+from typing import List, Tuple, Optional, Generator, Any
+from pathlib import Path
 
 class NoRepositoryNameException(Exception):
     def __init__(self, *args: object) -> None:
@@ -36,7 +42,94 @@ class Repository:
     @property
     def name(self):
         return self._name
+
+class VirtualEnvironment:
+    """ Adaptado de FlaPy
+    """
+    def __init__(self, venv_name: str, root_dir: str, requirements: List[Path]) -> None:
+        self._venv_name = venv_name
+        self._requirements = requirements
+        self._root_dir = root_dir
+        self._venv_dir = f"{root_dir}/{venv_name}"
+
+        # Criando o venv para o repositório
+        create_venv_cmd = ["virtualenv", self._venv_dir]
+        subprocess.run(create_venv_cmd, check = True)
+
+    @property
+    def venv_name(self):
+        return self._venv_name
     
+    @property
+    def requirements(self):
+        return self._requirements
+    
+    @property
+    def venv_dir(self):
+        return self._venv_dir
+    
+    def cleanUp(self):
+        shutil.rmtree(self._venv_dir)
+
+    def runCommands(self, commands: Optional[List[str]] = None) -> Tuple[str, str]:
+        command_list = [
+            f"source {self._venv_dir}/bin/activate",
+            "python3 -V"
+        ]
+
+        for requirement in self._requirements:
+            command_list.append(f"pip3 install -r {requirement}")
+
+        if commands is not None:
+            command_list.extend(commands)
+
+        cmd = ";".join(command_list)
+
+        process = subprocess.Popen(
+            cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, executable="/bin/bash"
+        )
+        out, err = process.communicate()
+
+        return (out.decode("utf-8"), err.decode("utf-8"))
+    
+    def executePytest(self, test_node: str, params: List[bool], output_dir: str) -> Tuple[str, float, int, int, int, int]:
+        include_tracing = params[0]
+        include_coverage = params[1]
+        include_profiling = params[2]
+
+
+        test_result = analise.TestResult(include_tracing, include_profiling, include_coverage,
+                                         outputDir = output_dir, testName = test_node.split("/")[-1])
+        pytest.main([test_node], plugins=[test_result])
+
+        passed_count = 0
+        failed_count = 0
+        xfailed_count = 0
+        skipped_count = 0
+
+        if test_result.passed != 0:
+            result = "PASSED"
+            passed_count += 1
+        elif test_result.failed != 0:
+            result = "FAILED"
+            failed_count += 1
+        elif test_result.skipped != 0:
+            result = "SKIPPED"
+            skipped_count += 1
+        else:
+            result = "XFAILED"
+            xfailed_count += 1
+
+        return (result, test_result.total_duration, passed_count, failed_count, skipped_count, xfailed_count)
+    
+@contextlib.contextmanager
+def venv(venv_name: str, root_dir: str, requirements: List[str]) -> Generator[VirtualEnvironment, Any, None]:
+    v = VirtualEnvironment(venv_name, root_dir, requirements)
+    try:
+        yield v
+    finally:
+        pass
+
 def readCSV(fileName: str) -> List[Repository]:
     """Lê um arquivo CSV, obtendo informações de repositório e número de runs
     :param fileName: Nome do arquivo CSV
@@ -66,15 +159,15 @@ def getRepoName(gitUrl: str) -> str:
     :param gitUrl: URL do github
     :returns: String do nome do repositório
     """
-    print(f"\n\n\n{gitUrl}\n\n\n")
     urlPattern = r'https?://github\.com/[\w-]+/([\w-]+)$'
     match = re.match(urlPattern, gitUrl)
-
-    print(f"\n\n\n{match.group(1)}\n\n\n")
     if match:
         return match.group(1)
     else:
         raise NoRepositoryNameException(f"Nenhum nome de repositório para {gitUrl}")
+
+def getRepoRequirements(repo: Repository):
+    return list(Path(repo.name).glob("*requirements*.txt"))
 
 def activating(repo: Repository) -> None:
     """Ativa um repositório, instalando suas depências dentro de seu venv
@@ -94,7 +187,7 @@ def activating(repo: Repository) -> None:
         print("Não há arquivo de requirements")
 
     # Instalação de dependências do plugin
-    subprocess.run([path.join(venvPath, "bin", "pip"), "install", "-r", "requirements.txt"], check=True)
+    subprocess.run([path.join(venvPath, "bin","pip"), "install", "-r", "requirements.txt"], check=True)
 
 def venving(repo: Repository) -> None:
     """Cria um virtual environment (venv; não confundir com a biblioteca virtual-environment) para um repositório
@@ -111,10 +204,78 @@ def cloning(repo: Repository) -> None:
     :param repo: Repositório para ser clonado
     :returns: None
     """
+    cwd = getcwd()
+
     p1 = subprocess.Popen(["git", "clone", repo.url])
     p1.wait()
+
+    chdir(repo.name)
 
     p1 = subprocess.Popen(["git", "checkout", repo.githash])
     p1.wait()
 
+    chdir(cwd)
     return
+
+def runSpecificTests(repo: Repository, mod_name: str, params: List[bool], test_node: str, no_runs: int) -> None:
+    cwd = getcwd()
+
+    requirements = getRepoRequirements(repo)
+
+    include_tracing = params[0]
+    include_coverage = params[1]
+    include_profiling = params[2]
+    
+    test_name = test_node.split("/")[-1]
+
+    if not path.exists(mod_name):
+        subprocess.run(["mkdir", f"Test-{mod_name}"])
+        cloning(repo)
+
+    run_summary = []
+    total_time = 0
+    failed_count = 0
+    passed_count = 0 
+    skipped_count = 0
+    xfailed_count = 0
+
+    chdir(f"Test-{mod_name}")
+    subprocess.run(["mkdir", test_name])
+    chdir(test_name)
+
+    for run in range(no_runs):
+        subprocess.run(["mkdir", f"Run-{run}"])
+        chdir(cwd)
+
+        with venv(mod_name, cwd, requirements) as env:
+            results: Tuple = tuple()
+            env.runCommands()
+            results = env.executePytest(test_node = test_node, params = [include_tracing, include_coverage, include_profiling],
+                                        output_dir = cwd + f"/Test-{mod_name}/{test_name}/Run-{run}")
+            total_time += results[1]
+            passed_count += results[2]
+            failed_count += results[3]
+            skipped_count += results[4]
+            xfailed_count += results[5]
+
+        chdir(cwd + f"/Test-{mod_name}/{test_name}")
+        run_summary.append(f"Run {run}: {results[0]} Tempo: {results[1]}\n")
+
+    run_summary.append(f"Tempo total: {total_time}\n")
+
+    if skipped_count != 0:
+        run_summary.append("Resultado: SKIPPED")
+    elif xfailed_count != 0:
+        run_summary.append("Resultado: XFAILED")
+    else:
+        if passed_count == 0 and failed_count != 0:
+            run_summary.append("Resultado: FAILED")
+        elif passed_count != 0 and failed_count == 0:
+            run_summary.append("Resultado: PASSED")
+        elif passed_count !=0 and failed_count !=0:
+            run_summary.append("Resultado: FLAKY")
+
+    with open("runsSummary.txt", "a") as f:
+        f.writelines(run_summary)
+
+    chdir(cwd)
