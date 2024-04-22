@@ -4,3 +4,5 @@ __pycache__
 Tests*.csv
 analytic_shrinkage/*
 Test-*
+FlaPy-Repos.csv
+tt-env/

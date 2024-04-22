@@ -153,7 +153,11 @@ class TestResult:
                 if arg is not None:
                     builtins = (int, float, str, complex, list, tuple, range, dict, set, frozenset, bool, bytes, bytearray)
                     if isinstance(arg, object) and type(arg) not in builtins:
-                        attrs = getmembers(arg)
+                        try:
+                            print("\n\n\n\n BRUH321 \n\n\n\n")
+                            attrs = getmembers(arg)
+                        except Exception as e:
+                            attrs = []
                         returnObj = f"{type(arg)}:\n"
                         for name, value in attrs:
                             # Ignora builtins

@@ -2,9 +2,9 @@ import csv
 import re
 import subprocess
 import pytest
-import virtualenv
 import contextlib
 import shutil
+import ast
 from . import analise
 from os import path, getcwd, chdir
 from sys import builtin_module_names
@@ -92,11 +92,13 @@ class VirtualEnvironment:
 
         return (out.decode("utf-8"), err.decode("utf-8"))
     
-    def executePytest(self, test_node: str, params: List[bool], output_dir: str) -> Tuple[str, float, int, int, int, int]:
+    def executePytest(self, test_node: str, params: List[bool], output_dir: str, origin_dir: str) -> Tuple[str, float, int, int, int, int]:
+        cwd = getcwd()
+        chdir(origin_dir)
+
         include_tracing = params[0]
         include_coverage = params[1]
         include_profiling = params[2]
-
 
         test_result = analise.TestResult(include_tracing, include_profiling, include_coverage,
                                          outputDir = output_dir, testName = test_node.split("/")[-1])
@@ -120,6 +122,7 @@ class VirtualEnvironment:
             result = "XFAILED"
             xfailed_count += 1
 
+        chdir(cwd)
         return (result, test_result.total_duration, passed_count, failed_count, skipped_count, xfailed_count)
     
 @contextlib.contextmanager
@@ -128,7 +131,7 @@ def venv(venv_name: str, root_dir: str, requirements: List[str]) -> Generator[Vi
     try:
         yield v
     finally:
-        pass
+        v.cleanUp()
 
 def readCSV(fileName: str) -> List[Repository]:
     """Lê um arquivo CSV, obtendo informações de repositório e número de runs
@@ -217,16 +220,33 @@ def cloning(repo: Repository) -> None:
     chdir(cwd)
     return
 
+def checkIfClassExist(file_path: str, className: str) -> bool:
+    try:
+        with open(file_path, "r") as f:
+            tree = ast.parse(f.read)
+
+            for node in tree:
+                if isinstance(node, ast.ClassDef) and node.name == className:
+                    return True
+
+            return False
+    except Exception as e:
+        print(f"Erro durante checagem por classe: {e}")
+
 def runSpecificTests(repo: Repository, mod_name: str, params: List[bool], test_node: str, no_runs: int) -> None:
     cwd = getcwd()
-
     requirements = getRepoRequirements(repo)
 
     include_tracing = params[0]
     include_coverage = params[1]
     include_profiling = params[2]
     
-    test_name = test_node.split("/")[-1]
+    test_name = test_node.split("::")[-1]
+    test_file = test_node.split("::")[0]
+    class_name = ""
+
+    if len(test_node.split("::")) == 3:
+        class_name = test_node.split("::")[-2]
 
     if not path.exists(mod_name):
         subprocess.run(["mkdir", f"Test-{mod_name}"])
@@ -243,23 +263,28 @@ def runSpecificTests(repo: Repository, mod_name: str, params: List[bool], test_n
     subprocess.run(["mkdir", test_name])
     chdir(test_name)
 
-    for run in range(no_runs):
-        subprocess.run(["mkdir", f"Run-{run}"])
-        chdir(cwd)
+    class_exist = checkIfClassExist(test_file, class_name)
+    with venv(mod_name, cwd, requirements) as env:
+        for run in range(no_runs):
+            subprocess.run(["mkdir", f"Run-{run}"])
 
-        with venv(mod_name, cwd, requirements) as env:
             results: Tuple = tuple()
             env.runCommands()
-            results = env.executePytest(test_node = test_node, params = [include_tracing, include_coverage, include_profiling],
-                                        output_dir = cwd + f"/Test-{mod_name}/{test_name}/Run-{run}")
+
+            if class_exist:
+                results = env.executePytest(test_node = test_node, params = [include_tracing, include_coverage, include_profiling],
+                                        output_dir = cwd + f"/Test-{mod_name}/{test_name}/Run-{run}", origin_dir = cwd)
+            else:
+                results = env.executePytest(test_node = test_node.split("::")[0] + "::" + test_node.split("::")[-1], params = [include_tracing, include_coverage, include_profiling],
+                                        output_dir = cwd + f"/Test-{mod_name}/{test_name}/Run-{run}", origin_dir = cwd)
             total_time += results[1]
             passed_count += results[2]
             failed_count += results[3]
             skipped_count += results[4]
             xfailed_count += results[5]
+            run_summary.append(f"Run {run}: {results[0]} Tempo: {results[1]}\n")
 
         chdir(cwd + f"/Test-{mod_name}/{test_name}")
-        run_summary.append(f"Run {run}: {results[0]} Tempo: {results[1]}\n")
 
     run_summary.append(f"Tempo total: {total_time}\n")
 
