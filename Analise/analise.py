@@ -11,16 +11,20 @@ from difflib import unified_diff
 from typing import List, Tuple, Dict, Optional, Any
 from random import choice
 from inspect import getmembers
+from .utils import VirtualEnvironment, activateVenv
 import trace as trc
 import subprocess
 import pytest
 import cProfile, pstats
 import re
+import gzip
+from pickle import dump, HIGHEST_PROTOCOL
 
 class TestResult:
     def __init__(self, trace: bool = True, prof: bool = False, cov: bool = False, 
                  outputDir: str = ".", testName: str = "", modName: str = "", testFileName: str = "",
-                 isParametrized: Optional[bool] = False, params: Optional[List[Any]] = []):
+                 isParametrized: Optional[bool] = False, params: Optional[List[Any]] = [], 
+                 repoVenv: VirtualEnvironment = None):
         self.testName = testName
         self.modName = modName
         self.testFileName = testFileName
@@ -42,6 +46,8 @@ class TestResult:
         self.cov = cov
         self.trace = trace
         self.prof = prof
+
+        self.repoVenv = repoVenv
 
         if self.prof:
             self.profiler = cProfile.Profile()
@@ -92,6 +98,7 @@ class TestResult:
 
     @pytest.hookimpl(tryfirst = True)
     def pytest_sessionstart(self, session):    
+        activateVenv(self.repoVenv._venv_dir)
         if self.prof:
             self.profiler.enable()
 
@@ -154,7 +161,6 @@ class TestResult:
                     builtins = (int, float, str, complex, list, tuple, range, dict, set, frozenset, bool, bytes, bytearray)
                     if isinstance(arg, object) and type(arg) not in builtins:
                         try:
-                            print("\n\n\n\n BRUH321 \n\n\n\n")
                             attrs = getmembers(arg)
                         except Exception as e:
                             attrs = []
@@ -179,10 +185,12 @@ class TestResult:
         self.writeTrace(outDir)
 
     def writeTrace(self, outDir: str) -> None:
+        # print(f"\n\n\n {len(self.traceBuffer)} \n\n\n")
         if len(self.traceBuffer) > 0:
             with open(outDir + "/calls.txt", "a") as f:
                 f.writelines(self.traceBuffer)
-                f.close()
+            f.close()
+                
 
 def runMultipleTimes(modDir: str, modName: str, count: int, params: List[bool]):
     dirList = getTestDir(modDir)

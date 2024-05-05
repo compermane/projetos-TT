@@ -1,3 +1,5 @@
+# TODO: arrumar instalação de dependências
+
 import csv
 import re
 import subprocess
@@ -46,11 +48,10 @@ class Repository:
 class VirtualEnvironment:
     """ Adaptado de FlaPy
     """
-    def __init__(self, venv_name: str, root_dir: str, requirements: List[Path]) -> None:
-        self._venv_name = venv_name
+    def __init__(self, venv_dir: str, root_dir: str, requirements: List[Path]) -> None:
+        self._venv_dir = f"{root_dir}/{venv_dir}"
         self._requirements = requirements
         self._root_dir = root_dir
-        self._venv_dir = f"{root_dir}/{venv_name}"
 
         # Criando o venv para o repositório
         create_venv_cmd = ["virtualenv", self._venv_dir]
@@ -73,7 +74,7 @@ class VirtualEnvironment:
 
     def runCommands(self, commands: Optional[List[str]] = None) -> Tuple[str, str]:
         command_list = [
-            f"source {self._venv_dir}/bin/activate",
+            f"source '{self._venv_dir}/bin/activate'",
             "python3 -V"
         ]
 
@@ -82,6 +83,24 @@ class VirtualEnvironment:
 
         if commands is not None:
             command_list.extend(commands)
+
+        cmd = ";".join(command_list)
+
+        process = subprocess.Popen(
+            cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, executable="/bin/bash"
+        )
+        out, err = process.communicate()
+
+        return (out.decode("utf-8"), err.decode("utf-8"))
+    
+    def uninstallDependencies(self):
+        command_list = [
+            f"source {self._venv_dir}/bin/activate",
+            "python3 -V"
+        ]
+
+        for requirement in self._requirements:
+            command_list.append(f"pip3 uninstall -r {requirement} -y")
 
         cmd = ";".join(command_list)
 
@@ -101,7 +120,17 @@ class VirtualEnvironment:
         include_profiling = params[2]
 
         test_result = analise.TestResult(include_tracing, include_profiling, include_coverage,
-                                         outputDir = output_dir, testName = test_node.split("/")[-1])
+                                         outputDir = output_dir, testName = test_node.split("/")[-1],
+                                         repoVenv = self)
+        
+        activate_cmd = [f"source '{self._venv_dir}/bin/activate'"]
+        cmd = ";".join(activate_cmd)
+
+        process = subprocess.Popen(
+            cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, executable="/bin/bash"
+        )
+        out, err = process.communicate()
+
         pytest.main([test_node], plugins=[test_result])
 
         passed_count = 0
@@ -125,13 +154,19 @@ class VirtualEnvironment:
         chdir(cwd)
         return (result, test_result.total_duration, passed_count, failed_count, skipped_count, xfailed_count)
     
+def activateVenv(venv_dir: str) -> None:
+    if venv_dir:
+        activate_command = [f"source '{venv_dir}/bin/activate'"]
+        subprocess.Popen(activate_command, shell = True, executable = "/bin/bash")
+
 @contextlib.contextmanager
-def venv(venv_name: str, root_dir: str, requirements: List[str]) -> Generator[VirtualEnvironment, Any, None]:
-    v = VirtualEnvironment(venv_name, root_dir, requirements)
+def venv(venv_dir: Path, root_dir: str, requirements: List[str]) -> Generator[VirtualEnvironment, Any, None]:
+    v = VirtualEnvironment(venv_dir, root_dir, requirements)
     try:
         yield v
     finally:
-        v.cleanUp()
+        # v.cleanUp()
+        pass
 
 def readCSV(fileName: str) -> List[Repository]:
     """Lê um arquivo CSV, obtendo informações de repositório e número de runs
@@ -223,9 +258,9 @@ def cloning(repo: Repository) -> None:
 def checkIfClassExist(file_path: str, className: str) -> bool:
     try:
         with open(file_path, "r") as f:
-            tree = ast.parse(f.read)
+            tree = ast.parse(f.read())
 
-            for node in tree:
+            for node in tree.body:
                 if isinstance(node, ast.ClassDef) and node.name == className:
                     return True
 
@@ -233,7 +268,8 @@ def checkIfClassExist(file_path: str, className: str) -> bool:
     except Exception as e:
         print(f"Erro durante checagem por classe: {e}")
 
-def runSpecificTests(repo: Repository, mod_name: str, params: List[bool], test_node: str, no_runs: int) -> None:
+def runSpecificTests(repo: Repository, mod_name: str, params: List[bool], test_node: str, no_runs: int,
+                     env_path: Path) -> None:
     cwd = getcwd()
     requirements = getRepoRequirements(repo)
 
@@ -245,11 +281,12 @@ def runSpecificTests(repo: Repository, mod_name: str, params: List[bool], test_n
     test_file = test_node.split("::")[0]
     class_name = ""
 
+    subprocess.run(["mkdir", f"Test-{mod_name}"])
+    
     if len(test_node.split("::")) == 3:
         class_name = test_node.split("::")[-2]
 
     if not path.exists(mod_name):
-        subprocess.run(["mkdir", f"Test-{mod_name}"])
         cloning(repo)
 
     run_summary = []
@@ -259,18 +296,21 @@ def runSpecificTests(repo: Repository, mod_name: str, params: List[bool], test_n
     skipped_count = 0
     xfailed_count = 0
 
+    class_exist = checkIfClassExist(test_file, class_name)
+
     chdir(f"Test-{mod_name}")
     subprocess.run(["mkdir", test_name])
     chdir(test_name)
+    test_cwd = getcwd()
 
-    class_exist = checkIfClassExist(test_file, class_name)
-    with venv(mod_name, cwd, requirements) as env:
+    with venv(env_path, cwd, requirements) as env:
+        chdir(cwd)
+        env.runCommands()
+        chdir(test_cwd)
         for run in range(no_runs):
             subprocess.run(["mkdir", f"Run-{run}"])
 
             results: Tuple = tuple()
-            env.runCommands()
-
             if class_exist:
                 results = env.executePytest(test_node = test_node, params = [include_tracing, include_coverage, include_profiling],
                                         output_dir = cwd + f"/Test-{mod_name}/{test_name}/Run-{run}", origin_dir = cwd)
@@ -284,6 +324,7 @@ def runSpecificTests(repo: Repository, mod_name: str, params: List[bool], test_n
             xfailed_count += results[5]
             run_summary.append(f"Run {run}: {results[0]} Tempo: {results[1]}\n")
 
+        env.uninstallDependencies()
         chdir(cwd + f"/Test-{mod_name}/{test_name}")
 
     run_summary.append(f"Tempo total: {total_time}\n")
