@@ -1,6 +1,0 @@
-Chamada de funcao: 0 vezes
-Execucao de linha: 0 vezes
-Retorno de valor: 0 vezes
-Excecao: 0 vezes
-
-Funcoes chamadas: 
