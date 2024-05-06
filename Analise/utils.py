@@ -11,6 +11,7 @@ from os import path, getcwd, chdir
 from sys import builtin_module_names
 from typing import List, Tuple, Optional, Generator, Any
 from pathlib import Path
+from shutil import rmtree
 
 class NoRepositoryNameException(Exception):
     def __init__(self, *args: object) -> None:
@@ -24,7 +25,13 @@ class Repository:
         self._isgitrepo = isgitrepo
 
         if isgitrepo:
-            self._name = getRepoName(url)
+            name = getRepoName(url)
+            if len(name.split(".")) > 1:
+                self._name = name.split(".")[0]
+            else:
+                self._name = name
+
+            
         else:
             self._name = url
     
@@ -43,6 +50,9 @@ class Repository:
     @property
     def name(self):
         return self._name
+    
+    def deleteRepoDirectory(self) -> None:
+        rmtree(self.name)
     
 def activateVenv(venv_dir: str) -> None:
     if venv_dir:
@@ -87,7 +97,7 @@ def getRepoName(gitUrl: str) -> str:
     :param gitUrl: URL do github
     :returns: String do nome do repositório
     """
-    urlPattern = r'https?://github\.com/[\w-]+/([\w-]+)$'
+    urlPattern = r'https?://github\.com/[\w-]+/([\w-]+)(?:\.git)?$'
     match = re.match(urlPattern, gitUrl)
     if match:
         return match.group(1)
@@ -158,6 +168,12 @@ def checkIfClassExist(file_path: str, className: str) -> bool:
     except Exception as e:
         print(f"Erro durante checagem por classe: {e}")
 
+def checkForDots(test_node: str) -> bool:
+    if len(test_node.split("/")[0].split(".")) > 1:
+        return True
+    
+    return False
+
 def runSpecificTests(repo: Repository, mod_name: str, params: List[bool], test_node: str, no_runs: int,
                      env_path: Path) -> None:
     cwd = getcwd()
@@ -187,6 +203,16 @@ def runSpecificTests(repo: Repository, mod_name: str, params: List[bool], test_n
     xfailed_count = 0
 
     class_exist = checkIfClassExist(test_file, class_name)
+    dotted_repo_name = checkForDots(test_node)
+
+    # gamble.git/tests/models/test_cards.py::test_deck_init
+    if dotted_repo_name:
+        aux_node = test_node.split(".")[0]
+
+        for node in test_node.split("/")[1:]:
+            aux_node += "/" + node
+
+        test_node = aux_node
 
     chdir(f"Test-{mod_name}")
     subprocess.run(["mkdir", test_name])
@@ -218,7 +244,6 @@ def runSpecificTests(repo: Repository, mod_name: str, params: List[bool], test_n
         chdir(cwd + f"/Test-{mod_name}/{test_name}")
 
     run_summary.append(f"Tempo total: {total_time}\n")
-
     if skipped_count != 0:
         run_summary.append("Resultado: SKIPPED")
     elif xfailed_count != 0:
@@ -235,3 +260,4 @@ def runSpecificTests(repo: Repository, mod_name: str, params: List[bool], test_n
         f.writelines(run_summary)
 
     chdir(cwd)
+    repo.deleteRepoDirectory()

@@ -7,6 +7,7 @@ from .utils import activateVenv
 from sys import settrace
 from time import time
 from inspect import getmembers
+import pytest
 import sys
 import cProfile
 import trace as trc
