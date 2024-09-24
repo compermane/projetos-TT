@@ -9,7 +9,7 @@ import shutil
 class VirtualEnvironment:
     """ Adaptado de FlaPy
     """
-    def __init__(self, venv_dir: str, root_dir: str, requirements: List[Path]) -> None:
+    def __init__(self, venv_dir: str, root_dir: str, requirements: Optional[List[Path]] =  ["requirements.txt"]) -> None:
         self._venv_dir = f"{root_dir}/{venv_dir}"
         self._requirements = requirements
         self._root_dir = root_dir
@@ -40,7 +40,8 @@ class VirtualEnvironment:
         ]
 
         for requirement in self._requirements:
-            command_list.append(f"pip3 install -r {requirement}")
+            print(requirement)
+            command_list.append(f"pip3 install --force-reinstall -r {requirement}")
 
         if commands is not None:
             command_list.extend(commands)
@@ -50,7 +51,10 @@ class VirtualEnvironment:
         process = subprocess.Popen(
             cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, executable="/bin/bash"
         )
+        process.wait(timeout=120)
+
         out, err = process.communicate()
+        print(f"\n\n\n\nOUT: {out}\nERR: {err}\n\n\n\n")
 
         return (out.decode("utf-8"), err.decode("utf-8"))
     
@@ -61,6 +65,7 @@ class VirtualEnvironment:
         ]
 
         for requirement in self._requirements:
+            print(requirement)
             command_list.append(f"pip3 uninstall -r {requirement} -y")
 
         cmd = ";".join(command_list)
@@ -68,12 +73,20 @@ class VirtualEnvironment:
         process = subprocess.Popen(
             cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, executable="/bin/bash"
         )
+        process.wait()
         out, err = process.communicate()
 
-        print(f" {out} \n {err}")
         return (out.decode("utf-8"), err.decode("utf-8"))
     
     def executePytest(self, test_node: str, params: List[bool], output_dir: str, origin_dir: str) -> Tuple[str, float, int, int, int, int]:
+        """Executa o pytest de acordo com o test node.
+        :params:
+        :test_node: Node do teste a ser executado
+        :params: Parâmetros para a análise, como gerar trace, coverage e profiling
+        :output_dir: Diretório de saída dos resultados
+        :origin_dir: Diretório de chamada dessa função
+        :returns: Tupla contendo o resultado, o tempo de execução e as contagens dos verditos do pytest
+        """
         cwd = getcwd()
         chdir(origin_dir)
 
@@ -86,7 +99,7 @@ class VirtualEnvironment:
                                          outputDir = output_dir, testName = test_node.split("/")[-1],
                                          repoVenv = self)
 
-        pytest.main([test_node], plugins=[test_result])
+        pytest.main(["--ignore=pytest.ini", test_node], plugins=[test_result])
 
         passed_count = 0
         failed_count = 0

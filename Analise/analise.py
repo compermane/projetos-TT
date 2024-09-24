@@ -9,6 +9,16 @@ import pytest
 import re       
 
 def runMultipleTimes(modDir: str, modName: str, count: int, params: List[bool]):
+    """ (deprecated) Executa um teste multiplas vezes, verificando por classe, plugin e parametrização.
+    É complexo computacionalmente, preferível executar executePytest de Analise/VirtualEnvironment.py, que só
+    utiliza do test node para rodar o pytest.
+    :params:
+    :modDir: Caminho absoluto ou relativo para o diretório do repositório
+    :modName: Nome do repositório
+    :count: Quantidade de execuções do pytest
+    :params: Parâmetros da análise, isto é, gerar trace, coverage ou profiling
+    :return: None
+    """
     dirList = getTestDir(modDir)
 
     cwd = getcwd()
@@ -125,14 +135,14 @@ def runMultipleTimes(modDir: str, modName: str, count: int, params: List[bool]):
                 chdir(cwd)
 
 def getParamsValues(param: str) -> List[Any]:
-    """Recebe parâmetros de um teste os retorna na forma de uma lista. Ex: [1-1-'Foo'] -> [1, 1, 'Foo']"
+    """ (deprecated) Recebe parâmetros de um teste os retorna na forma de uma lista. Ex: [1-1-'Foo'] -> [1, 1, 'Foo']"
     :param str: string dos parâmetros de um teste.
     :returns: lista com os parâmetros
     """
     return [eval(item) for item in param.strip('[]').split('-')]
 
 def getTestParameters(testFilePath: str, testName: str) -> List[str]:
-    """Gera uma lista com todos os parâmetros de um teste parametrizado. Útil na execução única de um teste parametrizado com um determinado parâmetro
+    """ (deprecated) Gera uma lista com todos os parâmetros de um teste parametrizado. Útil na execução única de um teste parametrizado com um determinado parâmetro
     :param testFilePath: caminho para o arquivo de teste do teste parametrizado. Aqui, é utilizado o absolute path.
     :param testName: nome do teste.
     :returns: lista com todos os parâmetros do teste. Ex: ['[1-1-'foo']', '[2-2-'bar']']
@@ -179,7 +189,7 @@ def getTestParameters(testFilePath: str, testName: str) -> List[str]:
     return parameters
 
 def checkForTestParametrization(testPath: str, testName: str) -> bool:
-    """Verifica se um teste é parametrizado.
+    """ (deprecated) Verifica se um teste é parametrizado.
     :param testPath: caminho para o arquivo de teste do teste a ser verificado. Aqui é utilizado o absolute path.
     :param testName: nome do teste a ser verificado.
     :returns: bool, True caso o teste seja parametrizado e false caso contrário.
@@ -200,7 +210,7 @@ def checkForTestParametrization(testPath: str, testName: str) -> bool:
     return False
 
 def checkForTestClasses(filePath: str) -> Optional[List[str]]:
-    """Verifica se existem classes declaradas no arquivo de testes.
+    """ (deprecated) Verifica se existem classes declaradas no arquivo de testes.
     :param filePath: caminho para o arquivo de testes. Aqui é utilizado o caminho absoluto.
     :returns: lista com os nomes das classes, se existirem. None caso contrário.
     """
@@ -214,7 +224,7 @@ def checkForTestClasses(filePath: str) -> Optional[List[str]]:
     return classNames if classNames != [] else None
 
 def getTestsFromClass(className: str, filePath: str) -> List[str]:
-    """Fornece os testes declarados dentro de uma determinada classe.
+    """ (deprecated) Fornece os testes declarados dentro de uma determinada classe.
     :param className: nome da classe.
     :param filePath: caminho para o arquivo de testes.
     :returns: lista contendo os testes dentro da classe className.

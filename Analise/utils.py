@@ -1,5 +1,3 @@
-# TODO: investigar por que alguns testes ou passam inteiramente ou falham inteiramente
-
 import csv
 import re
 import subprocess
@@ -9,7 +7,7 @@ from . import VirtualEnvironment
 from . import analise
 from os import path, getcwd, chdir
 from sys import builtin_module_names
-from typing import List, Tuple, Optional, Generator, Any
+from typing import List, Tuple, Generator, Any
 from pathlib import Path
 from shutil import rmtree
 
@@ -104,7 +102,11 @@ def getRepoName(gitUrl: str) -> str:
     else:
         raise NoRepositoryNameException(f"Nenhum nome de repositório para {gitUrl}")
 
-def getRepoRequirements(repo: Repository):
+def getRepoRequirements(repo: Repository) -> List[str]:
+    """ Obtem os requirements de um repositório.
+    :param repo: Repositório
+    :returns: Lista contendo os arquivos de dependências do repositório
+    """
     return list(Path(repo.name).glob("*requirements*.txt"))
 
 def activating(repo: Repository) -> None:
@@ -156,6 +158,11 @@ def cloning(repo: Repository) -> None:
     return
 
 def checkIfClassExist(file_path: str, className: str) -> bool:
+    """ (deprecated) Verifica a existência de uma classe em um arquivo.
+    :param file_path: Caminho para o arquivo
+    :param className: Nome da classe a ser procurada
+    :returns: True caso a classe exista, false caso contrário
+    """
     try:
         with open(file_path, "r") as f:
             tree = ast.parse(f.read())
@@ -169,6 +176,10 @@ def checkIfClassExist(file_path: str, className: str) -> bool:
         print(f"Erro durante checagem por classe: {e}")
 
 def checkForDots(test_node: str) -> bool:
+    """ Verifica a existência de pontos em um test node
+    :param test_node: Node a ser verificado
+    :returns: True caso exista, False caso contrário
+    """
     if len(test_node.split("/")[0].split(".")) > 1:
         return True
     
@@ -176,6 +187,14 @@ def checkForDots(test_node: str) -> bool:
 
 def runSpecificTests(repo: Repository, mod_name: str, params: List[bool], test_node: str, no_runs: int,
                      env_path: Path) -> None:
+    """ Executa um teste específico.
+    :param repo: Repositório do teste
+    :param mod_name: Nome do repositório de teste
+    :param params: Parâmetros da execução do teste
+    :param test_node: Node de execução do teste
+    :param no_runs: Quantidade de execuções de um teste
+    :returns: None
+    """
     cwd = getcwd()
     requirements = getRepoRequirements(repo)
 
@@ -260,4 +279,4 @@ def runSpecificTests(repo: Repository, mod_name: str, params: List[bool], test_n
         f.writelines(run_summary)
 
     chdir(cwd)
-    repo.deleteRepoDirectory()
+    # repo.deleteRepoDirectory()

@@ -2,6 +2,10 @@ import csv
 from typing import List, Tuple, Dict
 
 def getReproducedResultsRepos(csv_name: str) -> List[Tuple[str, str]]:
+    """ Obtem repositórios onde o experimento com o Flapy foi reproduzidos
+    :param csv_name: Nome do CSV contendo os repositórios reproduzidos
+    :returns: Lista com tuplas onde tupla[0] é o nome do repositório e tupla[1] é o seu respectivo git hash
+    """
     with open(csv_name, "r", encoding = "utf8") as results:
         resultsDict = csv.DictReader(results, delimiter = ",")
         repos: List[Tuple[str, str]] = list()
@@ -15,6 +19,10 @@ def getReproducedResultsRepos(csv_name: str) -> List[Tuple[str, str]]:
     return repos
 
 def getFlakyTestsFromRepos(repos: List[Tuple[str, str]]) -> List[Tuple[str, ...]]:
+    """ Obtem os testes flaky dos repositórios onde o experimento com o Flapy foi reproduzido
+    :param repos: Lista contendo tuplas do nome do repositório e seu respectivo git hash
+    :returns: Listade tuplas contendo informações gerais do teste flaky
+    """
     with open("TestsOverview.csv", "r", encoding = "utf8") as testsOverview:
         csvReader = csv.DictReader(testsOverview, delimiter = ",")
         testsInfo: List[Tuple[str, ...]] = list()

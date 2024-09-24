@@ -12,6 +12,7 @@ import sys
 import cProfile
 import trace as trc
 import pstats
+import gzip
 
 class TestResult:
     def __init__(self, trace: bool = True, prof: bool = False, cov: bool = False, 
@@ -160,8 +161,11 @@ class TestResult:
                         returnObj = f"{type(arg)}:\n"
                         for name, value in attrs:
                             # Ignora builtins
-                            if not name.startswith("__") and not name.endswith("__"):
-                                returnObj += self.callCounter[0] * "\t" + f"{name}: {value}\n"
+                            try:
+                                if not name.startswith("__") and not name.endswith("__"):
+                                    returnObj += self.callCounter[0] * "\t" + f"{name}: {value}\n"
+                            except AttributeError:
+                                returnObj += f"Erro ao acessar atributo {name}"
                         self.traceBuffer.append(self.callCounter[0] * "<" + f"{funcName}: {returnObj} ({self.rootFile[0]}, {self.rootFileNo[0]}, {self.rootFuncName[0]})\n")
                     else:
                         self.traceBuffer.append(self.callCounter[0] * "<" + f"{funcName}: {arg} ({self.rootFile[0]}, {self.rootFileNo[0]}, {self.rootFuncName[0]})\n")
@@ -178,8 +182,8 @@ class TestResult:
         self.writeTrace(outDir)
 
     def writeTrace(self, outDir: str) -> None:
-        # print(f"\n\n\n {len(self.traceBuffer)} \n\n\n")
         if len(self.traceBuffer) > 0:
-            with open(outDir + "/calls.txt", "a") as f:
-                f.writelines(self.traceBuffer)
+            with gzip.open(outDir + "/calls.gz", "wb") as f:
+                for line in self.traceBuffer:
+                    f.write(line.encode())
             f.close()
