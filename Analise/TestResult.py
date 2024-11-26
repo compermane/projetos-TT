@@ -13,12 +13,13 @@ import cProfile
 import trace as trc
 import pstats
 import gzip
+import subprocess
 
 class TestResult:
     def __init__(self, trace: bool = True, prof: bool = False, cov: bool = False, 
                  outputDir: str = ".", testName: str = "", modName: str = "", testFileName: str = "",
                  isParametrized: Optional[bool] = False, params: Optional[List[Any]] = [], 
-                 repoVenv: VirtualEnvironment = None):
+                 repoVenv: VirtualEnvironment = None, n: int = 0 ):
         self.testName = testName
         self.modName = modName
         self.testFileName = testFileName
@@ -29,6 +30,7 @@ class TestResult:
         self.xfailed = 0
         self.skipped = 0
         self.total_duration = 0
+        self.n = n
 
         self.traceBuffer = []
         self.callCounter = [1]
@@ -50,28 +52,7 @@ class TestResult:
             self.params = getParamsValues(params)
         else:
             self.params = None
-    
-    def pytest_runtest_protocol(self, item, nextitem):
-        if self.cov:
-            testName = item.nodeid.split("::")[-1]
-            open(f"{testName}-cov.txt", "a").close()
-            with open(f"{testName}-cov.txt", "w") as traceFile:
 
-                if self.params is not None:
-                    if len(self.params) != len(item.fixturenames):
-                        raise Exception(f"Number of test arguments is different from the number of the given arguments: expected {len(item.funcargs)} got {len(self.params)}")
-                    else:
-                        item.funcargs = {item.fixturenames[i]: self.params[i] for i in range(len(item.fixturenames))}
-                        locals_ = {**locals(), **item.funcargs}
-                else:
-                    locals_ = {**locals()}
-
-                sys.stdout = traceFile
-                try:
-                    tracer = trc.Trace(trace=1, count=1)
-                    tracer.runctx("item.runtest()", globals=globals(), locals=locals_)
-                finally:
-                    sys.stdout = sys.__stdout__
 
     @pytest.hookimpl(hookwrapper = True)
     def pytest_runtest_makereport(self, item, call):
@@ -91,8 +72,9 @@ class TestResult:
         self.total_duration = time() - terminalreporter._sessionstarttime
 
     @pytest.hookimpl(tryfirst = True)
-    def pytest_sessionstart(self, session):    
+    def pytest_sessionstart(self, session):   
         activateVenv(self.repoVenv._venv_dir)
+
         if self.prof:
             self.profiler.enable()
 
@@ -102,10 +84,12 @@ class TestResult:
 
     @pytest.hookimpl(tryfirst = True)
     def pytest_sessionfinish(self, session, exitstatus):
+        n = self.n
         if self.trace:
             self.end(self.outputDir)
 
         if self.prof:
+            testName = self.testName.split("::")[-1]
             self.profiler.disable()
             stats = pstats.Stats(self.profiler)
             filteredStats = pstats.Stats()
@@ -113,11 +97,15 @@ class TestResult:
             for entry in stats.stats.items():
                 if not self.ignoreEntry(entry):
                     filteredStats.stats[entry[0]] = entry[1]
-
-            with open("stats.txt", "w") as f:
+            with open(f"{testName}-stats.txt", "w") as f:
                 filteredStats.stream = f
                 filteredStats.sort_stats("ncalls").print_stats()
             f.close()
+            test_dir = self.outputDir.split("/")[-3]
+            subprocess.run(["python3","parse_profiling.py","--input",f"{testName}-stats.txt","--output",f"{test_dir}/{testName}/Run-{n}/{testName}-profiling.csv"])
+            subprocess.run(["rm",f"{testName}-stats.txt"])
+
+        
     
     def ignoreEntry(self, entry: Tuple[Tuple[str, str, str], Tuple]):
         ignore = {"pytest", "pluggy", "builtins"}
@@ -180,6 +168,7 @@ class TestResult:
     def end(self, outDir: str):
         settrace(None)
         self.writeTrace(outDir)
+        
 
     def writeTrace(self, outDir: str) -> None:
         if len(self.traceBuffer) > 0:

@@ -39,9 +39,9 @@ class VirtualEnvironment:
             "python3 -V"
         ]
 
-        for requirement in self._requirements:
-            print(requirement)
-            command_list.append(f"pip3 install --force-reinstall -r {requirement}")
+        #for requirement in self._requirements:
+         #   print(requirement)
+          #  command_list.append(f"pip3 install --force-reinstall -r {requirement}")
 
         if commands is not None:
             command_list.extend(commands)
@@ -78,7 +78,7 @@ class VirtualEnvironment:
 
         return (out.decode("utf-8"), err.decode("utf-8"))
     
-    def executePytest(self, test_node: str, params: List[bool], output_dir: str, origin_dir: str) -> Tuple[str, float, int, int, int, int]:
+    def executePytest(self, test_node: str, params: List[bool], output_dir: str, origin_dir: str, count: int) -> Tuple[str, float, int, int, int, int]:
         """Executa o pytest de acordo com o test node.
         :params:
         :test_node: Node do teste a ser executado
@@ -97,14 +97,34 @@ class VirtualEnvironment:
 
         test_result = analise.TestResult(include_tracing, include_profiling, include_coverage,
                                          outputDir = output_dir, testName = test_node.split("/")[-1],
-                                         repoVenv = self)
+                                         repoVenv = self, n = count)
+        
+        test_dir = test_node.split('/')[0]
 
-        pytest.main(["--ignore=pytest.ini", test_node], plugins=[test_result])
+        if include_coverage == True:
+            test_name = test_node.split('/')[-1].split("::")[-1]
+            n = 0
+            print(f"Executando testes no: {test_node}")
+            print(f"Diretorio de testes: {test_dir}")
+            print(f"Nome dos testes: {test_name}")
+
+            pytest.main(["--ignore=pytest.ini",
+            f"--cov={test_dir}",
+            f"--cov-report=json:Test-{test_dir}/{test_name}/Run-{count}/{test_name}-cov.json",
+            test_node],
+            plugins=[test_result])
+            subprocess.run(["python3","parse_coverage.py","--input_file",f"Test-{test_dir}/{test_name}/Run-{count}/{test_name}-cov.json","--output_file",f"Test-{test_dir}/{test_name}/Run-{count}/{test_name}-coverage.csv"])
+            
+        else:
+            pytest.main(["--ignore=pytest.ini", test_node], plugins=[test_result])
+            
 
         passed_count = 0
         failed_count = 0
         xfailed_count = 0
         skipped_count = 0
+
+        
 
         if test_result.passed != 0:
             result = "PASSED"

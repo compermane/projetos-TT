@@ -220,6 +220,7 @@ def runSpecificTests(repo: Repository, mod_name: str, params: List[bool], test_n
     passed_count = 0 
     skipped_count = 0
     xfailed_count = 0
+    count = 0
 
     class_exist = checkIfClassExist(test_file, class_name)
     dotted_repo_name = checkForDots(test_node)
@@ -248,15 +249,16 @@ def runSpecificTests(repo: Repository, mod_name: str, params: List[bool], test_n
             results: Tuple = tuple()
             if class_exist:
                 results = env.executePytest(test_node = test_node, params = [include_tracing, include_coverage, include_profiling],
-                                        output_dir = cwd + f"/Test-{mod_name}/{test_name}/Run-{run}", origin_dir = cwd)
+                                        output_dir = cwd + f"/Test-{mod_name}/{test_name}/Run-{run}", origin_dir = cwd, count = count)
             else:
                 results = env.executePytest(test_node = test_node.split("::")[0] + "::" + test_node.split("::")[-1], params = [include_tracing, include_coverage, include_profiling],
-                                        output_dir = cwd + f"/Test-{mod_name}/{test_name}/Run-{run}", origin_dir = cwd)
+                                        output_dir = cwd + f"/Test-{mod_name}/{test_name}/Run-{run}", origin_dir = cwd, count = count)
             total_time += results[1]
             passed_count += results[2]
             failed_count += results[3]
             skipped_count += results[4]
             xfailed_count += results[5]
+            count += 1
             run_summary.append(f"Run {run}: {results[0]} Tempo: {results[1]}\n")
 
         env.uninstallDependencies()

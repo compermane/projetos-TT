@@ -61,6 +61,7 @@ def argsDefiner():
                 reader = csv.DictReader(csv_file,  delimiter = ",")
                 for row in reader:
                     # Instalando as dependências desse projeto
+
                     process = subprocess.Popen(
                         "pip3 install --force-reinstall -r requirements.txt", stdout = subprocess.PIPE, stderr = subprocess.PIPE, 
                         shell = True, executable = "/bin/bash"
