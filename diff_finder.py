@@ -1,5 +1,6 @@
 import csv
 import argparse
+import re
 
 def str_to_bool(value: str) -> bool:
     if value.lower() in {"true", "t"}:
@@ -27,6 +28,7 @@ def str_to_int(value: str) -> int:
 def comparar_csvs(diretorio:str, analise:str, numero_de_runs:int, coluna_chave:str):
 
     teste = diretorio.split("/")[-1]
+    projeto = diretorio.split("/")[0].split("Test-")[1]
     diffs_totais = set()
 
     for i in range(numero_de_runs-1):
@@ -75,8 +77,20 @@ def comparar_csvs(diretorio:str, analise:str, numero_de_runs:int, coluna_chave:s
                     
         elif analise == "profiling":
 
+
+                dynamically_generated_pattern = re.compile(r'<.*?>:\d+\(([\w<>,]+)\)') 
+                internal_methods_pattern = re.compile(r'{method \'(.+)\' of \'(.+)\' objects}')
+                internal_functions_pattern = re.compile(r'\{function\s([a-zA-Z0-9_\.]+)\s+at\s0x[a-f0-9]+\}')
+                sys_functions_pattern = re.compile(r'{built-in method (.+)}')
                 todas_as_chaves = set(linhas1.keys()).union(set(linhas2.keys()))
-                diffs = []
+                dynamically_generated_diffs = []
+                internal_methods_diffs = []
+                sys_functions_diffs = []
+                internal_functions_diffs = []
+                misc_diffs = []
+                pylibs_diffs = []
+                project_diffs = []
+                dependencies_diffs = []
                 arquivo_saida = f"{diretorio}/Run-{i}/{teste}-{analise}-{coluna_chave}-diff-{i}-{i+1}.txt"
 
                 for chave in todas_as_chaves:
@@ -88,20 +102,114 @@ def comparar_csvs(diretorio:str, analise:str, numero_de_runs:int, coluna_chave:s
                             if coluna == coluna_chave:
                                 continue
                             valor2 = linha2.get(coluna)
-                            if valor1 != valor2:
-                                diffs.append(f"Chave '{chave}': Coluna '{coluna}' - Arquivo1='{valor1}' vs Arquivo2='{valor2}'\n")
+                            if valor1 != valor2 :
+                                if "site-packages" in chave:
+                                    dependencies_diffs.append(f"Chave '{chave}': Coluna '{coluna}' - Arquivo1='{valor1}' vs Arquivo2='{valor2}'\n")
+                                    continue
+                                elif projeto in chave:
+                                    project_diffs.append(f"Chave '{chave}': Coluna '{coluna}' - Arquivo1='{valor1}' vs Arquivo2='{valor2}'\n")
+                                elif "lib/python" in chave:
+                                    pylibs_diffs.append(f"Chave '{chave}': Coluna '{coluna}' - Arquivo1='{valor1}' vs Arquivo2='{valor2}'\n")
+                                elif dynamically_generated_pattern.match(chave):
+                                    dynamically_generated_diffs.append(f"Chave '{chave}': Coluna '{coluna}' - Arquivo1='{valor1}' vs Arquivo2='{valor2}'\n")
+                                elif internal_methods_pattern.match(chave):
+                                    internal_methods_diffs.append(f"Chave '{chave}': Coluna '{coluna}' - Arquivo1='{valor1}' vs Arquivo2='{valor2}'\n")
+                                elif sys_functions_pattern.match(chave):
+                                    sys_functions_diffs.append(f"Chave '{chave}': Coluna '{coluna}' - Arquivo1='{valor1}' vs Arquivo2='{valor2}'\n")
+                                elif internal_functions_pattern.match(chave):
+                                    internal_functions_diffs.append(f"Chave '{chave}': Coluna '{coluna}' - Arquivo1='{valor1}' vs Arquivo2='{valor2}'\n")
+                                else:
+                                    misc_diffs.append(f"Chave '{chave}': Coluna '{coluna}' - Arquivo1='{valor1}' vs Arquivo2='{valor2}'\n")
+
                     elif linha1:
-                        diffs.append(f"Chave '{chave}' está apenas no Arquivo1.\n")
+                        if "site-packages" in chave:
+                            dependencies_diffs.append(f"Chave '{chave}' está apenas no Arquivo1.\n")
+                            continue
+                        elif projeto in chave:
+                            project_diffs.append(f"Chave '{chave}' está apenas no Arquivo1.\n")
+                        elif "lib/python" in chave:
+                            pylibs_diffs.append(f"Chave '{chave}' está apenas no Arquivo1.\n")
+                        elif dynamically_generated_pattern.match(chave):
+                            dynamically_generated_diffs.append(f"Chave '{chave}' está apenas no Arquivo1.\n")
+                        elif internal_methods_pattern.match(chave):
+                            internal_methods_diffs.append(f"Chave '{chave}' está apenas no Arquivo1.\n")
+                        elif sys_functions_pattern.match(chave):
+                            sys_functions_diffs.append(f"Chave '{chave}' está apenas no Arquivo1.\n")
+                        elif internal_functions_pattern.match(chave):
+                            internal_functions_diffs.append(f"Chave '{chave}' está apenas no Arquivo1.\n")
+                        else:
+                            misc_diffs.append(f"Chave '{chave}' está apenas no Arquivo1.\n")
+                        
                     elif linha2:
-                        diffs.append(f"Chave '{chave}' está apenas no Arquivo2.\n")
+                        if "site-packages" in chave:
+                            dependencies_diffs.append(f"Chave '{chave}' está apenas no Arquivo1.\n")
+                            continue
+                        elif projeto in chave:
+                            project_diffs.append(f"Chave '{chave}' está apenas no Arquivo1.\n")
+                        elif "lib/python" in chave:
+                            pylibs_diffs.append(f"Chave '{chave}' está apenas no Arquivo1.\n")
+                        elif dynamically_generated_pattern.match(chave):
+                            dynamically_generated_diffs.append(f"Chave '{chave}' está apenas no Arquivo1.\n")
+                        elif internal_methods_pattern.match(chave):
+                            internal_methods_diffs.append(f"Chave '{chave}' está apenas no Arquivo1.\n")
+                        elif sys_functions_pattern.match(chave):
+                            sys_functions_diffs.append(f"Chave '{chave}' está apenas no Arquivo1.\n")
+                        elif internal_functions_pattern.match(chave):
+                            internal_functions_diffs.append(f"Chave '{chave}' está apenas no Arquivo1.\n")
+                        else:
+                            misc_diffs.append(f"Chave '{chave}' está apenas no Arquivo1.\n")
 
                 with open(arquivo_saida, 'w', encoding='utf-8') as saida:
-                    if len(diffs) == 0:
+                    if (len(pylibs_diffs) +  len(project_diffs) + len(misc_diffs) + len(dynamically_generated_diffs) + len(internal_methods_diffs) + len(sys_functions_diffs) + len(internal_functions_diffs)) == 0:
                         saida.write("Nenhuma diferença encontrada.")
                     else:
-                        saida.write(f"Diferenças encontradas ({len(diffs)}):\n\n")
-                        for diff in diffs:
-                            saida.write(diff)
+                        saida.write(f"Diferenças encontradas ({(len(pylibs_diffs) +  len(project_diffs) + len(misc_diffs) + len(dynamically_generated_diffs) + len(internal_methods_diffs) + len(sys_functions_diffs) + len(internal_functions_diffs))}):\n\n")
+                        if len(project_diffs) !=0:
+                            saida.write(f"Diffs do projeto({len(project_diffs)}):\n")
+                            for diff in project_diffs:
+                                saida.write(diff)
+
+                        if len(dependencies_diffs) != 0:
+                            saida.write("\n")
+                            saida.write(f"Diffs de dependências({len(dependencies_diffs)}):\n")
+                            for diff in dependencies_diffs:
+                                saida.write(diff)
+
+                        if len(pylibs_diffs) != 0: 
+                            saida.write("\n")
+                            saida.write(f"Diffs de libs padrão do Python ({len(pylibs_diffs)}):\n")
+                            for diff in pylibs_diffs:
+                                saida.write(diff)
+
+                        if len(dynamically_generated_diffs) != 0: 
+                            saida.write("\n")
+                            saida.write(f"Diffs de funções ou métodos gerados dinamicamente ({len(dynamically_generated_diffs)}):\n")
+                            for diff in dynamically_generated_diffs:
+                                saida.write(diff)
+
+                        if len(internal_methods_diffs) != 0: 
+                            saida.write("\n")
+                            saida.write(f"Diffs de métodos embutidos de objetos internos do Python ({len(internal_methods_diffs)}):\n")
+                            for diff in internal_methods_diffs:
+                                saida.write(diff)
+
+                        if len(sys_functions_diffs) != 0: 
+                            saida.write("\n")
+                            saida.write(f"Diffs de funções internas embutidas do Python ({len(sys_functions_diffs)}):\n")
+                            for diff in sys_functions_diffs:
+                                saida.write(diff)
+
+                        if len(internal_functions_diffs) != 0: 
+                            saida.write("\n")
+                            saida.write(f"Diffs de funções internas do Python ({len(internal_functions_diffs)}):\n")
+                            for diff in internal_functions_diffs:
+                                saida.write(diff)
+
+                        if len(misc_diffs) != 0:
+                            saida.write("\n")
+                            saida.write(f"Outras diffs({len(misc_diffs)}):\n")
+                            for diff in misc_diffs:
+                                saida.write(diff)
 
     if analise == "coverage":
 

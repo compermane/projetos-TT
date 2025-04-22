@@ -14,6 +14,7 @@ import trace as trc
 import pstats
 import gzip
 import subprocess
+import os
 
 class TestResult:
     def __init__(self, trace: bool = True, prof: bool = False, cov: bool = False, 
@@ -93,17 +94,18 @@ class TestResult:
             self.profiler.disable()
             stats = pstats.Stats(self.profiler)
             filteredStats = pstats.Stats()
+            test_dir = self.outputDir.split("/")[-3]
 
             for entry in stats.stats.items():
                 if not self.ignoreEntry(entry):
                     filteredStats.stats[entry[0]] = entry[1]
-            with open(f"{testName}-stats.txt", "w") as f:
+            with open(f"{test_dir}/{testName}/Run-{n}/{testName}-stats.txt", "w") as f:
                 filteredStats.stream = f
                 filteredStats.sort_stats("ncalls").print_stats()
+                print("Current working directory:", os.getcwd())
+
             f.close()
-            test_dir = self.outputDir.split("/")[-3]
-            subprocess.run(["python3","parse_profiling.py","--input",f"{testName}-stats.txt","--output",f"{test_dir}/{testName}/Run-{n}/{testName}-profiling.csv"])
-            subprocess.run(["rm",f"{testName}-stats.txt"])
+            subprocess.run(["python3","parse_profiling.py","--input_file",f"{test_dir}/{testName}/Run-{n}/{testName}-stats.txt","--output_file",f"{test_dir}/{testName}/Run-{n}/{testName}-profiling.csv"])
 
         
     
@@ -171,8 +173,11 @@ class TestResult:
         
 
     def writeTrace(self, outDir: str) -> None:
+        testName = self.testName.split("::")[-1]
+        test_dir = self.outputDir.split("/")[-3]
         if len(self.traceBuffer) > 0:
             with gzip.open(outDir + "/calls.gz", "wb") as f:
                 for line in self.traceBuffer:
                     f.write(line.encode())
             f.close()
+        subprocess.run(["python3","parse_tracing.py","--input_file",f"{outDir}/calls.gz","--output_file",f"{outDir}/{testName}-tracing.csv"])

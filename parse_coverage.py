@@ -37,7 +37,7 @@ def parse_coverage_data(input_file: str, output_file: str):
         # Escrever os dados
         csv_writer.writerows(coverage_data)
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(description="Converte arquivos JSON de cobertura para CSV.")
     parser.add_argument("--input_file", help="Arquivo de entrada (JSON) com dados de cobertura.")
     parser.add_argument("--output_file", help="Arquivo de saída para os dados (CSV).")
@@ -47,3 +47,6 @@ if __name__ == "__main__":
         parse_coverage_data(args.input_file, args.output_file)
     else:
         print("Erro: Você deve fornecer --input_file e --output_file.")
+
+if __name__ == "__main__":
+    main()

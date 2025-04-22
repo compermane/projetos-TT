@@ -49,7 +49,7 @@ class Repository:
     def name(self):
         return self._name
     
-    def deleteRepoDirectory(self) -> None:
+def deleteRepoDirectory(self) -> None:
         rmtree(self.name)
     
 def activateVenv(venv_dir: str) -> None:
@@ -95,8 +95,12 @@ def getRepoName(gitUrl: str) -> str:
     :param gitUrl: URL do github
     :returns: String do nome do repositório
     """
-    urlPattern = r'https?://github\.com/[\w-]+/([\w-]+)(?:\.git)?$'
+    print(f"Verificando URL: {gitUrl}")  # Para depuração
+
+    # Regex atualizado para suportar repositórios com ponto (como .py) no nome
+    urlPattern = r'https?://github\.com/[\w-]+/([a-zA-Z0-9._-]+)(?:\.git)?/?$'
     match = re.match(urlPattern, gitUrl)
+    
     if match:
         return match.group(1)
     else:
@@ -197,6 +201,7 @@ def runSpecificTests(repo: Repository, mod_name: str, params: List[bool], test_n
     """
     cwd = getcwd()
     requirements = getRepoRequirements(repo)
+    
 
     include_tracing = params[0]
     include_coverage = params[1]
@@ -214,7 +219,23 @@ def runSpecificTests(repo: Repository, mod_name: str, params: List[bool], test_n
     if not path.exists(mod_name):
         cloning(repo)
 
+    requirements_path = path.join(repo.name, "requirements.txt")
+    if path.exists(requirements_path):
+        try:
+            subprocess.run(["pip", "install", "-r", requirements_path], check=True)
+        except subprocess.CalledProcessError:
+            print(f"Erro ao instalar dependências de {requirements_path}")
+    else:
+        print(f"Arquivo de requirements não encontrado em {requirements_path}")
+
     run_summary = []
+    if params[0]:
+        test = "Tracing"
+    elif params[1]:
+        test = "Coverage"
+    elif params[2]:
+        test = "Profiling"
+    run_summary.append(f"Teste: {test}\n")
     total_time = 0
     failed_count = 0
     passed_count = 0 
@@ -223,16 +244,16 @@ def runSpecificTests(repo: Repository, mod_name: str, params: List[bool], test_n
     count = 0
 
     class_exist = checkIfClassExist(test_file, class_name)
-    dotted_repo_name = checkForDots(test_node)
+    #dotted_repo_name = checkForDots(test_node)
 
     # gamble.git/tests/models/test_cards.py::test_deck_init
-    if dotted_repo_name:
-        aux_node = test_node.split(".")[0]
-
-        for node in test_node.split("/")[1:]:
-            aux_node += "/" + node
-
-        test_node = aux_node
+    #if dotted_repo_name:
+     #   aux_node = test_node.split(".")[0]
+#
+ #       for node in test_node.split("/")[1:]:
+  #          aux_node += "/" + node
+#
+ #       test_node = aux_node
 
     chdir(f"Test-{mod_name}")
     subprocess.run(["mkdir", test_name])
@@ -262,23 +283,26 @@ def runSpecificTests(repo: Repository, mod_name: str, params: List[bool], test_n
             run_summary.append(f"Run {run}: {results[0]} Tempo: {results[1]}\n")
 
         env.uninstallDependencies()
+        env.cleanUp()
         chdir(cwd + f"/Test-{mod_name}/{test_name}")
 
     run_summary.append(f"Tempo total: {total_time}\n")
     if skipped_count != 0:
-        run_summary.append("Resultado: SKIPPED")
+        run_summary.append("Resultado: SKIPPED\n")
     elif xfailed_count != 0:
-        run_summary.append("Resultado: XFAILED")
+        run_summary.append("Resultado: XFAILED\n")
     else:
         if passed_count == 0 and failed_count != 0:
-            run_summary.append("Resultado: FAILED")
+            run_summary.append("Resultado: FAILED\n")
         elif passed_count != 0 and failed_count == 0:
-            run_summary.append("Resultado: PASSED")
+            run_summary.append("Resultado: PASSED\n")
         elif passed_count !=0 and failed_count !=0:
-            run_summary.append("Resultado: FLAKY")
+            run_summary.append("Resultado: FLAKY\n")
+    run_summary.append("\n")
 
     with open("runsSummary.txt", "a") as f:
         f.writelines(run_summary)
 
+
     chdir(cwd)
-    # repo.deleteRepoDirectory()
+    #deleteRepoDirectory(repo)

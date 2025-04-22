@@ -30,9 +30,17 @@ def parse_profiling_data(input_file: str, output_file: str):
         # Escrever os dados
         csv_writer.writerows(profiling_data)
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(description="Converte um arquivo de perfilamento de texto para CSV")
     parser.add_argument("--input_file", help="Arquivo de entrada com dados de perfilamento (TXT)")
     parser.add_argument("--output_file", help="Arquivo de saída para os dados (CSV)")
     args = parser.parse_args()
-    parse_profiling_data(args.input_file, args.output_file)
+
+    if args.input_file and args.output_file:
+        parse_profiling_data(args.input_file, args.output_file)
+    else:
+        print("Erro: Você deve fornecer --input_file e --output_file.")
+
+
+if __name__ == "__main__":
+    main()
