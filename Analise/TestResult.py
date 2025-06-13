@@ -95,6 +95,7 @@ class TestResult:
             stats = pstats.Stats(self.profiler)
             filteredStats = pstats.Stats()
             test_dir = self.outputDir.split("/")[-3]
+            os.environ["TEST_DIR"] = test_dir
 
             for entry in stats.stats.items():
                 if not self.ignoreEntry(entry):
@@ -106,7 +107,6 @@ class TestResult:
 
             f.close()
             subprocess.run(["python3","parse_profiling.py","--input_file",f"{test_dir}/{testName}/Run-{n}/{testName}-stats.txt","--output_file",f"{test_dir}/{testName}/Run-{n}/{testName}-profiling.csv"])
-
         
     
     def ignoreEntry(self, entry: Tuple[Tuple[str, str, str], Tuple]):

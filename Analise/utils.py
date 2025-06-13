@@ -3,6 +3,7 @@ import re
 import subprocess
 import contextlib
 import ast
+import os
 from . import VirtualEnvironment
 from . import analise
 from os import path, getcwd, chdir
@@ -222,11 +223,14 @@ def runSpecificTests(repo: Repository, mod_name: str, params: List[bool], test_n
     requirements_path = path.join(repo.name, "requirements.txt")
     if path.exists(requirements_path):
         try:
-            subprocess.run(["pip", "install", "-r", requirements_path], check=True)
+            pip_path = os.environ.get("PIP_PATH")
+            subprocess.run([pip_path, "install", "-r", requirements_path], check=True)
+            print(f"requirements de  {requirements_path} intalados com sucesso.")
         except subprocess.CalledProcessError:
             print(f"Erro ao instalar dependências de {requirements_path}")
     else:
         print(f"Arquivo de requirements não encontrado em {requirements_path}")
+
 
     run_summary = []
     if params[0]:

@@ -57,36 +57,52 @@ def argsDefiner():
         if venvDir == "":
             raise ValueError("Nao foi informado um diretorio para o ambiente virtual")
         else:
-            with open(specificTests, "r", encoding = "utf8") as csv_file:
-
-                reader = list(csv.DictReader(csv_file,  delimiter = ","))
-                if not reader:
-                    print|("CSV vazio")
-                else:
-
-                    row = reader[0]
-                        
+            with open(specificTests, "r", encoding="utf8") as csv_file:
+                reader = list(csv.DictReader(csv_file, delimiter=","))
+            
+            if not reader:
+                print("CSV vazio")
+            else:
+                row = reader[0]
+                try:
                     repo_name = row["Name"]
                     repo_hash = row["Hash"]
                     repo_url = row["URL"]
                     test_no_runs = int(float(row["No_Runs"]))
                     test_node = row["Test"]
 
-                    repo = utils.Repository(githash = repo_hash, url = repo_url, isgitrepo = True, noruns = str(test_no_runs))
+                    repo = utils.Repository(
+                        githash=repo_hash,
+                        url=repo_url,
+                        isgitrepo=True,
+                        noruns=str(test_no_runs)
+                    )
 
-                    utils.runSpecificTests(repo, repo_name, [tracing, coverage, profiling], test_node, test_no_runs, env_path = venvDir)
-                    
-                    shutil.rmtree(repo_name, ignore_errors=True) # Adicione ignore_errors para evitar falhas se o diretório não existir
-                    sleep(1) # Reduza o tempo de espera para testes
-                
-                    chdir(getcwd()) # Volte para o diretório principal após remover o repositório
+                    utils.runSpecificTests(
+                        repo, repo_name,
+                        [tracing, coverage, profiling],
+                        test_node,
+                        test_no_runs,
+                        env_path=venvDir
+                    )
 
-            if reader:
-                with open(specificTests, mode="w", newline="") as csv_file:
-                    fieldnames = reader[0].keys()
-                    writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
-                    writer.writeheader()
-                    writer.writerows(reader[1:])  # Escreve a partir da segunda linha
+                    test_dir = test_node.split('/')[0]
+                    test_name = test_node.split('/')[-1].split("::")[-1]
+                    if tracing:
+                        subprocess.run(["python3", "diff_finder.py", f"Test-{test_dir}/{test_name}", "t", "10", "Function"])
+                    elif profiling:
+                        subprocess.run(["python3", "diff_finder.py", f"Test-{test_dir}/{test_name}", "p", "10", "filename:lineno(function)"])
+                    elif coverage:
+                        subprocess.run(["python3", "diff_finder.py", f"Test-{test_dir}/{test_name}", "c", "10", "Percentual de Cobertura (%)"])
+
+                except Exception as e:
+                    print(f"Erro ao executar o teste: {e}")
+                finally:
+                    with open(specificTests, mode="w", newline="") as csv_file:
+                        fieldnames = reader[0].keys()
+                        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+                        writer.writeheader()
+                        writer.writerows(reader[1:])
 
     elif csvFile != "" and specificTests == "":
         repos: List[utils.Repository] = utils.readCSV(csvFile)
