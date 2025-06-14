@@ -46,6 +46,9 @@ def argsDefiner():
     specificTests = args.run_specific_test
     venvDir = args.venv_dir
 
+    if specificTests:
+        specificTests = path.abspath(specificTests)
+
     if csvFile == "" and specificTests == "":
         # Obtendo os parametros especificados
         repo = args.repo_dir
