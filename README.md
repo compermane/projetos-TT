@@ -7,8 +7,11 @@ rs3clans.py,https://github.com/johnvictorfs/rs3clans.py,692ffb859d954a304d039a6e
 
 Atenção! o caminho para o teste deve estar correto.
 Seguindo o padrão:
+
 test_example.py::Classe(se houver)::nome_do_teste
+
 exemplo:
+
 rs3clans.py/tests/test_players.py::test_skill_exp[CoNsTiTutioN-1154] - Está correto
 
 rs3clans.py/tests/test_players.py::test_players::test_skill_exp[CoNsTiTutioN-1154] - Está errado, o nome do arquivo "test_players" aprece duplicado.
@@ -16,6 +19,7 @@ rs3clans.py/tests/test_players.py::test_players::test_skill_exp[CoNsTiTutioN-115
 service-manager/test/unit/test_smdownload.py::TestSmDownload::test_reporthook10percent - Está correto
 
 Para executar as análises:
+
 Para tracing
 ```bash
 python3 csv_runner.py --analise tracing
