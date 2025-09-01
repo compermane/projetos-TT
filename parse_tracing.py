@@ -3,65 +3,83 @@ import csv
 import re
 import argparse
 from collections import Counter, defaultdict
+from pathlib import Path
 
-def parse_tracing_file(file_path):
+def parse_hierarchical_trace(input_file: str):
     """
-    Processa o arquivo de tracing para obter frequência de chamadas e valores de retorno.
+    Processa o arquivo de tracing hierárquico para obter frequência de chamadas
+    e os valores de retorno únicos para cada função.
     """
+    if not Path(input_file).exists():
+        print(f"Erro: Arquivo de entrada não encontrado: {input_file}")
+        return None, None
+
     function_calls = Counter()
-    return_values = defaultdict(list)
-    
-    stack = []
+    return_values = defaultdict(set)
 
-    with gzip.open(file_path, 'rt') as file:
-        for line in file:
-            if line.startswith(('>', '>>', '>>>', '>>>>')):
-                # Captura a função chamada
-                func_match = re.match(r'^[>]+([^:]+):', line)
-                if func_match:
-                    func_name = func_match.group(1).strip()
-                    stack.append(func_name)
-                    function_calls[func_name] += 1
-            elif line.startswith(('<', '<<', '<<<', '<<<<')):
-                # Captura o valor de retorno
-                return_match = re.match(r'^[<]+([^:]+):\s*(.*)', line)
+    # Regex corrigidas para tratar a indentação como opcional usando '*'
+    # Ex: (opcional)> func_name in file.py
+    call_pattern = re.compile(r"^\s*[>]*\s*([\w<>.-]+)\s+in\s+([\w./\\<>-]+\.py)")
+    # Ex: (opcional)< func_name returned: some_value
+    return_pattern = re.compile(r"^\s*[<]*\s*([\w<>.-]+)\s+returned:\s*(.*)")
+
+    try:
+        with gzip.open(input_file, 'rt', encoding="utf-8") as file:
+            for line in file:
+                line = line.strip()
+                call_match = call_pattern.match(line)
+                if call_match:
+                    func_name, file_name = call_match.groups()
+                    unique_key = f"{file_name}::{func_name}"
+                    function_calls[unique_key] += 1
+                    continue
+
+                return_match = return_pattern.match(line)
                 if return_match:
                     func_name, return_value = return_match.groups()
-                    func_name = func_name.strip()
-                    return_value = return_value.strip()
-                    if return_value:
-                        return_values[func_name].append(return_value)
-                    if stack and stack[-1] == func_name:
-                        stack.pop()
+                    return_values[func_name].add(return_value.strip())
+
+    except Exception as e:
+        print(f"Erro ao processar o arquivo de trace '{input_file}': {e}")
+        return None, None
     
     return function_calls, return_values
 
-def save_to_csv(output_file, function_calls, return_values):
+def save_to_csv(output_file: str, function_calls: Counter, return_values: defaultdict):
     """
     Salva os resultados de frequência e valores de retorno em um arquivo CSV.
     """
-    with open(output_file, mode='w', newline='') as csv_file:
-        writer = csv.writer(csv_file)
-        writer.writerow(['Function', 'Call Frequency', 'Unique Return Values'])
+    if not function_calls:
+        print("Nenhuma chamada de função foi extraída. O arquivo CSV não será gerado.")
+        return
+
+    try:
+        with open(output_file, mode='w', newline='', encoding='utf-8') as csv_file:
+            writer = csv.writer(csv_file)
+            writer.writerow(['Function', 'Call_Frequency', 'Unique_Return_Values'])
+            
+            for func_key, count in sorted(function_calls.items()):
+                func_name_only = func_key.split("::")[-1]
+                unique_returns_set = return_values.get(func_name_only, set())
+                returns_str = " | ".join(sorted(list(unique_returns_set)))
+                writer.writerow([func_key, count, returns_str])
         
-        for func, count in function_calls.items():
-            unique_returns = ', '.join(set(return_values[func]))
-            writer.writerow([func, count, unique_returns])
+        print(f"Análise concluída. Resultados salvos em {output_file}")
+    except Exception as e:
+        print(f"Erro ao escrever o arquivo CSV '{output_file}': {e}")
 
 def main():
-    parser = argparse.ArgumentParser(description="Analisa um arquivo compactado de tracing.")
+    parser = argparse.ArgumentParser(description="Analisa um arquivo compactado de tracing hierárquico.")
     parser.add_argument('--input_file', required=True, help="Caminho do arquivo .gz de entrada.")
     parser.add_argument('--output_file', required=True, help="Caminho do arquivo CSV de saída.")
     args = parser.parse_args()
 
-    if args.input_file and args.output_file:
-        print(f"Processando arquivo: {args.input_file}")
-        function_calls, return_values = parse_tracing_file(args.input_file)
+    print(f"Processando arquivo: {args.input_file}")
+    function_calls, return_values = parse_hierarchical_trace(args.input_file)
+    if function_calls:
         save_to_csv(args.output_file, function_calls, return_values)
-        print(f"Análise concluída. Resultados salvos em {args.output_file}")
     else:
-        print("Erro: Você deve fornecer --input_file e --output_file.")
-  
+        print("Processamento do arquivo de trace não gerou dados.")
 
 if __name__ == "__main__":
     main()
