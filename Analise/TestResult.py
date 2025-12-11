@@ -4,6 +4,7 @@ Plugin do Pytest para coletar resultados e acionar análises de tracing e profil
 from typing import List, Tuple, Any
 from pathlib import Path
 import pytest
+import inspect
 import sys
 import cProfile
 import pstats
@@ -27,22 +28,19 @@ class TestResult:
         if not self.automation_root or not self.automation_root.is_dir():
             raise ValueError("O caminho raiz do projeto de automação é inválido ou não foi fornecido.")
 
-        # Novo: Armazena o caminho do projeto sob teste para filtragem
         self.project_root_dir = project_root_dir
         if self.trace and not self.project_root_dir:
             raise ValueError("`project_root_dir` deve ser fornecido para habilitar o tracing.")
 
-        # Atributos para resultados
         self.passed = 0
         self.failed = 0
         self.xfailed = 0
         self.skipped = 0
         self.total_duration = 0.0
 
-        # Atributos para análise
         self.profiler = cProfile.Profile() if self.prof else None
         self.traceBuffer = []
-        self.trace_depth = 0 # Contador para a profundidade da chamada
+        self.trace_depth = 0 
 
     # --- Hooks do Pytest ---
 
@@ -59,8 +57,8 @@ class TestResult:
         if self.prof and self.profiler:
             self.profiler.enable()
         if self.trace:
-            self.trace_depth = 0 # Reseta a profundidade para cada teste
-            self.traceBuffer = [] # Limpa o buffer para cada teste
+            self.trace_depth = 0
+            self.traceBuffer = [] 
             sys.settrace(self.hierarchical_trace)
 
     def pytest_runtest_teardown(self, item, nextitem):
@@ -72,9 +70,6 @@ class TestResult:
 
     def pytest_sessionfinish(self, session, exitstatus):
         """Processa e salva os dados coletados no final da sessão."""
-        # A lógica agora é por teste, mas podemos deixar um hook de sessão para tarefas futuras.
-        # Por enquanto, a maior parte do processamento acontecerá no teardown do teste.
-        # Vamos mover o processamento para cá para garantir que ele rode uma vez por sessão.
         if self.prof:
             self.process_profiling_data()
         if self.trace:
@@ -123,7 +118,6 @@ class TestResult:
         else:
             print("Buffer de trace vazio, nenhum arquivo será gerado.")
 
-    # --- LÓGICA DE TRACING REFINADA ---
 
     def hierarchical_trace(self, frame, event, arg):
         """
@@ -136,7 +130,6 @@ class TestResult:
         code = frame.f_code
         filename = code.co_filename
         
-        # O FILTRO PRINCIPAL: Ignora tudo que não está dentro da pasta do projeto testado.
         if not filename.startswith(self.project_root_dir):
             return self.hierarchical_trace
 
@@ -148,19 +141,31 @@ class TestResult:
             self.trace_depth += 1
         
         elif event == 'return':
-            self.trace_depth -= 1
+            self.trace_depth = max(0, self.trace_depth - 1)
             indent = "<" * self.trace_depth
             
-            # Captura o valor de retorno de forma segura e concisa
-            try:
+            builtins_to_skip = (type(None), int, float, str, bool, list, tuple, dict, set)
+            if isinstance(arg, object) and not isinstance(arg, builtins_to_skip):
+                try:
+                    members = inspect.getmembers(arg)
+                    attributes_str = f"Class <{type(arg).__name__}> object:\n"
+                    inner_indent = ' ' * (self.trace_depth * 2)
+                    
+                    for name, value in members:
+                        if not name.startswith('_') and not callable(value):
+                            value_repr = repr(value)
+                            if len(value_repr) > 100:
+                                value_repr = value_repr[:100] + '...'
+                            attributes_str += f"{inner_indent}  - {name}: {value_repr}\n"
+                    
+                    return_value_str = attributes_str.strip()
+                except Exception:
+                    return_value_str = f"[Uninspectable object of type {type(arg).__name__}]"
+            else:
                 return_value_str = repr(arg)
-            except Exception:
-                return_value_str = "[Unrepresentable object]"
-
-            # Trunca valores de retorno muito longos para manter o log limpo
-            if len(return_value_str) > 150:
-                return_value_str = return_value_str[:150] + "..."
-                
-            self.traceBuffer.append(f"{indent} {func_name} returned: {return_value_str}\n")
+                if len(return_value_str) > 150:
+                    return_value_str = return_value_str[:150] + "..."
+                    
+                self.traceBuffer.append(f"{indent} {func_name} returned: {return_value_str}\n")
 
         return self.hierarchical_trace
